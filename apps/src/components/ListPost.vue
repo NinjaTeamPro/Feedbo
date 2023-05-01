@@ -253,18 +253,21 @@ export default {
   },
   mounted() {
     const listElm = document.querySelector(".board-main .board-list-post");
+    const boardElemnt = document.querySelector(".board-main");
+    const bannerOffset =
+      document.querySelector(".board-home-link").offsetHeight +
+      document.querySelector(".board-header").offsetHeight +
+      20;
+    boardElemnt.style.top = bannerOffset + "px";
+
     listElm.addEventListener("scroll", (e) => {
       if (this.mobileCheck()) {
-        const scrollHeight = listElm.scrollHeight;
         const scrollTop = listElm.scrollTop;
-        const boardElemnt = document.querySelector(
-          ".big-ninja-feedbo .board-main"
-        );
 
-        if (scrollTop > 0 && scrollTop < scrollHeight) {
-          boardElemnt.classList.add("fixed");
+        if (scrollTop > 0) {
+          boardElemnt.style.top = 0;
         } else {
-          boardElemnt.classList.remove("fixed");
+          boardElemnt.style.top = bannerOffset + "px";
         }
       }
     });

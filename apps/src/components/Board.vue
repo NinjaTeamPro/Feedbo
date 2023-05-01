@@ -193,17 +193,7 @@ export default {
   .board-menu {
     background-color: #ffffff;
   }
-  .board-main {
-    position: relative;
-    transition: all 0.3s ease-out;
-    &.fixed {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 99;
-    }
-  }
+
   .board-list-post {
     background-color: #ffffff;
     border-bottom-left-radius: 8px;
@@ -241,6 +231,15 @@ export default {
       letter-spacing: 1px;
       padding-left: 0;
       padding: 20px 15px;
+    }
+
+    .board-main {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 99;
+      transition: all 0.4s ease-out;
     }
   }
 }
