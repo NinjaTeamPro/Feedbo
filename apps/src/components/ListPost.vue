@@ -30,7 +30,11 @@
                   :style="{ color: category.theme.title}"
                   @click="setModalVisible(item)"
                 >
-                  <span>{{ item.post_title }}</span>
+                  <h2 
+                    style="display:inline-block;font-size:1.2em;" 
+                    :style="{ color: category.theme.title}"
+                  >{{ item.post_title }}
+                  </h2>
                   <span class="post-title-status">
                     <ABadge 
                       :count="item.post_status" 
@@ -592,9 +596,14 @@ export default {
   .post-content-text {
     white-space: break-spaces;
   }
+  
   .button-vote:hover, .button-vote:focus {
     color: #494949;
     border-color: #494949;
+  }
+  .post-title-status {
+    display: inline-block;
+    line-height: 1.75em;
   }
   .post-title-status .ant-badge {
     vertical-align: top;

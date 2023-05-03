@@ -21,11 +21,52 @@ if ( ! class_exists( 'Frontend' ) ) {
 			add_filter( 'login_redirect', array( $this, 'redirectPreviousPage' ), 10, 3 );
 			add_action( 'login_enqueue_scripts', array( $this, 'my_custom_login_stylesheet' ) );
 			add_filter( 'login_headerurl', array( $this, 'custom_loginlogo_url' ) );
+			add_filter( 'pre_get_document_title', array( $this, 'generate_custom_title' ), 10 );
+			add_action( 'template_redirect', array( $this, 'custom_redirect_homepage' ) );
 
 			add_filter( 'wp_head', array( $this, 'wp_head' ) );
 			add_action( 'login_head', array( $this, 'wp_head' ) );
-			add_action( 'register_form',  array( $this, 'add_re_captcha_fields' ) );
+			add_action( 'register_form', array( $this, 'add_re_captcha_fields' ) );
 			add_filter( 'registration_errors', array( $this, 'custom_registration_errors' ), 10, 3 );
+		}
+
+		function custom_redirect_homepage() {
+			$requestURL = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '';
+			if ( MV_URL_BOARD === $requestURL ) {
+				wp_redirect( home_url(), 301 );
+				exit();
+			}
+		}
+
+		function generate_custom_title( $title ) {
+			$requestURL = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '';
+			$boardId    = '';
+			if ( str_starts_with( $requestURL, MV_URL_BOARD ) ) {
+				$boardId = str_replace( MV_URL_BOARD, '', $requestURL );
+				if ( str_ends_with( $requestURL, '/' ) ) {
+					$boardId = substr( $boardId, 0, strlen( $boardId ) - 1 );
+				}
+				if ( ! empty( $boardId ) ) {
+					$args        = array(
+						'taxonomy'   => 'category',
+						'order'      => 'ASC',
+						'hide_empty' => false,
+						'meta_key'   => 'board_Setting',
+					);
+					$terms_query = new \WP_Term_Query( $args );
+					if ( ! empty( $terms_query->terms ) ) {
+						foreach ( $terms_query->terms as $term ) {
+							$boardMeta = get_term_meta( $term->term_id, 'board_Setting' );
+							$boardURL  = str_replace( '/#/board/', MV_URL_BOARD, $boardMeta[0]['board_URL'] );
+							if ( $boardURL === site_url() . MV_URL_BOARD . $boardId ) {
+								$title = $boardMeta[0]['name'] . ' | ' . get_bloginfo( 'name' );
+							}
+						}
+					}
+				}
+			}
+
+			return $title;
 		}
 
 		public function add_re_captcha_fields() {
@@ -43,7 +84,7 @@ if ( ! class_exists( 'Frontend' ) ) {
 		public function wp_head() {
 			?>
 			<script src="https://www.google.com/recaptcha/api.js?render=<?php echo MV_RECAPTCHA_KEY; ?>"></script>
-			<script type="text/javascript">var mv_recaptcha_key = '<?php  echo MV_RECAPTCHA_KEY; ?>';</script>
+			<script type="text/javascript">var mv_recaptcha_key = '<?php echo MV_RECAPTCHA_KEY; ?>';</script>
 			<?php
 		}
 		public function enqueueScripts() {
@@ -61,6 +102,7 @@ if ( ! class_exists( 'Frontend' ) ) {
 					'axiosUrl'       => $axiosURL,
 					'pluginUrl'      => MV_PLUGIN_URL,
 					'siteUrl'        => site_url(),
+					'siteName'       => get_bloginfo( 'name' ),
 					'logoutUrl'      => wp_logout_url(),
 					'apiNonce'       => wp_create_nonce( 'wp_rest' ),
 					'defineUrlBoard' => MV_URL_BOARD,

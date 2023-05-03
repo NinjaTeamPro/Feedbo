@@ -384,7 +384,7 @@
                 {{ item.userslike_length }}
               </span>
             </span>
-            <ADropdown v-show="checkUser(item.comment_author)">
+            <ADropdown v-show="checkUser(item.comment_author) || user.currentLevel < 3">
               <AMenu
                 slot="overlay"
                 style="width:100px;"
@@ -394,6 +394,12 @@
                   @click="hide(item)"
                 >
                   <span>Edit</span>
+                </AMenuItem>
+                <AMenuItem
+                  key="delete-comment"
+                  @click="deleteComment(item,index)"
+                >
+                  <span>Delete</span>
                 </AMenuItem>
               </AMenu>
               <AIcon type="more" />
@@ -1049,6 +1055,23 @@ export default {
             this.$store.commit('comment/SET_IMGUPDATE', image);
             this.visibleUpdate = true;
             this.visible = false;
+        },
+        deleteComment (item, index) {
+            this.$confirm({
+                content: 'Are you sure you want to delete this comment?',
+                okText: 'Delete',
+                cancelText: 'Cancel',
+                centered: true,
+                onOk: () => this.handleDeleteComment(item, index),
+            });
+            
+        },
+        handleDeleteComment (item, index) {
+            this.$store.commit('comment/DELETE_COMMENT', index);
+            this.$store.dispatch('comment/deleteComment', {
+                comment: item,
+                component: this,
+            });
         },
         deleteimgUpload (image) {
             const index = this.comment.commentImgUpdate.indexOf(image);

@@ -25,6 +25,9 @@ export const mutations = {
   ADD_COMMENT(state, comment) {
     state.comments.push(comment)
   },
+  DELETE_COMMENT(state, index) {
+    state.comments.splice(index, 1)
+  },
   ADD_USERSLIKE(state, userslike) {
     state.userslike.push(userslike)
   },
@@ -159,6 +162,19 @@ export const actions = {
         console.log('There was an error:', error.response)
         commit("SET_GENERNAL", {isLoadingEditComment: false})
       })
+   },
+   deleteComment({commit},data) {
+    const thisComp = data.component;
+    delete data.component;
+    return ApiService.deleteComment(data).then((response) => {
+      commit("SET_GENERNAL", {
+        comments: response.data.comments,
+      });
+      thisComp.$message.success(response.data.message);
+    })
+    .catch(error => {
+      console.log('There was an error:', error.response)
+    })
    },
   imgupdate({commit}, {data,config}) {
     return ApiService.uploadimg(data,config)

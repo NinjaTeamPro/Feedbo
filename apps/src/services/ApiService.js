@@ -86,6 +86,9 @@ export default {
   updateComment(comment){
     return apiClient.post('/v1/wp_update_comment',comment)
   },
+  deleteComment(comment){
+    return apiClient.post('/v1/wp_delete_comment',comment)
+  },
   updateUsersLike(comment){
     return apiClient.post('/v1/wp_update_users_like', comment)
   },

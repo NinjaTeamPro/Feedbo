@@ -33,7 +33,7 @@ export default {
         ...mapState([ 'category','user' ]),
     },
     mounted () {
-        document.title = 'Feedbo - Feedback Manager';
+        document.title = window.bigNinjaVoteWpdata.siteName + ' | Feedback Manager';
         var link =
             document.querySelector("link[rel*='icon']") ||
             document.createElement("link");

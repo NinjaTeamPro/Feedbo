@@ -8,3 +8,9 @@
 .big-ninja-feedbo .form-account-info .wrap-button {
     margin: 0;
 }
+
+@media only screen and (max-width: 768px) { 
+    .grecaptcha-badge {
+        visibility: hidden;
+    }
+}

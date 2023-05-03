@@ -234,7 +234,7 @@ export default {
       if (this.checkVisibility() == false) {
         this.$router.push({ path: `/private/` });
       } else {
-        document.title = this.category.board.name + "  - Feedback Manager";
+        document.title = this.category.board.name + ' | ' + window.bigNinjaVoteWpdata.siteName;
         if (
           this.category.faviconimg != "" &&
           this.category.faviconimg != null

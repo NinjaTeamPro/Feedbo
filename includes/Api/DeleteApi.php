@@ -43,6 +43,17 @@ class DeleteApi extends \WP_REST_Controller {
 		);
 		register_rest_route(
 			'v1',
+			'wp_delete_comment',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'deleteComment' ),
+					'permission_callback' => '__return_true',
+				),
+			)
+		);
+		register_rest_route(
+			'v1',
 			'wp_update_users_like',
 			array(
 				array(
@@ -314,6 +325,19 @@ class DeleteApi extends \WP_REST_Controller {
 			'comments' => $comments,
 			'isPost'   => $isPost,
 			'message'  => 'Update comment success',
+		);
+		return new \WP_REST_Response( $result, 200 );
+	}
+	public function deleteComment ( $request ) {
+		$req    = wp_unslash( $request->get_params() );
+		if ( isset( $req['comment'] ) && ! empty( $req['comment']['comment_ID'] ) ) {
+			wp_delete_comment( $req['comment']['comment_ID'], true );
+		}
+		$comment  = Comment::getInstance();
+		$comments = $comment->getComments( $req['comment']['comment_post_ID'] );
+		$result   = array(
+			'comments' => $comments,
+			'message'  => 'Delete comment success',
 		);
 		return new \WP_REST_Response( $result, 200 );
 	}

@@ -12,7 +12,7 @@
           v-if="category.logoimg == ''"
           :class="{ 'dark' : checkHeaderLight(),'light' : checkHeaderDark()}"
         >
-          <span>{{ title }}</span>
+          <span><h1 :class="{ 'dark' : checkHeaderLight(),'light' : checkHeaderDark()}">{{ title }}</h1></span>
         </div>
         <div
           v-else
@@ -23,7 +23,7 @@
               :src="category.logoimg"
               class="head-logo"
             >
-            <div> {{ title }} </div>
+            <div><h1 :class="{ 'dark' : checkHeaderLight(),'light' : checkHeaderDark()}"> {{ title }} </h1></div>
           </div>
         </div>
         <div class="head-description">
@@ -147,9 +147,11 @@ export default {
       height: 32px;
   }
   .dark{
+      font-size: 1.2em;
       color: #000;
   }
   .light{
+      font-size: 1.2em;
       color: #fff;
   }
 

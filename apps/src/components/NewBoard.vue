@@ -85,7 +85,7 @@ export default {
       ...mapState([ 'category','user' ])
     },
     mounted () {
-      document.title = 'Feedbo - New Board';
+      document.title = window.bigNinjaVoteWpdata.siteName + ' | New Board';
       var link =
             document.querySelector("link[rel*='icon']") ||
             document.createElement("link");
