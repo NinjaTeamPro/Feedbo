@@ -4,11 +4,16 @@
   </div>
 </template>
 <style>
-:root{
-    --main-color: '#fff';
-    --hover-color: '#fff';
+:root {
+  --main-color: "#fff";
+  --hover-color: "#fff";
 }
-#modal-account-settings .ant-modal-wrap .ant-modal-content .ant-modal-body{
+#modal-account-settings .ant-modal-wrap .ant-modal-content .ant-modal-body {
   padding: 24px 0px;
+}
+@media only screen and (max-width: 600px) {
+  .ant-spin-dot {
+    display: none !important;
+  }
 }
 </style>

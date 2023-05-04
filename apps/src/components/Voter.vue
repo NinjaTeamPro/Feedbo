@@ -1,31 +1,24 @@
 <template>
-  <div 
-    class="vote-list-wrap"
-  >
+  <div class="vote-list-wrap">
     <div class="vote-list-container">
-      <div
-        class="voter-title"
-        :style="{ color: category.theme.text}"
-      >
+      <div class="voter-title" :style="{ color: category.theme.text }">
         Voters
       </div>
       <div class="voter-list">
-        <APopover
-          trigger="click"
-          placement="bottom"
-        >
+        <APopover trigger="click" placement="bottom">
           <template slot="content">
             <div :class="{ 'has-error': !validateEmail(userCreate) }">
               <AInput
                 v-model="userCreate"
                 type="email"
                 class="behalf-user-input feedbo-input"
-                
                 placeholder="Vote on behalf of a user..."
               />
             </div>
-            <div v-if="!validateEmail(userCreate)" >
-              <span class="create-user-email-error">Please input correct email</span>
+            <div v-if="!validateEmail(userCreate)">
+              <span class="create-user-email-error"
+                >Please input correct email</span
+              >
             </div>
             <div
               v-if="userCreate != '' && validateEmail(userCreate)"
@@ -34,7 +27,8 @@
             >
               <AIcon type="plus" />
               <span>
-                Create <span class="user-name-create">
+                Create
+                <span class="user-name-create">
                   {{ userCreate }}
                 </span>
               </span>
@@ -43,7 +37,7 @@
               v-if="userCreate == ''"
               class="list-vote-scrollbar"
             >
-              <div 
+              <div
                 v-for="item in post.listVoter"
                 :key="item.id"
                 class="list-all-user-vote"
@@ -59,14 +53,11 @@
           <div
             v-if="post.listVoter.length == 0"
             class="no-votes-yet"
-            :style="{ color: category.theme.text}"
+            :style="{ color: category.theme.text }"
           >
             No votes yet
           </div>
-          <div
-            v-else
-            class="image-voter-container"
-          >
+          <div v-else class="image-voter-container">
             <div
               v-for="item in listVote"
               :key="item.id"
@@ -74,10 +65,10 @@
             >
               <AAvatar :src="item.user_avatar" />
             </div>
-            <span 
-              v-if="post.listVoter.length > 5" 
+            <span
+              v-if="post.listVoter.length > 5"
               class="count-list-vote"
-              :style="{ color: category.theme.text}"
+              :style="{ color: category.theme.text }"
             >
               +{{ countListUser() }}
             </span>
@@ -103,98 +94,98 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 export default {
-    props: {
-        postItem: Object
+  props: {
+    postItem: Object,
+  },
+  data() {
+    return {
+      userCreate: "",
+    };
+  },
+  computed: {
+    ...mapState(["post", "category", "user"]),
+    listVote() {
+      return this.post.listVoter.slice(0, 5);
     },
-    data (){
-        return {
-            userCreate: '',
+  },
+  methods: {
+    setSubscribe() {
+      let check = false;
+      if (
+        this.postItem.subscribe_ids.length > 0 &&
+        this.user.userAnonymous == false
+      ) {
+        this.postItem.subscribe_ids.forEach((element) => {
+          if (element == this.user.user.ID) {
+            check = true;
+          }
+        });
+      }
+      return check;
+    },
+    subscribeClick() {
+      if (this.user.userAnonymous == true) {
+        this.$message.error(
+          "You are not logged in. Please login to subscribe this post."
+        );
+      } else {
+        const requestParams = {
+          post: this.postItem,
+          component: this,
+          checkSubscribe: this.setSubscribe(),
         };
+        this.$store.dispatch("post/updateUserSubscribe", requestParams);
+      }
     },
-    computed: {
-        ...mapState([ 'post', 'category', 'user' ]),
-        listVote (){
-            return this.post.listVoter.slice(0,5);
-        }
+    countListUser() {
+      return this.post.listVoter.length - 5;
     },
-    methods: {
-        setSubscribe (){
-            let check = false;
-            if (this.postItem.subscribe_ids.length > 0 && this.user.userAnonymous == false) {
-                this.postItem.subscribe_ids.forEach(element => {
-                    if (element == this.user.user.ID) {
-                        check = true;
-                    }    
-                });
-            }
-            return check;
-        },
-        subscribeClick (){
-            if (this.user.userAnonymous == true)
-            {
-                this.$message.error('You are not logged in. Please login to subscribe this post.');
-            }
-            else
-            { 
-                const requestParams = {
-                    post : this.postItem,
-                    component: this,
-                    checkSubscribe: this.setSubscribe()
-                };
-                this.$store.dispatch('post/updateUserSubscribe',requestParams);
-            }
-            
-
-        },
-        countListUser (){
-            return this.post.listVoter.length -  5;
-        },
-        createUserBehalf (){
-            const params = {
-                post: this.postItem,
-                userCreate: this.userCreate,
-                component: this
-            };
-            this.$store.dispatch('post/addUserBehalf',params);
-            setTimeout(() => {
-                this.$store.commit('post/UPDATE_VOTE_BEHALF',this.postItem);
-                // this.$emit('changeUpvoted');
-                this.userCreate = '';
-            }, 500);
-        },
-        validateEmail (input) {
-            if(input == '') return true;
-            const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-            if (input.match(validRegex)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
+    createUserBehalf() {
+      const params = {
+        post: this.postItem,
+        userCreate: this.userCreate,
+        component: this,
+      };
+      this.$store.dispatch("post/addUserBehalf", params);
+      setTimeout(() => {
+        this.$store.commit("post/UPDATE_VOTE_BEHALF", this.postItem);
+        // this.$emit('changeUpvoted');
+        this.userCreate = "";
+      }, 500);
+    },
+    validateEmail(input) {
+      if (input == "") return true;
+      const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      if (input.match(validRegex)) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
 };
 </script>
 
 <style scoped lang="scss">
 .big-ninja-feedbo {
-  .vote-list-wrap{
+  .vote-list-wrap {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding-bottom: 7px;
   }
-  .vote-list-container{
+  .vote-list-container {
     display: flex;
   }
-  .vote-list-container .voter-title{
+  .vote-list-container .voter-title {
     padding-top: 10px;
   }
-  .vote-list-container .voter-list{
+  .vote-list-container .voter-list {
     padding-left: 5px;
   }
-  .vote-list-container .voter-list .image-voter-container{
+  .vote-list-container .voter-list .image-voter-container {
     display: flex;
     margin-left: 5px;
     cursor: pointer;
@@ -202,61 +193,59 @@ export default {
     border-radius: 5px;
     padding: 5px 5px 0px;
   }
-  .vote-list-container .voter-list .image-voter-container:hover{
+  .vote-list-container .voter-list .image-voter-container:hover {
     background-color: rgba(0, 0, 0, 0.04);
   }
-  .vote-list-container .voter-list .image-voter{
+  .vote-list-container .voter-list .image-voter {
     height: 32px;
     width: 32px;
     border-radius: 50%;
   }
-  .vote-list-container .voter-list .image-voter-container .count-list-vote{
+  .vote-list-container .voter-list .image-voter-container .count-list-vote {
     padding-top: 5px;
   }
-  .list-all-user-vote{
+  .list-all-user-vote {
     height: 48px;
     padding-top: 8px;
     width: 275px;
     padding-left: 20px;
     padding-right: 20px;
   }
-  .list-vote-scrollbar{
+  .list-vote-scrollbar {
     max-height: 250px;
   }
-  .user-name-create{
+  .user-name-create {
     font-weight: bold;
   }
-  .create-user-behalf{
+  .create-user-behalf {
     height: 48px;
     padding-top: 18px;
     width: 275px;
     cursor: pointer;
   }
-  .no-votes-yet{
+  .no-votes-yet {
     padding: 10px;
     cursor: pointer;
-
   }
-  .no-votes-yet:hover{
+  .no-votes-yet:hover {
     background-color: rgba(0, 0, 0, 0.04);
   }
   .create-user-email-error {
     color: #f5222d;
   }
-  .behalf-user-input{
+  .behalf-user-input {
     width: 275px !important;
   }
-  .vote-export{
+  .vote-export {
     position: absolute;
     right: 24px;
     margin-top: 10px;
   }
-@media only screen and (max-width: 600px){
-      .vote-list-wrap {
-        flex-direction: column;
-        align-items: stretch;
-      }
+  @media only screen and (max-width: 600px) {
+    .vote-list-wrap {
+      flex-direction: column;
+      align-items: stretch;
+    }
   }
-  
 }
 </style>
