@@ -21,10 +21,8 @@ if ( ! class_exists( 'GoogleOnTab' ) ) {
 		}
 
 		private function __construct() {
-			$this->google_client_id = '1077705283804-sp1410spf9rm5t5tvrlfvf1o0sitoo26.apps.googleusercontent.com';
 
 			add_action( 'login_enqueue_scripts', array( $this, 'login_enqueue_scripts' ), 10 );
-			add_action( 'init', array( $this, 'feebo_connect_got_endpoint' ) );
 			add_filter( 'get_avatar_url', array( $this, 'get_avatar_url' ), 10, 3 );
 
 			add_action( 'wp_ajax_feebo_connect_google_on_tab', array( $this, 'feebo_connect_google_on_tab' ) );
@@ -48,48 +46,6 @@ if ( ! class_exists( 'GoogleOnTab' ) ) {
 			);
 			if ( ! is_user_logged_in() ) {
 				wp_enqueue_script( 'feebo-google-tap', MV_PLUGIN_URL . 'assets/js/google-tab.js', array( 'jquery' ), MV_PLUGIN_VERSION, true );
-			}
-
-		}
-
-		public function feebo_connect_got_endpoint() {
-
-			if ( array_key_exists( 'feedbo-gotl-signin', $_GET ) && ! is_user_logged_in() ) {
-
-				if ( ! wp_verify_nonce( $_POST['wpnonce'], 'feedbo-gotl-connect' ) ) {
-					die( __( 'Security wpnonce failed', 'feedbo' ) );
-				}
-
-				if ( ! isset( $_POST['g_csrf_token'] ) && ! empty( $_POST['g_csrf_token'] ) ) {
-					die( __( 'Security g_csrf_token not available', 'feedbo' ) );
-				}
-
-				if ( ! isset( $_COOKIE['g_csrf_token'] ) && ! empty( $_COOKIE['g_csrf_token'] ) ) {
-					die( __( 'Security cookie g_csrf_token not available', 'feedbo' ) );
-				}
-
-				if ( $_POST['g_csrf_token'] != $_COOKIE['g_csrf_token'] ) {
-					die( __( 'g_csrf_token is not same in post and cookie', 'feedbo' ) );
-				}
-
-				if ( ! isset( $_POST['credential'] ) && ! empty( $_POST['credential'] ) ) {
-					die( __( 'credential is not available', 'feedbo' ) );
-				}
-
-				$id_token   = sanitize_text_field( $_POST['credential'] );
-				$autoloader = MV_PLUGIN_DIR . 'includes/vendor/autoload.php';
-				if ( is_readable( $autoloader ) ) {
-					include $autoloader;
-				}
-				$client  = new \Google_Client( array( 'client_id' => $this->google_client_id ) );
-				$payload = $client->verifyIdToken( $id_token );
-
-				if ( $payload ) {
-					$redirect_uri = $_POST['redirect_uri'];
-					$this->register_or_login_user( $payload, $redirect_uri );
-				} else {
-					die( __( 'invaild id', 'feedbo' ) );
-				}
 			}
 
 		}
