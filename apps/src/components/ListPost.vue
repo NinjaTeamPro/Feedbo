@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div v-show="post.tabActive != 'roadmap'" class="feature-container">
+    <div
+      v-show="post.tabActive != 'roadmap'"
+      class="feature-container"
+    >
       <div class="feature-wrap">
         <div
           id="feedbo-list-post"
@@ -9,9 +12,15 @@
           :infinite-scroll-disabled="busy"
           :infinite-scroll-distance="10"
         >
-          <ASkeleton :loading="post.loadingListPost" active>
+          <ASkeleton
+            :loading="post.loadingListPost"
+            active
+          >
             <AList :data-source="post.listPost">
-              <AListItem slot="renderItem" slot-scope="item, index">
+              <AListItem
+                slot="renderItem"
+                slot-scope="item, index"
+              >
                 <AListItemMeta>
                   <p
                     slot="description"
@@ -25,7 +34,12 @@
                     :style="{ color: category.theme.title }"
                     @click="setModalVisible(item)"
                   >
-                    <span>{{ item.post_title }}</span>
+                    <h2 
+                      style="display:inline-block;font-size:1.2em;" 
+                      :style="{ color: category.theme.title}"
+                    >
+                      {{ item.post_title }}
+                    </h2>
                     <span class="post-title-status">
                       <ABadge
                         :count="item.post_status"
@@ -104,7 +118,10 @@
                   </AButton>
                 </div>
               </AListItem>
-              <div v-if="loading" class="demo-loading-container">
+              <div
+                v-if="loading"
+                class="demo-loading-container"
+              >
                 <ASpin />
               </div>
             </AList>
@@ -120,7 +137,10 @@
             :footer="null"
             @cancel="handleCloseComment"
           >
-            <ASkeleton :loading="comment.isLoadingComment" active>
+            <ASkeleton
+              :loading="comment.isLoadingComment"
+              active
+            >
               <Comment
                 :post-item="postItem"
                 @deletePost="deletePost"
@@ -132,17 +152,30 @@
       </div>
     </div>
 
-    <div v-show="post.tabActive == 'roadmap'" class="roadmap-wrap">
-      <ASkeleton :loading="post.loadingRoadmap" active>
+    <div
+      v-show="post.tabActive == 'roadmap'"
+      class="roadmap-wrap"
+    >
+      <ASkeleton
+        :loading="post.loadingRoadmap"
+        active
+      >
         <template
           v-if="post.status && category.board.features.indexOf('roadmap') > -1"
         >
           <ATimeline>
-            <div v-for="(value, name) in group" :key="name">
+            <div
+              v-for="(value, name) in group"
+              :key="name"
+            >
               <div>
                 <ATimelineItem :color="category.status[name]">
                   {{ name }}
-                  <div v-for="posts in value" :key="posts.post_id" class="post">
+                  <div
+                    v-for="posts in value"
+                    :key="posts.post_id"
+                    class="post"
+                  >
                     <h3 class="post-title">
                       <ABadge
                         :color="category.status[name]"
@@ -166,7 +199,10 @@
             :footer="null"
             @cancel="handleCloseComment"
           >
-            <ASkeleton :loading="comment.isLoadingComment" active>
+            <ASkeleton
+              :loading="comment.isLoadingComment"
+              active
+            >
               <Comment
                 :post-item="postItem"
                 @deletePost="deletePost"
@@ -212,11 +248,11 @@ export default {
     };
   },
   computed: {
-    ...mapState(["category", "post", "comment", "user"]),
+    ...mapState([ "category", "post", "comment", "user" ]),
     group() {
       const item = this.post.status;
       const group = item.reduce((r, a) => {
-        r[a.post_status] = [...(r[a.post_status] || []), a];
+        r[a.post_status] = [ ...(r[a.post_status] || []), a ];
         return r;
       }, {});
       return group;
@@ -623,6 +659,11 @@ export default {
   .button-vote:focus {
     color: #494949;
     border-color: #494949;
+  }
+
+  .post-title-status {
+    display: inline-block;
+    line-height: 1.75em;
   }
 
   .post-title-status .ant-badge {

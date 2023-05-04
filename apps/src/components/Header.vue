@@ -1,5 +1,8 @@
 <template>
-  <div class="head-container" :style="{ background: category.theme.header }">
+  <div
+    class="head-container"
+    :style="{ background: category.theme.header }"
+  >
     <div
       class="head-content"
       :class="{ dark: checkHeaderLight(), light: checkHeaderDark() }"
@@ -9,15 +12,26 @@
           v-if="category.logoimg == ''"
           :class="{ dark: checkHeaderLight(), light: checkHeaderDark() }"
         >
-          <span><h1 :class="{ 'dark' : checkHeaderLight(),'light' : checkHeaderDark()}">{{ title }}</h1></span>
+          <span>
+            <h1 :class="{ 'dark' : checkHeaderLight(),'light' : checkHeaderDark()}">
+              {{ title }}
+            </h1>
+          </span>
         </div>
         <div
           v-else
           :class="{ dark: checkHeaderLight(), light: checkHeaderDark() }"
         >
           <div class="head-title-logo-wrap">
-            <img :src="category.logoimg" class="head-logo" />
-            <div>{{ title }}</div>
+            <img
+              :src="category.logoimg"
+              class="head-logo"
+            >
+            <div>
+              <h1 :class="{ 'dark' : checkHeaderLight(),'light' : checkHeaderDark()}">
+                {{ title }}
+              </h1>
+            </div>
           </div>
         </div>
         <div class="head-description">
@@ -30,12 +44,8 @@
 
 <script>
 import { mapState } from "vuex";
-import Comment from "@/components/Comment.vue";
 import { getBoardIdFromUrl } from "@/helper/helper.js";
 export default {
-  components: {
-    Comment,
-  },
   props: {
     title: String,
   },
@@ -45,7 +55,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["category", "post", "comment", "user"]),
+    ...mapState([ "category", "post", "comment", "user" ]),
   },
   methods: {
     getBoardId() {
@@ -78,7 +88,6 @@ export default {
       let r;
       let g;
       let b;
-      let hsp;
       // Check the format of the color, HEX or RGB?
       if (color.match(/^rgb/)) {
         // If HEX --> store the red, green, blue values in separate variables
@@ -99,7 +108,7 @@ export default {
         b = color & 255;
       }
       // HSP (Highly Sensitive Poo) equation from http://alienryderflex.com/hsp.html
-      hsp = Math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b));
+      const hsp = Math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b));
       // Using the HSP value, determine whether the color is light or dark 127.5
       if (hsp > 160) {
         return "light";
@@ -148,9 +157,11 @@ export default {
     height: 32px;
   }
   .dark {
+    font-size: 1.2em;
     color: #000;
   }
   .light {
+    font-size: 1.2em;
     color: #fff;
   }
 

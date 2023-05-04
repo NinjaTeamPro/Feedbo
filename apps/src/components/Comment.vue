@@ -307,9 +307,7 @@
             slot="content"
             class="comment-content-text"
             :style="{ color: category.theme.text }"
-          >
-            {{ item.comment_content }}
-          </div>
+          >{{ item.comment_content }}</div>
           <div>
             <a
               v-for="(image, index) in item.comment_image"
@@ -996,6 +994,22 @@ export default {
       this.$store.commit("comment/SET_IMGUPDATE", image);
       this.visibleUpdate = true;
       this.visible = false;
+    },
+    deleteComment (item, index) {
+      this.$confirm({
+          content: 'Are you sure you want to delete this comment?',
+          okText: 'Delete',
+          cancelText: 'Cancel',
+          centered: true,
+          onOk: () => this.handleDeleteComment(item, index),
+      }); 
+    },
+    handleDeleteComment (item, index) {
+      this.$store.commit('comment/DELETE_COMMENT', index);
+      this.$store.dispatch('comment/deleteComment', {
+          comment: item,
+          component: this,
+      });
     },
     deleteimgUpload(image) {
       const index = this.comment.commentImgUpdate.indexOf(image);
