@@ -35,7 +35,7 @@
                     @click="setModalVisible(item)"
                   >
                     <h2 
-                      style="display:inline-block;font-size:1.2em;" 
+                      style="display:inline-block;font-size:1.2em;vertical-align: middle;" 
                       :style="{ color: category.theme.title}"
                     >
                       {{ item.post_title }}

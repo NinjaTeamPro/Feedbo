@@ -140,7 +140,6 @@ export default {
 
   .head-title-logo-wrap {
     display: flex;
-    align-items: center;
     gap: 15px;
   }
   .head-description {
@@ -157,11 +156,11 @@ export default {
     height: 32px;
   }
   .dark {
-    font-size: 1.2em;
+    font-size: 1.1em;
     color: #000;
   }
   .light {
-    font-size: 1.2em;
+    font-size: 1.1em;
     color: #fff;
   }
 

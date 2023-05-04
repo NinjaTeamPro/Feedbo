@@ -6,13 +6,12 @@ defined( 'ABSPATH' ) || exit;
 class Captcha {
 
 	public static function isValid( $response ) {
-		// $data = array(
-		// 	'secret'   => MV_RECAPTCHA_SECRET,
-		// 	'response' => $response,
-		// );
-		// $res  = self::cURL( 'https://www.google.com/recaptcha/api/siteverify', $data );
-		// return is_array( $res ) && $res['success'] == 1;
-		return true;
+		$data = array(
+			'secret'   => MV_RECAPTCHA_SECRET,
+			'response' => $response,
+		);
+		$res  = self::cURL( 'https://www.google.com/recaptcha/api/siteverify', $data );
+		return is_array( $res ) && $res['success'] == 1;
 	}
 	private static function cURL( $url, $data ) {
 		$ch     = curl_init();

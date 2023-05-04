@@ -9,7 +9,7 @@
                 // Initializing the Google One Tap 2.0
                 google.accounts.id.initialize({
                     // Replace it with your Google Client Id
-                    client_id: '1077705283804-sp1410spf9rm5t5tvrlfvf1o0sitoo26.apps.googleusercontent.com',
+                    client_id: '732127190575-mtdvbmflr8vcs8ac3it7s5eqc3ujb968.apps.googleusercontent.com',
                     // Function to be called with credentials after the one of the listed accounts have been selected by the user
                     callback: self.handleCredentialResponse,
                     // cookie domain that is used for the Google One Tap
