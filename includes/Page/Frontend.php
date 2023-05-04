@@ -7,14 +7,15 @@ defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'Frontend' ) ) {
 	class Frontend {
-
 		protected static $instance = null;
+
 		public static function getInstance() {
 			if ( null == self::$instance ) {
 				self::$instance = new self();
 			}
 			return self::$instance;
 		}
+
 		private function __construct() {
 			add_shortcode( 'feedbo', array( $this, 'showDashBoard' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueueScripts' ), 20 );
@@ -28,6 +29,7 @@ if ( ! class_exists( 'Frontend' ) ) {
 			add_action( 'login_head', array( $this, 'wp_head' ) );
 			add_action( 'register_form', array( $this, 'add_re_captcha_fields' ) );
 			add_filter( 'registration_errors', array( $this, 'custom_registration_errors' ), 10, 3 );
+
 		}
 
 		function custom_redirect_homepage() {
@@ -76,17 +78,22 @@ if ( ! class_exists( 'Frontend' ) ) {
 		}
 
 		public function custom_registration_errors( $errors, $sanitized_user_login, $user_email ) {
-			if ( ! Captcha::isValid( $_POST['recaptcha_response'] ) ) {
-				$errors->add( 'captcha_validation_failed', __( 'Captcha validation failed.', 'feedbo' ) );
+			if ( ! array_key_exists( 'feedbo-gotl-signin', $_GET ) ) {
+				if ( ! Captcha::isValid( $_POST['recaptcha_response'] ) ) {
+					$errors->add( 'captcha_validation_failed', __( 'Captcha validation failed.', 'feedbo' ) );
+				}
 			}
+
 			return $errors;
 		}
+
 		public function wp_head() {
 			?>
 			<script src="https://www.google.com/recaptcha/api.js?render=<?php echo MV_RECAPTCHA_KEY; ?>"></script>
 			<script type="text/javascript">var mv_recaptcha_key = '<?php echo MV_RECAPTCHA_KEY; ?>';</script>
 			<?php
 		}
+
 		public function enqueueScripts() {
 			$axiosURL = site_url() . '/wp-json';
 			wp_dequeue_style( 'twentytwenty-style' );
@@ -94,6 +101,7 @@ if ( ! class_exists( 'Frontend' ) ) {
 			wp_enqueue_style( 'feedbo_front_end_style', MV_PLUGIN_URL . 'assets/css/feedbo_frontend_style.css', null, true );
 			wp_enqueue_style( 'style_main', MV_PLUGIN_URL . 'assets/dist/css/main.css', null, true );
 			wp_enqueue_style( 'hide-header-footer', MV_PLUGIN_URL . 'assets/headerfooter.css', null, true );
+
 			wp_enqueue_script( 'js_main', MV_PLUGIN_URL . 'assets/dist/js/main.js', array( 'jquery' ), null, true );
 			wp_localize_script(
 				'js_main',
@@ -110,6 +118,7 @@ if ( ! class_exists( 'Frontend' ) ) {
 			);
 			wp_enqueue_media();
 		}
+
 		public function my_custom_login_stylesheet() {
 			?>
 			<script src="https://www.google.com/recaptcha/api.js?render=<?php echo MV_RECAPTCHA_KEY; ?>"></script>
@@ -144,18 +153,35 @@ if ( ! class_exists( 'Frontend' ) ) {
 				)
 			);
 		}
+
 		public function showDashBoard() {
 			$dashboard  = '';
 			$dashboard .= '<div id="app"></div>';
 			return $dashboard;
 		}
+
 		public function redirectPreviousPage( $redirectTo, $request, $user ) {
+			if ( is_user_logged_in() ) {
+				if ( wp_safe_redirect( home_url( '/' ) ) ) {
+					exit;
+				}
+			}
 			$linkRedirect = get_option( 'mo_openid_relative_login_redirect_url' );
 			$redirectTo   = site_url() . '' . $linkRedirect;
+			if ( isset( $_COOKIE['feedbo_previous_url'] ) ) {
+				$feedbo_previous_url = sanitize_text_field( $_COOKIE['feedbo_previous_url'] );
+				if ( ! str_contains( $feedbo_previous_url, 'wp-login.php' ) && ! str_contains( $feedbo_previous_url, 'wp-register.php' ) ) {
+					$redirectTo = $feedbo_previous_url;
+				}
+			}
 			return $redirectTo;
 		}
+
 		public function custom_loginlogo_url( $url ) {
 			return site_url();
 		}
+
 	}
+
+
 }

@@ -1,1 +1,14 @@
 /assets/dist
+/vendor/
+apps/node_modules
+package-lock.json
+.DS_Store
+.vscode/
+.vscode/launch.json
+/build
+phpcs.xml
+log.xml
+*.xml
+/release/*
+yarn.lock
+feedbo.zip

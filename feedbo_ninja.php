@@ -4,7 +4,7 @@
  * Description: Vote on existing ideas or suggest new ones.
  * Author: Ninja Team
  * Text Domain: feedbo
- * Version: 1.2
+ * Version: 2.0.0
  */
 
 namespace Feedbo;
@@ -16,9 +16,16 @@ define( 'MV_URL_BOARD', '/board/' );
 define( 'MV_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'MV_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'MV_PLUGIN_NAME', plugin_basename( __FILE__ ) );
+define( 'MV_PLUGIN_VERSION', '2.0.0' );
+if ( ! defined( 'MV_PLUGIN_FILE' ) ) {
+	define( 'MV_PLUGIN_FILE', __FILE__ );
+}
+if ( ! defined( 'MV_PLUGIN_DIR' ) ) {
+	define( 'MV_PLUGIN_DIR', plugin_dir_path( MV_PLUGIN_FILE ) );
+}
 
-define( 'MV_RECAPTCHA_KEY', '6Ld6a-YkAAAAAMH-zAsjPMz3Oh4IczQeNZtGh5Rg' );
-define( 'MV_RECAPTCHA_SECRET', '6Ld6a-YkAAAAANxnVlWfNZdunOA6ppYsdX_F0PQ0' );
+define( 'MV_RECAPTCHA_KEY', '6LfoiLslAAAAAPlhxIS_HDwuUCxa415E3iWGqqJu' );
+define( 'MV_RECAPTCHA_SECRET', '6LfoiLslAAAAANprMfE3iPeD2aYW5VEaikHOu90U' );
 spl_autoload_register(
 	function ( $class ) {
 		$prefix   = __NAMESPACE__; // project-specific namespace prefix
@@ -42,6 +49,7 @@ function init() {
 	I18n::getInstance();
 	Page\Frontend::getInstance();
 	Page\Backend::getInstance();
+	Page\GoogleOnTab::getInstance();
 	Api\GetApi::getInstance();
 	Api\AddApi::getInstance();
 	Api\DeleteApi::getInstance();

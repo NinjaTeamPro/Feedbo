@@ -1,345 +1,353 @@
-body.login{
-    background-color:#f0f2f5 !important;
+body.login {
+  background-color: #f0f2f5 !important;
 }
 
-body.login div#login form#loginform p.submit input#wp-submit
-{
-    float:right;
-      
+body.login div#login form#loginform p.submit input#wp-submit {
+  float: right;
 }
-img.mo_openid_image{
-    display: none !important;
-    width: 100%;
+img.mo_openid_image {
+  display: none !important;
+  width: 100%;
 }
-body.login div#login h1 a{
-    display: none;
+body.login div#login h1 a {
+  display: none;
 }
 
-#loginform{
-    margin: auto;
-    width: 530px;
-    height: 415px;
-    border-radius: 7px;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-    background-color: #ffffff;
-    margin-bottom: 234px;
+#loginform {
+  margin: auto;
+  width: 530px;
+  height: 415px;
+  /* border-radius: 7px; */
+  border-radius: 20.9968px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+  margin-bottom: 234px;
 }
-#registerform{
-    margin: auto;
-    width: 530px;
-    height: 425px;
-    border-radius: 7px;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-    background-color: #ffffff;
-    margin-bottom: 234px;
+#registerform {
+  margin: auto;
+  width: 530px;
+  height: 425px;
+  border-radius: 7px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+  margin-bottom: 234px;
 }
 #registerform .mo-openid-app-icons {
-    display: none;
+  display: none;
 }
 #registerform br {
-    display: none;
+  display: none;
 }
-#lostpasswordform{
-    margin: auto;
-    width: 530px;
-    height: 350px;
-    border-radius: 7px;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-    background-color: #ffffff;
-    margin-bottom: 234px;
+#lostpasswordform {
+  margin: auto;
+  width: 530px;
+  height: 350px;
+  border-radius: 7px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+  margin-bottom: 234px;
 }
-#resetpassform{
-    margin: auto;
-    width: 530px;
-    height: 420px;
-    border-radius: 7px;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-    background-color: #ffffff;
-    margin-bottom: 234px;
+#resetpassform {
+  margin: auto;
+  width: 530px;
+  height: 420px;
+  border-radius: 7px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+  margin-bottom: 234px;
 }
-#loginform br{
-    display: none;
+#loginform br {
+  display: none;
 }
 
 .login .button.wp-hide-pw .dashicons {
-    display: none;
+  display: none;
 }
-.btn-facebook-link svg{
-    display: none;
+.btn-facebook-link svg {
+  display: none;
 }
-.screen-reader-text{
-    display: none;
+.screen-reader-text {
+  display: none;
 }
-#backtoblog{
-    display: none;
+#backtoblog {
+  display: none;
 }
 .login #nav {
-     margin: 24px 0;
+  margin: 24px 0;
 }
 
 .mo-openid-app-icons {
-    padding-left: 50px;
-    padding-right: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 #login_error,
 .message,
 .mo-openid-app-icons p,
-.mo-openid-app-icons a.mo_btn{
-    display: none;
+.mo-openid-app-icons a.mo_btn {
+  display: none;
 }
-.header-login{
-    display: block;
+.header-login {
+  display: block;
 }
-.login-header{
-    padding-bottom: 50px;
-    width: 200px;
-    margin: auto;
+.login-header {
+  padding-bottom: 50px;
+  width: 200px;
+  margin: auto;
 }
-.login-header .Feedbo a{
-    color: inherit !important;
+.login-header .Feedbo a {
+  color: inherit !important;
 }
-.login-header .Feedbo a:hover{
-    text-decoration: none;
+.login-header .Feedbo a:hover {
+  text-decoration: none;
 }
-.icon-vote{
-    width: 200px;
-    color: #0ab8f9;
-    margin: auto;
-    padding-top: 80px;
+.icon-vote {
+  width: 200px;
+  color: #0ab8f9;
+  margin: auto;
+  padding-top: 80px;
 }
 .Feedbo-login {
-    margin: auto;
-    padding-top: 13px;
-    width: 124px;
-    height: 30px;
-    font-size: 35px;
-    font-weight: bold;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    color: #1a2a37;
+  margin: auto;
+  padding-top: 13px;
+  width: 124px;
+  height: 30px;
+  font-size: 35px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #1a2a37;
 }
-.Feedbo-login a{
-    color: #1a2a37;
+.Feedbo-login a {
+  color: #1a2a37;
 }
-.Feedbo-login a:hover{
-    color: inherit;
+.Feedbo-login a:hover {
+  color: inherit;
 }
 .Login-on-Vote-Project {
-    height: 36px;
-    font-size: 30px;
-    text-align: center;
-    font-weight: bold;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    color: #1a2a37;
-    padding-bottom: 43px;
-    padding-top: 42px;
+  height: 36px;
+  font-size: 30px;
+  text-align: center;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #1a2a37;
+  padding-bottom: 20px;
+  padding-top: 42px;
 }
-.button-facebook{
-    width: 100%;
-    height: 55px ;
-    margin-bottom: 15px;
-    background-color: #4267b2;
-    box-shadow: 0 5px 25px 0 rgba(66, 103, 178, 0.15);
-    border-radius: 5px;
-    color: #ffffff;
-    cursor: pointer;
-    display: inline-flex;
+.button-facebook {
+  background-color: #1877f2;
+  box-shadow: 0px 38.4869px 71.4756px rgba(0, 0, 0, 0.07);
+  color: #ffffff;
 }
-.button-facebook:hover{
-    background-color:#365899;
+.button-facebook:hover {
+  background-color: #478be3;
 }
 .button-google {
-    width: 100%;
-    height: 55px;
-    background-color: #d9463d;
-    margin-bottom: 15px;
-    box-shadow: 0 5px 25px 0 rgba(217, 70, 61, 0.15);
-    color: #ffffff;
-    border-radius: 5px;
-    cursor: pointer;
-    display: inline-flex;
+  background-color: #ffffff;
+  box-shadow: 0px 38.4869px 71.4756px rgba(0, 0, 0, 0.07);
+  color: rgba(0, 0, 0, 0.54);
 }
-.button-google:hover{
-    background-color: #d03326;
+.button-google:hover {
+  opacity: 0.7;
 }
 .button-email {
-    width: 100%;
-    height: 55px;
-    background-color: #ffffff;
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.1) 0px 1px 4px 0px;
-    color: #494949;
-    border-radius: 5px;
-    cursor: pointer;
-    display: inline-flex;
-    border-width: 0px;
-    border-style: initial;
-    border-color: initial;
-    border-image: initial;
+  background-color: #000000;
+  box-shadow: 0px 38.4869px 71.4756px rgba(0, 0, 0, 0.07);
+  color: #ffffff;
+  border-width: 0px;
+  border-style: initial;
+  border-color: initial;
+  border-image: initial;
 }
-.button-email:hover{
-    background-color: #f7f7f7;
+.button-email:hover {
+  background-color: #494949;
 }
-.Facebook {
-    font-weight: 600;
-    margin: auto;
+.Login-on-Vote-Project,
+.button-facebook,
+.button-google,
+.button-email,
+.Feedbo-login {
+  font-family: 'Helvetica';
+  font-style: normal;
+  font-weight: 550;
 }
-.Google {
-    font-weight: 600;
-    margin: auto;
+.button-facebook,
+.button-google,
+.button-email {
+  font-size: 1.4em;
+  width: 100%;
+  height: 65px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-flex;
 }
+.Facebook,
+.Google,
 .Email {
-    font-weight: 600;
-    margin: auto;
+  font-weight: 550;
+  margin: auto 10px;
 }
-.login-icon{
-    float: left;
-    padding: 19px;
+
+.login-icon {
+  float: left;
+  padding: 16px 10px 16px 20px;
 }
-.Rectangle-178 {
-    width: 1px;
-    height: 55px;
-    opacity: 0.1;
-    background-color: #1a2a37;
-}
+
 .Rectangle-242 {
-    margin-top:50px;
-    width: 100%;
-    height: 1px;
-    background-color: #e6e8eb;
+  margin-top: 50px;
+  width: 100%;
+  height: 1px;
+  background-color: #e6e8eb;
 }
 .login-form-footer {
-    padding-top: 13px;
-    margin: auto;
-    width: 100%;
-    height: 21px;
-    font-size: 12px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.75;
-    letter-spacing: normal;
-    color: #74788d;
-    text-align: center;
-  }
-#nav{
-    display:none;
+  padding-top: 13px;
+  margin: auto;
+  width: 100%;
+  height: 21px;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.75;
+  letter-spacing: normal;
+  color: #74788d;
+  text-align: center;
 }
-#user_login{
-    display: none;
+#nav {
+  display: none;
 }
-.wp-pwd{
-    display: none;
+#user_login {
+  display: none;
 }
-.submit{
-    display: none;
+.wp-pwd {
+  display: none;
 }
-.forgetmenot{
-    display: none;
+.submit {
+  display: none;
 }
-#loginform label{
-    display: none;
+.forgetmenot {
+  display: none;
 }
-.button-secondary{
-    display: none !important;
+#loginform label {
+  display: none;
 }
-.button-rememberme{
-    opacity: 1 !important;
-    position: relative !important;
+.button-secondary {
+  display: none !important;
 }
-.user-login-input{
-    display: block !important;
-    margin: 0px 50px !important;
-    width: 430px !important;
-    height: 40px !important;
+.button-rememberme {
+  opacity: 1 !important;
+  position: relative !important;
 }
-.user-pass-input{
-    height: 40px !important;
+.user-login-input {
+  display: block !important;
+  margin: 0px 50px !important;
+  width: 430px !important;
+  height: 40px !important;
 }
-.email-active{
-    display: block !important;
-    padding: 0px 50px;
+.user-pass-input {
+  height: 40px !important;
+  width: 430px !important;
 }
-.user-pass-wrap{
-    display: block !important;
-    margin-bottom: 15px;
+.email-active {
+  display: block !important;
+  padding: 0px 50px;
 }
-#lost-pass{
-    float: right;
+.user-pass-wrap {
+  display: block !important;
+  margin-bottom: 15px;
 }
-#div-header{
-    position: absolute;
-    right: 30px;
-    top: 30px;
+#lost-pass {
+  float: right;
 }
-#button-register{
-    height: 50px;
-    width: 115px;
-    font-weight: 600;
-    padding-top: 8px;
+#div-header {
+  position: absolute;
+  right: 30px;
+  top: 30px;
 }
-.btn-register{
-    width: 100%;
-    height: 50px !important;
+#button-register {
+  height: 50px;
+  width: 115px;
+  font-weight: 600;
+  padding-top: 8px;
+}
+.btn-register {
+  width: 100%;
+  height: 50px !important;
 }
 #registerform p {
-    padding: 0px 50px;
+  padding: 0px 50px;
 }
 #lostpasswordform p {
-    padding: 0px 50px;
+  padding: 0px 50px;
 }
 #resetpassform p {
-    padding: 0px 50px;
+  padding: 0px 50px;
 }
 #resetpassform .user-pass1-wrap {
-    padding: 0px 50px;
+  padding: 0px 50px;
 }
 #resetpassform .user-pass1-wrap p {
-    padding: 0px;
+  padding: 0px;
 }
-.reset-form{
-    margin: auto;
-    width: 530px;
-    height: 50px;
-    border-radius: 7px;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-    background-color: #ffffff;
-    padding-top: 15px;
-    text-align: center;
+.reset-form {
+  margin: auto;
+  width: 530px;
+  height: 50px;
+  border-radius: 7px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+  padding-top: 15px;
+  text-align: center;
 }
-.register-header{
-    margin-bottom: 30px;
+.register-header {
+  margin-bottom: 30px;
 }
-.lostpass-button-login{
-    margin-right: 10px;
+.lostpass-button-login {
+  margin-right: 10px;
 }
-.you-dont-have-account{
-    font-style: italic;
-    padding-right: 10px;
+.you-dont-have-account {
+  font-style: italic;
+  padding-right: 10px;
 }
-.login-back{
-    padding-right: 20px;
-    display: inline-flex;
-    color: #494949;
+.login-back {
+  padding-right: 20px;
+  display: inline-flex;
+  color: #494949;
 }
 @media only screen and (max-width: 600px) {
-    #loginform,#registerform,#resetpassform,#lostpasswordform{
-        width: 100%;
-    }
-    .user-login-input{
-        width: 275px !important;
-    }
+  #loginform,
+  #registerform,
+  #resetpassform,
+  #lostpasswordform {
+    width: 100%;
+  }
+  .user-login-input {
+    width: 275px !important;
+  }
+  .button-facebook,
+  .button-google,
+  .button-email {
+    font-size: 1em;
+    height: 50px;
+    margin-bottom: 20px;
+  }
+  i.anticon.login-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  .login-icon {
+    float: left;
+    padding: 14px 5px 10px 15px;
+  }
 }
 
 .feedbo-main-logo {
-    height: 200px;
-    width: 200px;
+  height: 200px;
+  width: 200px;
 }
-
-
-

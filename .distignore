@@ -1,0 +1,16 @@
+.vscode
+.DS_Store
+.git/
+.gitignore
+.distignore
+node_modules/
+phpcs.xml
+log.xml
+composer.json
+composer.lock
+package.json
+package-lock.json
+release.sh
+feedbo.zip
+/apps
+/build
