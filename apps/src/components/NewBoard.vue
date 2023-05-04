@@ -2,33 +2,30 @@
   <div class="newboard-container">
     <div class="newboard-header">
       <div class="project-name">
-        <router-link
-          :to="{name: 'Home'}"
-          class="FeedboProject"
-        >
+        <router-link :to="{ name: 'Home' }" class="FeedboProject">
           <img :src="logoLink" alt="Feedbo Logo" class="feedbo-main-logo" />
           <span class="Feedbo">
             Feedbo
           </span>
         </router-link>
       </div>
-      <AccountView  class="fb-account-view" />
+      <AccountView class="fb-account-view" />
     </div>
     <div class="content">
       <div class="form-container">
         {{ category.categorys }}
         <h2 class="Create-new-board">Create New Board</h2>
         <p>Enter your board name. You can change it later.</p>
-        <AForm
-          id="form"
-          :form="form"
-          @submit.prevent="handleSubmit()"
-        >
+        <AForm id="form" :form="form" @submit.prevent="handleSubmit()">
           <AFormItem>
             <AInput
               v-decorator="[
                 'category',
-                { rules: [{ required: true, message: 'This is a required field' }] },
+                {
+                  rules: [
+                    { required: true, message: 'This is a required field' },
+                  ],
+                },
               ]"
               placeholder="Enter name project"
               class="input-name-project"
@@ -50,85 +47,87 @@
   </div>
 </template>
 <script>
-import { mapState } from 'vuex';
-import AccountView from '@/components/Account/AccountView.vue';
+import { mapState } from "vuex";
+import AccountView from "@/components/Account/AccountView.vue";
 export default {
-    components : {
-      AccountView
-    },
-    data (){
-        return {
-            form: this.$form.createForm(this, { name: 'coordinated' }),
-            logoLink: window.bigNinjaVoteWpdata.pluginUrl + 'assets/img/feedbo-logo-square.png',
-        };
-    },
-    methods:{
-      handleSubmit () {
-        this.form.validateFields((err, values) => {
-          if (!err) {
-            if(this.user.userAnonymous == true)
-              this.$message.error('Please sign in to create your own board.');
-            else
-            {
-              let component = this;
-              let requestParams = {
-                values: values,
-                component: component
-              }
-              this.$store.dispatch('category/createCategory', requestParams);
-            }
+  components: {
+    AccountView,
+  },
+  data() {
+    return {
+      form: this.$form.createForm(this, { name: "coordinated" }),
+      logoLink:
+        window.bigNinjaVoteWpdata.pluginUrl +
+        "assets/img/feedbo-logo-square.png",
+    };
+  },
+  methods: {
+    handleSubmit() {
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          if (this.user.userAnonymous == true)
+            this.$message.error("Please sign in to create your own board.");
+          else {
+            let component = this;
+            let requestParams = {
+              values: values,
+              component: component,
+            };
+            this.$store.dispatch("category/createCategory", requestParams);
           }
-        });
-      },
+        }
+      });
     },
-    computed: {
-      ...mapState([ 'category','user' ])
-    },
-    mounted () {
-      document.title = window.bigNinjaVoteWpdata.siteName + ' | New Board';
-      var link =
-            document.querySelector("link[rel*='icon']") ||
-            document.createElement("link");
-          link.type = "image/x-icon";
-          link.rel = "shortcut icon";
-          link.href = window.bigNinjaVoteWpdata.pluginUrl + 'assets/img/feedbo-logo-square.png';
-          document.getElementsByTagName("head")[0].appendChild(link);
-    },
-        
+  },
+  computed: {
+    ...mapState(["category", "user"]),
+  },
+  mounted() {
+    document.title = window.bigNinjaVoteWpdata.siteName + " | New Board";
+    var link =
+      document.querySelector("link[rel*='icon']") ||
+      document.createElement("link");
+    link.type = "image/x-icon";
+    link.rel = "shortcut icon";
+    link.href =
+      window.bigNinjaVoteWpdata.pluginUrl + "assets/img/feedbo-logo-square.png";
+    document.getElementsByTagName("head")[0].appendChild(link);
+  },
 };
 </script>
 
 <style scoped lang="scss">
 .big-ninja-feedbo {
-  div{
-      display: block;
+  div {
+    display: block;
   }
   a {
     color: inherit;
     cursor: pointer;
     text-decoration: none;
   }
-  .newboard-container{
+  .newboard-container {
     background: #27ae60;
     height: 100vh;
   }
-  .newboard-header{
+  .newboard-header {
     display: flex;
-    letter-spacing: 1px;
-    padding-top: 26px;
-    padding-left: 50px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 15px;
   }
   .feedbo-main-logo {
     height: 60px;
     width: 60px;
   }
-  .content{
+  .content {
     padding: 30vh 1rem 0px;
     width: 430px;
     margin: auto;
   }
   .FeedboProject {
-    height: 37px;
+    display: flex;
+    align-items: center;
     font-size: 24px;
     font-weight: bold;
     font-stretch: normal;
@@ -137,15 +136,13 @@ export default {
     letter-spacing: normal;
     color: #ffffff;
   }
-  .Feedbo{
-    position: absolute;
-    margin-top: 9px;
+  .Feedbo {
     padding-left: 10px;
   }
-  .button{
-      width: 230px;
-      height: 50px;
-      border-radius: 5px;
+  .button {
+    width: 230px;
+    height: 50px;
+    border-radius: 5px;
   }
   .Create-new-board {
     font-size: 21px;
@@ -165,11 +162,11 @@ export default {
     width: 100%;
     height: 50px;
   }
-  @media screen and (max-width:600px) {
-    .form-container{
+  @media screen and (max-width: 600px) {
+    .form-container {
       width: 90%;
     }
-    .content{
+    .content {
       padding-top: 15vh;
     }
   }

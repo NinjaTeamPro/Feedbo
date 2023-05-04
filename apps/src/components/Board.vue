@@ -1,18 +1,8 @@
 <template>
-  <div 
-    class="board" 
-    :style="{ backgroundColor: category.theme.background }"
-  >
+  <div class="board" :style="{ backgroundColor: category.theme.background }">
     <div class="board-home-link">
-      <router-link 
-        :to="{ name: 'Home' }" 
-        class="FeedboProject"
-      >
-        <img 
-          :src="logoLink" 
-          alt="Feedbo Logo" 
-          class="feedbo-main-logo" 
-        >
+      <router-link :to="{ name: 'Home' }" class="FeedboProject">
+        <img :src="logoLink" alt="Feedbo Logo" class="feedbo-main-logo" />
         <span class="Feedbo">
           Feedbo
         </span>
@@ -27,20 +17,14 @@
             : { paddingBottom: '10%' },
         ]"
       >
-        <Header 
-          :title="category.board.name" 
-          class="board-header" 
-        />
+        <Header :title="category.board.name" class="board-header" />
         <div class="board-main">
           <Menu class="board-menu" />
           <ListPost class="board-list-post" />
         </div>
       </div>
     </ASpin>
-    <NavBar 
-      class="board-navbar" 
-      @changeBoard="changeBoard()" 
-    />
+    <NavBar class="board-navbar" @changeBoard="changeBoard()" />
     <BoardManage v-if="user.currentLevel < 3" />
   </div>
 </template>
@@ -96,7 +80,10 @@ export default {
       if (this.checkVisibility() == false) {
         this.$router.push({ path: `/private/` });
       } else {
-        document.title = this.category.board.name +'  | ' + window.bigNinjaVoteWpdata.siteName;
+        document.title =
+          this.category.board.name +
+          "  | " +
+          window.bigNinjaVoteWpdata.siteName;
         if (
           this.category.faviconimg != "" &&
           this.category.faviconimg != null
@@ -196,9 +183,6 @@ export default {
   .board-home-link a:hover {
     text-decoration: none;
     color: inherit;
-  }
-  .board-header {
-    height: 11.1%;
   }
   .board-content {
     width: 650px;

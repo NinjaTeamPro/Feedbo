@@ -1,16 +1,16 @@
 .big-ninja-feedbo {
-    width: 100% !important;
+  width: 100% !important;
 }
 .big-ninja-feedbo .ant-tooltip-inner {
-    min-height: 28px;
-    font-size: 12px;
+  min-height: 28px;
+  font-size: 12px;
 }
 .big-ninja-feedbo .form-account-info .wrap-button {
-    margin: 0;
+  margin: 0;
 }
 
-@media only screen and (max-width: 768px) { 
-    .grecaptcha-badge {
-        visibility: hidden;
-    }
+@media only screen and (max-width: 768px) {
+  .grecaptcha-badge {
+    visibility: hidden;
+  }
 }

@@ -157,7 +157,8 @@ export default {
       right: 15px;
     }
     .nav-container.nav-container-anonymous {
-      right: 0;
+      top: 24px;
+      right: 15px;
     }
     .search-input {
       width: 120px !important;

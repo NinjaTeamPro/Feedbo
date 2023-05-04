@@ -41,7 +41,7 @@
               class="list-board"
             >
               <router-link
-                :to="{ name: 'Board', params: { id: item.board_URL} }"
+                :to="{ name: 'Board', params: { id: item.board_URL } }"
               >
                 <div class="icon-oval" />
                 <span
@@ -234,7 +234,8 @@ export default {
       if (this.checkVisibility() == false) {
         this.$router.push({ path: `/private/` });
       } else {
-        document.title = this.category.board.name + ' | ' + window.bigNinjaVoteWpdata.siteName;
+        document.title =
+          this.category.board.name + " | " + window.bigNinjaVoteWpdata.siteName;
         if (
           this.category.faviconimg != "" &&
           this.category.faviconimg != null
@@ -253,7 +254,9 @@ export default {
             document.createElement("link");
           link.type = "image/x-icon";
           link.rel = "shortcut icon";
-          link.href = window.bigNinjaVoteWpdata.pluginUrl + 'assets/img/feedbo-logo-square.png';
+          link.href =
+            window.bigNinjaVoteWpdata.pluginUrl +
+            "assets/img/feedbo-logo-square.png";
           document.getElementsByTagName("head")[0].appendChild(link);
         }
         const hoverColor = this.category.theme.accent + "99";
@@ -290,11 +293,6 @@ export default {
 
 <style lang="scss">
 .big-ninja-feedbo {
-  .fb-account-view {
-    position: absolute;
-    top: 31px;
-    right: 30px;
-  }
   .img-account-wrap {
     position: relative;
     cursor: inherit;
@@ -451,7 +449,7 @@ export default {
     border-radius: 50%;
     overflow: hidden;
   }
-  .Account-Settings{
+  .Account-Settings {
     padding-top: 15px;
     margin-left: 85px;
     height: 19px;
