@@ -5,6 +5,10 @@ body.login {
   background-color: #f0f2f5 !important;
   padding: 0 15px;
 }
+body.login .language-switcher {
+  display: none;
+}
+
 img.mo_openid_image {
   display: none !important;
   width: 100%;
