@@ -143,22 +143,22 @@ export default {
   }
   .nav-container {
     position: absolute;
-    right: 30px;
-    top: 31px;
+    right: 15px;
+    top: 20px;
   }
   .nav-wrap {
     display: flex;
-    -webkit-box-align: center;
     align-items: center;
+    margin-top: 2px;
   }
   @media only screen and (max-width: 600px) {
-    .nav-container {
-      top: 20px;
-      right: 15px;
-    }
     .nav-container.nav-container-anonymous {
       top: 24px;
       right: 15px;
+    }
+
+    .nav-wrap {
+      margin-top: 0;
     }
     .search-input {
       width: 120px !important;

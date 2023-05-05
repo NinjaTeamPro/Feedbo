@@ -34,7 +34,7 @@ a {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
   background-color: #ffffff;
   margin-bottom: 20px;
-  padding: 20px 20px 40px;
+  padding: 20px 30px;
 }
 #registerform .mo-openid-app-icons {
   display: none;
@@ -64,8 +64,6 @@ a {
 }
 
 .mo-openid-app-icons {
-  padding-left: 50px;
-  padding-right: 50px;
   margin-top: 30px;
 }
 
@@ -159,12 +157,27 @@ a {
 .button-google,
 .button-email {
   font-size: 0.9rem;
+  line-height: 1;
   width: 100%;
-  height: 50px;
-  margin-bottom: 20px;
-  border-radius: 10px;
+  height: 45px;
+  border-radius: 25px;
   cursor: pointer;
-  display: inline-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  max-width: 65%;
+  margin: 0 auto 20px;
+}
+.button-facebook .anticon,
+.button-google .anticon,
+.button-email .anticon {
+  line-height: normal;
+}
+.button-facebook .anticon svg,
+.button-google .anticon svg,
+.button-email .anticon svg {
+  max-width: 22px;
 }
 .Facebook,
 .Google,
@@ -173,9 +186,8 @@ a {
   margin: auto 10px;
 }
 
-.login-icon {
-  float: left;
-  padding: 16px 10px 16px 20px;
+.login-form-footer + #div-header {
+  margin-top: 20px;
 }
 
 #div-header {
@@ -192,7 +204,7 @@ a {
   padding-top: 13px;
   margin: auto;
   width: 100%;
-  font-size: 11px;
+  font-size: 0.75rem;
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
@@ -200,7 +212,6 @@ a {
   letter-spacing: normal;
   color: #74788d;
   text-align: center;
-  margin-bottom: 30px;
 }
 #nav {
   display: none;
@@ -213,7 +224,43 @@ a {
 }
 .forgetmenot {
   display: none;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+}
+.forgetmenot input[type="checkbox"] {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+.forgetmenot input + label {
+  position: relative;
+  padding-left: 25px !important;
+  cursor: pointer;
+}
+.forgetmenot label::before,
+.forgetmenot label::after {
+  content: "";
+  position: absolute;
+}
+.forgetmenot label::before {
+  top: -2px;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+}
+.forgetmenot label::after {
+  left: 6px;
+  top: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #1890ff;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.forgetmenot input:checked + label::after {
+  opacity: 1;
 }
 #login form label {
   display: none;
@@ -227,6 +274,8 @@ a {
   box-shadow: 0 2px 0 rgba(5, 145, 255, 0.1);
   border: 0;
   border-radius: 5px;
+  padding: 10px 15px;
+  height: auto;
 }
 #login form .ant-btn-primary:hover {
   color: #fff;
@@ -240,6 +289,7 @@ a {
   border: 1px solid #d9d9d9;
   margin-bottom: 20px;
   font-size: 1rem;
+  height: 40px;
 }
 .button-secondary {
   display: none !important;
@@ -264,28 +314,21 @@ a {
   text-decoration: none;
 }
 #button-register {
-  height: 50px;
-  width: 115px;
   font-weight: 600;
-  padding-top: 8px;
   color: #1677ff;
+  line-height: 1.2;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+  background-color: transparent;
+}
+#button-register:hover {
+  text-decoration: underline;
 }
 .btn-register {
   width: 100%;
-  height: 50px !important;
 }
-#registerform p {
-  padding: 0px 50px;
-}
-#lostpasswordform p {
-  padding: 0px 50px;
-}
-#resetpassform p {
-  padding: 0px 50px;
-}
-#resetpassform .user-pass1-wrap {
-  padding: 0px 50px;
-}
+
 #resetpassform .user-pass1-wrap p {
   padding: 0px;
 }
@@ -322,20 +365,24 @@ a {
   #resetpassform,
   #lostpasswordform {
     width: 100%;
+    padding: 20px;
   }
   .button-facebook,
   .button-google,
   .button-email {
-    height: 50px;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
+    max-width: 100%;
   }
-  i.anticon.login-icon svg {
-    width: 20px;
-    height: 20px;
+  .Login-on-Vote-Project {
+    font-size: 22px;
   }
-  .login-icon {
-    float: left;
-    padding: 14px 5px 10px 15px;
+  .forgetmenot label::before {
+    top: -1px;
+    height: 18px;
+    width: 18px;
+  }
+  .forgetmenot label::after {
+    left: 5px;
   }
 }
 

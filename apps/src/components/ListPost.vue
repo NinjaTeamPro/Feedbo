@@ -261,8 +261,7 @@ export default {
     const boardElemnt = document.querySelector(".board-main");
     const bannerOffset =
       document.querySelector(".board-home-link").offsetHeight +
-      document.querySelector(".board-content").offsetHeight +
-      20;
+      document.querySelector(".board-content").offsetHeight;
     boardElemnt.style.top = bannerOffset + "px";
 
     listElm.addEventListener("scroll", (e) => {

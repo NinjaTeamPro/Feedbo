@@ -82,8 +82,8 @@ export default {
     padding: 20px 15px;
   }
   .feedbo-main-logo {
-    height: 60px;
-    width: 60px;
+    height: 50px;
+    width: 50px;
   }
   .content {
     padding: 30vh 1rem 0px;
@@ -140,6 +140,13 @@ export default {
     text-align: center;
   }
   @media only screen and (max-width: 600px) {
+    .feedbo-main-logo {
+      height: 42px;
+      width: 42px;
+    }
+    .FeedboProject {
+      font-size: 22px;
+    }
     .Feedback-manager-software-and-roadmap-tool {
       width: 90%;
     }

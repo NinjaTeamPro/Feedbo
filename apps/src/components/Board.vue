@@ -13,7 +13,7 @@
         class="board-content"
         :style="[
           post.posts != null && post.posts.length >= 6
-            ? { paddingBottom: '5%' }
+            ? { paddingBottom: '0' }
             : { paddingBottom: '10%' },
         ]"
       >
@@ -176,8 +176,7 @@ export default {
   .board-home-link {
     display: flex;
     letter-spacing: 1px;
-    padding-left: 50px;
-    padding-top: 26px;
+    padding: 20px;
   }
 
   .board-home-link a:hover {
@@ -222,6 +221,13 @@ export default {
     width: 50px;
   }
   @media only screen and (max-width: 600px) {
+    .feedbo-main-logo {
+      height: 42px;
+      width: 42px;
+    }
+    .FeedboProject {
+      font-size: 22px;
+    }
     .board-content {
       width: 100%;
       padding-top: 0;
