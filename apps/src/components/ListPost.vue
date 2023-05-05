@@ -260,18 +260,14 @@ export default {
     const listElm = document.querySelector(".board-main .board-list-post");
     const boardElemnt = document.querySelector(".board-main");
 
-    setTimeout(() => {
-      boardElemnt.style.top = this.matchHeight();
-    }, 800);
-
     listElm.addEventListener("scroll", (e) => {
       if (this.mobileCheck()) {
         const scrollTop = listElm.scrollTop;
 
         if (scrollTop > 0) {
-          boardElemnt.style.top = 0;
+          boardElemnt.style.marginTop = "-" + this.matchHeight();
         } else {
-          boardElemnt.style.top = this.matchHeight();
+          boardElemnt.style.marginTop = 0;
         }
       }
     });
@@ -543,7 +539,7 @@ export default {
     matchHeight() {
       const bannerOffset =
         document.querySelector(".board-home-link").offsetHeight +
-        document.querySelector(".board-main-wrap").offsetHeight;
+        document.querySelector(".board-header").offsetHeight;
       return bannerOffset + "px";
     },
   },

@@ -8,24 +8,22 @@
         </span>
       </router-link>
     </div>
-    <div class="board-main-wrap">
-      <ASpin :spinning="board.isLoadingBoard">
-        <div
-          class="board-content"
-          :style="[
-            post.posts != null && post.posts.length >= 6
-              ? { paddingBottom: '0' }
-              : { paddingBottom: '10%' },
-          ]"
-        >
-          <Header :title="category.board.name" class="board-header" />
-          <div class="board-main">
-            <Menu class="board-menu" />
-            <ListPost class="board-list-post" />
-          </div>
+    <ASpin :spinning="board.isLoadingBoard">
+      <div
+        class="board-content"
+        :style="[
+          post.posts != null && post.posts.length >= 6
+            ? { paddingBottom: '0' }
+            : { paddingBottom: '10%' },
+        ]"
+      >
+        <Header :title="category.board.name" class="board-header" />
+        <div class="board-main">
+          <Menu class="board-menu" />
+          <ListPost class="board-list-post" />
         </div>
-      </ASpin>
-    </div>
+      </div>
+    </ASpin>
     <NavBar class="board-navbar" @changeBoard="changeBoard()" />
     <BoardManage v-if="user.currentLevel < 3" />
   </div>
@@ -242,12 +240,12 @@ export default {
     }
 
     .board-main {
-      position: fixed;
+      position: relative;
       top: 0;
       left: 0;
       width: 100%;
+      transition: all 0.5s ease-out;
       z-index: 99;
-      transition: all 0.4s ease-out;
     }
   }
 }
