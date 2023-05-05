@@ -259,10 +259,10 @@ export default {
   mounted() {
     const listElm = document.querySelector(".board-main .board-list-post");
     const boardElemnt = document.querySelector(".board-main");
-    const bannerOffset =
-      document.querySelector(".board-home-link").offsetHeight +
-      document.querySelector(".board-content").offsetHeight;
-    boardElemnt.style.top = bannerOffset + "px";
+
+    setTimeout(() => {
+      boardElemnt.style.top = this.matchHeight();
+    }, 800);
 
     listElm.addEventListener("scroll", (e) => {
       if (this.mobileCheck()) {
@@ -271,7 +271,7 @@ export default {
         if (scrollTop > 0) {
           boardElemnt.style.top = 0;
         } else {
-          boardElemnt.style.top = bannerOffset + "px";
+          boardElemnt.style.top = this.matchHeight();
         }
       }
     });
@@ -539,6 +539,12 @@ export default {
         return "#a4a4a4";
       }
       return this.category.status[status];
+    },
+    matchHeight() {
+      const bannerOffset =
+        document.querySelector(".board-home-link").offsetHeight +
+        document.querySelector(".board-main-wrap").offsetHeight;
+      return bannerOffset + "px";
     },
   },
 };
