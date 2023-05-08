@@ -247,6 +247,10 @@ export default {
       transition: all 0.5s ease-out;
       z-index: 99;
     }
+
+    .board-list-post {
+      max-height: calc(100vh - 56px);
+    }
   }
 }
 </style>

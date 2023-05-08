@@ -250,7 +250,7 @@ export default {
             }
           });
           if (existsComment == false) {
-            this.post.posts.forEach(post => {
+            this.post.posts.forEach((post) => {
               if (post.post_slug === postSlug) {
                 this.title = post.post_title;
                 this.postItem = post;
@@ -570,12 +570,13 @@ export default {
   }
 
   .ant-list-item-meta {
-    padding-right: 10px;
+    padding-right: 15px;
   }
 
   .button-vote {
-    width: 60px;
+    width: 40px;
     height: 32px;
+    padding: 5px;
   }
 
   .roadmap {
@@ -627,7 +628,7 @@ export default {
   .button-vote .vote-icon {
     vertical-align: 0.125em;
     font-size: 0.6rem;
-    margin: 0 0.5rem 0 0;
+    margin-right: 5px;
   }
 
   .demo-loading-container {
