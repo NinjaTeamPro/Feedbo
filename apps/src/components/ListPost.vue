@@ -238,15 +238,27 @@ export default {
           this.$route.hash.substring(0, 1) === "#"
         ) {
           const postSlug = this.$route.hash.substring(1);
+          let existsComment = false;
           newValue.some((post) => {
             if (post.post_slug === postSlug) {
               this.title = post.post_title;
               this.postItem = post;
               this.$store.dispatch("comment/fetchComments", post.post_id);
               this.modalVisible = true;
+              existsComment = true;
               return true;
             }
           });
+          if (existsComment == false) {
+            this.post.posts.forEach(post => {
+              if (post.post_slug === postSlug) {
+                this.title = post.post_title;
+                this.postItem = post;
+                this.$store.dispatch("comment/fetchComments", post.post_id);
+                this.modalVisible = true;
+              }
+            });
+          }
         }
       }
     },

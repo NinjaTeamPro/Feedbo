@@ -17,16 +17,15 @@
           >
             <span>UnLock</span>
           </AMenuItem>
-          <AMenuItem key="export-voter" @click="exportListVoter">
-            <span>Export Voter</span>
+          <AMenuItem key="export-voter">
+            <span @click="exportListVoter">Export Voter</span>
             <div id="export_email_voter" style="display:none;" />
           </AMenuItem>
           <AMenuItem
             v-if="user.currentLevel < 3"
-            key="export-subscriber"
-            @click="exportListSubscriber"
+            key="export-subscriber" 
           >
-            <span>Export Subscriber</span>
+            <span @click="exportListSubscriber">Export Subscriber</span>
             <div id="export_email_subscriber" style="display: none;" />
           </AMenuItem>
           <AMenuItem key="delete" @click="deletePost(postItem)">
