@@ -24,8 +24,10 @@ if ( ! defined( 'MV_PLUGIN_DIR' ) ) {
 	define( 'MV_PLUGIN_DIR', plugin_dir_path( MV_PLUGIN_FILE ) );
 }
 
-define( 'MV_RECAPTCHA_KEY', '6LfoiLslAAAAAPlhxIS_HDwuUCxa415E3iWGqqJu' );
-define( 'MV_RECAPTCHA_SECRET', '6LfoiLslAAAAANprMfE3iPeD2aYW5VEaikHOu90U' );
+// define( 'MV_RECAPTCHA_KEY', '6LfoiLslAAAAAPlhxIS_HDwuUCxa415E3iWGqqJu' );
+// define( 'MV_RECAPTCHA_SECRET', '6LfoiLslAAAAANprMfE3iPeD2aYW5VEaikHOu90U' );
+define( 'MV_RECAPTCHA_KEY', '6Ld6a-YkAAAAAMH-zAsjPMz3Oh4IczQeNZtGh5Rg' );
+define( 'MV_RECAPTCHA_SECRET', '6Ld6a-YkAAAAANxnVlWfNZdunOA6ppYsdX_F0PQ0' );
 spl_autoload_register(
 	function ( $class ) {
 		$prefix   = __NAMESPACE__; // project-specific namespace prefix

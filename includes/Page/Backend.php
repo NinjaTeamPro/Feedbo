@@ -21,11 +21,14 @@ if ( ! class_exists( 'Backend' ) ) {
 			// Add column to custom post type
 			add_filter( 'manage_edit-vote_columns', array( $this, 'my_columns' ) );
 			//Show columns
-			add_action( 'manage_posts_custom_column', array( $this, 'my_show_columns' ) );
+			add_action( 'manage_posts_custom_column', array( $this, 'my_show_columns' ), 10, 2 );
 			//Add metabox
 			add_action( 'add_meta_boxes', array( $this, 'vote_metabox' ) );
 			//Save Post
 			add_action( 'save_post', array( $this, 'vote_post_type_save' ) );
+
+			add_filter( 'post_type_link', array( $this, 'custom_vote_post_type_link' ), 10, 2 );
+
 		}
 		public function vote_custom_post_type() {
 			register_post_type(
@@ -41,7 +44,7 @@ if ( ! class_exists( 'Backend' ) ) {
 					),
 					'menu_position'       => 5,
 					'public'              => true,
-					'exclude_from_search' => true,
+					'exclude_from_search' => false,
 					'has_archive'         => false,
 					'supports'            => array( 'title', 'editor', 'thumbnail', 'comments' ),
 					'taxonomies'          => array( 'vote', 'category' ),
@@ -57,28 +60,25 @@ if ( ! class_exists( 'Backend' ) ) {
 			return $columns;
 		}
 
-		public function my_show_columns( $name ) {
-			global $post;
-			switch ( $name ) {
+		public function my_show_columns( $column, $post_id ) {
+			switch ( $column ) {
 				case 'user_created':
-					$user_created = get_post_meta( $post->ID, 'user_created', true );
+					$user_created = get_post_meta( $post_id, 'user_created', true );
+					echo $user_created;
 					break;
 				case 'categories':
-					$categories = get_post_meta( $post->ID, 'categories', true );
+					$categories = get_post_meta( $post_id, 'categories', true );
+					echo $categories;
 					break;
 				case 'rating':
-					$rating = count( explode( ' , ', get_post_meta( $post->ID, 'user_voted_ids', true ) ) );
+					$rating = count( explode( ' , ', get_post_meta( $post_id, 'user_voted_ids', true ) ) );
+					echo $rating;
 					break;
 				case 'date':
-					$date = get_post_meta( $post->ID, 'date', true );
+					$date = get_post_meta( $post_id, 'date', true );
+					echo $date;
 					break;
 			}
-			?>
-				<label><?php print $user_created; ?></label>
-				<label><?php print $categories; ?></label>
-				<label><?php print $rating; ?></label>
-				<label><?php print $date; ?></label>
-			<?php
 
 		}
 
@@ -142,5 +142,17 @@ if ( ! class_exists( 'Backend' ) ) {
 			}
 		}
 
+		public function custom_vote_post_type_link( $link, $post ) {
+			if ( $post->post_type == 'vote' ) {
+				$cats = get_the_terms( $post->ID, 'category' );
+				if ( $cats ) {
+					$termId = current( $cats )->term_id;
+					$boardMeta = get_term_meta(  current( $cats )->term_id, 'board_Setting' );
+					$boardURL  = str_replace( '/#/board/', MV_URL_BOARD, $boardMeta[0]['board_URL'] );
+					$link      = $boardURL . '/#' . sanitize_title( $post->post_title ) . '/';	
+				}
+			}
+			return $link;
+		  }
 	}
 }
