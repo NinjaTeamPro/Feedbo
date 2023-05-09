@@ -574,9 +574,9 @@ export default {
   }
 
   .button-vote {
-    width: 40px;
     height: 32px;
     padding: 5px;
+    padding-right: 8px;
   }
 
   .roadmap {
@@ -627,7 +627,7 @@ export default {
 
   .button-vote .vote-icon {
     vertical-align: 0.125em;
-    font-size: 0.6rem;
+    font-size: 8px;
     margin-right: 5px;
   }
 

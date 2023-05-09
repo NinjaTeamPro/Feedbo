@@ -220,6 +220,11 @@ export default {
     height: 50px;
     width: 50px;
   }
+  @media only screen and (min-width: 768px) {
+    .board-main {
+      margin-top: 0 !important;
+    }
+  }
   @media only screen and (max-width: 600px) {
     .feedbo-main-logo {
       height: 42px;
@@ -249,7 +254,7 @@ export default {
     }
 
     .board-list-post {
-      max-height: calc(100vh - 56px);
+      max-height: calc(100dvh - 56px);
     }
   }
 }
