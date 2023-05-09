@@ -254,7 +254,7 @@ export default {
     }
 
     .board-list-post {
-      max-height: calc(100vh - 56px);
+      max-height: calc(100dvh - 56px);
     }
   }
 }
