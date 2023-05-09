@@ -269,6 +269,7 @@ export default {
     this.$store.dispatch("board/getPosts", { boardId, component });
   },
   mounted() {
+    document.querySelector("body").classList.add("body-board");
     const listElm = document.querySelector(".board-main .board-list-post");
     const boardElemnt = document.querySelector(".board-main");
 
@@ -533,7 +534,7 @@ export default {
       if (check === false) {
         const waWidth =
           window.innerWidth > 0 ? window.innerWidth : screen.width;
-        if (waWidth < 500) {
+        if (waWidth < 600) {
           check = true;
         }
       }
@@ -633,7 +634,7 @@ export default {
 
   .demo-loading-container {
     position: absolute;
-    bottom: 40px;
+    bottom: 60px;
     width: 100%;
     text-align: center;
   }

@@ -1,20 +1,54 @@
 // Import Vue
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import Vue from "vue";
+import VueRouter from "vue-router";
 
 // Import Vue App, routes, store
-import App from './App';
-import routes from './routes';
-import store from './store/store';
+import App from "./App";
+import routes from "./routes";
+import store from "./store/store";
 Vue.use(VueRouter);
 // Import PerfectScrollbar
-import PerfectScrollbar from 'vue2-perfect-scrollbar';
-import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css';
+import PerfectScrollbar from "vue2-perfect-scrollbar";
+import "vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css";
 Vue.use(PerfectScrollbar);
 //Import Ant design vue
-import VueClipboards from 'vue-clipboards';
-import 'ant-design-vue/dist/antd.css';
-import { Button, Affix, Icon, Mentions, Switch, Modal, Form, Timeline ,Input, Avatar, Menu, Comment, Tooltip, Spin, Radio, List, Tabs, Checkbox , Upload, message, Popover, Popconfirm, Badge, Tree, Select, FormModel, Skeleton, Dropdown, Row, Col , Layout, Collapse, Drawer } from 'ant-design-vue';
+import VueClipboards from "vue-clipboards";
+import "ant-design-vue/dist/antd.css";
+import {
+  Button,
+  Affix,
+  Icon,
+  Mentions,
+  Switch,
+  Modal,
+  Form,
+  Timeline,
+  Input,
+  Avatar,
+  Menu,
+  Comment,
+  Tooltip,
+  Spin,
+  Radio,
+  List,
+  Tabs,
+  Checkbox,
+  Upload,
+  message,
+  Popover,
+  Popconfirm,
+  Badge,
+  Tree,
+  Select,
+  FormModel,
+  Skeleton,
+  Dropdown,
+  Row,
+  Col,
+  Layout,
+  Collapse,
+  Drawer,
+} from "ant-design-vue";
 Vue.use(Button);
 Vue.use(Icon);
 Vue.use(Modal);
@@ -50,17 +84,21 @@ Vue.use(Affix);
 Vue.use(Switch);
 Vue.use(Mentions);
 Vue.prototype.$confirm = Modal.confirm;
-Vue.prototype.$message =message;
+Vue.prototype.$message = message;
 // Configure router
 const router = new VueRouter({
-    routes,
-    linkActiveClass: 'active',
-    mode: 'history'
+  routes,
+  linkActiveClass: "active",
+  mode: "history",
+});
+
+router.afterEach(() => {
+  document.querySelector("body").classList.remove("body-board");
 });
 
 new Vue({
-    store,
-    el: '#app',
-    render: h => h(App),
-    router
+  store,
+  el: "#app",
+  render: (h) => h(App),
+  router,
 });

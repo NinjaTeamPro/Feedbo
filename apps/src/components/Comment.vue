@@ -21,10 +21,7 @@
             <span @click="exportListVoter">Export Voter</span>
             <div id="export_email_voter" style="display:none;" />
           </AMenuItem>
-          <AMenuItem
-            v-if="user.currentLevel < 3"
-            key="export-subscriber" 
-          >
+          <AMenuItem v-if="user.currentLevel < 3" key="export-subscriber">
             <span @click="exportListSubscriber">Export Subscriber</span>
             <div id="export_email_subscriber" style="display: none;" />
           </AMenuItem>
@@ -306,7 +303,9 @@
             slot="content"
             class="comment-content-text"
             :style="{ color: category.theme.text }"
-          >{{ item.comment_content }}</div>
+          >
+            {{ item.comment_content }}
+          </div>
           <div>
             <a
               v-for="(image, index) in item.comment_image"
@@ -351,7 +350,7 @@
                 </AMenuItem>
                 <AMenuItem
                   key="delete-comment"
-                  @click="deleteComment(item,index)"
+                  @click="deleteComment(item, index)"
                 >
                   <span>Delete</span>
                 </AMenuItem>
@@ -994,20 +993,20 @@ export default {
       this.visibleUpdate = true;
       this.visible = false;
     },
-    deleteComment (item, index) {
+    deleteComment(item, index) {
       this.$confirm({
-          content: 'Are you sure you want to delete this comment?',
-          okText: 'Delete',
-          cancelText: 'Cancel',
-          centered: true,
-          onOk: () => this.handleDeleteComment(item, index),
-      }); 
+        content: "Are you sure you want to delete this comment?",
+        okText: "Delete",
+        cancelText: "Cancel",
+        centered: true,
+        onOk: () => this.handleDeleteComment(item, index),
+      });
     },
-    handleDeleteComment (item, index) {
-      this.$store.commit('comment/DELETE_COMMENT', index);
-      this.$store.dispatch('comment/deleteComment', {
-          comment: item,
-          component: this,
+    handleDeleteComment(item, index) {
+      this.$store.commit("comment/DELETE_COMMENT", index);
+      this.$store.dispatch("comment/deleteComment", {
+        comment: item,
+        component: this,
       });
     },
     deleteimgUpload(image) {
@@ -1425,6 +1424,9 @@ export default {
       gap: 5px;
       justify-content: space-between;
       margin-top: 10px;
+    }
+    &.body-board {
+      overflow-y: hidden;
     }
   }
 }

@@ -220,6 +220,11 @@ export default {
     height: 50px;
     width: 50px;
   }
+  @media screen and (min-width: 601px) {
+    .board-main {
+      margin-top: 0 !important;
+    }
+  }
   @media only screen and (max-width: 600px) {
     .feedbo-main-logo {
       height: 42px;
