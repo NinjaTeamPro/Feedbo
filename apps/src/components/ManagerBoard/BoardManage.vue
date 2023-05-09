@@ -132,7 +132,7 @@ export default {
     position: fixed;
     bottom: 30px;
     left: 30px;
-    z-index: 99;
+    z-index: 101;
   }
   .menu-left {
     background: white;
