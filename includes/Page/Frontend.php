@@ -30,6 +30,25 @@ if ( ! class_exists( 'Frontend' ) ) {
 			add_action( 'register_form', array( $this, 'add_re_captcha_fields' ) );
 			add_filter( 'registration_errors', array( $this, 'custom_registration_errors' ), 10, 3 );
 
+			add_filter( 'feedbo_redirect_url', array( $this, 'feedbo_redirect_url' ), 10, 1 );
+
+		}
+
+		function feedbo_redirect_url( $redirectUrl ) {
+			if ( is_user_logged_in() ) {
+				if ( wp_safe_redirect( home_url( '/' ) ) ) {
+					exit;
+				}
+			}
+			$linkRedirect = get_option( 'mo_openid_relative_login_redirect_url' );
+			$redirectUrl  = site_url() . '' . $linkRedirect;
+			if ( isset( $_COOKIE['feedbo_previous_url'] ) ) {
+				$feedbo_previous_url = sanitize_text_field( $_COOKIE['feedbo_previous_url'] );
+				if ( ! str_contains( $feedbo_previous_url, 'wp-login.php' ) && ! str_contains( $feedbo_previous_url, 'wp-register.php' ) ) {
+					$redirectUrl = $feedbo_previous_url;
+				}
+			}
+			return $redirectUrl;
 		}
 
 		function custom_redirect_homepage() {
