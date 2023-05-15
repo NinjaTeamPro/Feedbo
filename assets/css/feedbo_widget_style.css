@@ -166,6 +166,13 @@ body {
 .feedbo-outer-content .inner-content .postItem-container .postItem-content {
     flex: 1 0;
 }
+.feedbo-outer-content .inner-content .postItem-container .postItem-content .postItem-status {
+    color: #fff;
+    border-radius: 50px;
+    padding: 2px 5px;
+    font-size: 11px;
+    margin-left: 5px;
+}
 .feedbo-outer-content .inner-content .fb-button {
     height: 32px;
     line-height: 32px;
