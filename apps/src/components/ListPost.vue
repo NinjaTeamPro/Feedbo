@@ -544,9 +544,6 @@ export default {
       this.$router.push({ hash: `` });
     },
     getStatusColor(status) {
-      if (status === "Unassigned") {
-        return "#a4a4a4";
-      }
       return this.category.status[status];
     },
     matchHeight() {

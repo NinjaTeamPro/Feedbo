@@ -303,9 +303,7 @@
             slot="content"
             class="comment-content-text"
             :style="{ color: category.theme.text }"
-          >
-            {{ item.comment_content }}
-          </div>
+          >{{ item.comment_content }}</div>
           <div>
             <a
               v-for="(image, index) in item.comment_image"
@@ -343,7 +341,7 @@
                 {{ item.userslike_length }}
               </span>
             </span>
-            <ADropdown v-show="checkUser(item.comment_author)">
+            <ADropdown v-show="checkUser(item.comment_author) || user.currentLevel < 3">
               <AMenu slot="overlay" style="width:100px;">
                 <AMenuItem key="edit-comment" @click="hide(item)">
                   <span>Edit</span>

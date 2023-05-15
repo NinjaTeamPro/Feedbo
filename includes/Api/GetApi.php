@@ -598,30 +598,53 @@ class GetApi extends \WP_REST_Controller {
                 INNER JOIN {$term_taxonomy} ON {$term_taxonomy}.term_taxonomy_id = {$term_relationships}.term_taxonomy_id
                 INNER JOIN {$terms} ON {$term_taxonomy}.term_id = {$terms}.term_id
                 LEFT JOIN {$users} ON {$posts}.post_author = {$users}.ID
-                WHERE {$posts}.post_type = 'vote' AND {$posts}.post_status='publish' AND {$posts}.post_content_filtered <>'' AND {$terms}.term_id = {$boardId}
-                ORDER BY {$posts}.post_content_filtered DESC";
+                WHERE {$posts}.post_type = 'vote' AND {$posts}.post_status='publish' AND {$terms}.term_id = {$boardId}
+                ORDER BY {$posts}.post_content_filtered ASC";
 		$data               = $wpdb->get_results( $wpdb->prepare( $sql ), ARRAY_A );
-		$results            = array();
+		$hasStatus          = array();
+		$unassigned         = array();
 		if ( count( $data ) > 0 ) {
 			foreach ( $data as $key => $val ) {
-				$results[ $key ]['term_id']          = $val['term_id'];
-				$results[ $key ]['post_id']          = $val['post_id'];
-				$results[ $key ]['post_author']      = $val['post_author'];
-				$results[ $key ]['post_title']       = $val['post_title'];
-				$results[ $key ]['post_content']     = $val['post_content'];
-				$results[ $key ]['post_status']      = $val['post_content_filtered'] != '' ? $val['post_content_filtered'] : 'Unassigned';
-				$results[ $key ]['post_date']        = $val['post_date'];
-				$results[ $key ]['post_slug']        = sanitize_title( $val['post_title'] );
-				$results[ $key ]['display_name']     = $val['display_name'];
-				$results[ $key ]['comment_status']   = $val['comment_status'];
-				$userVote                            = get_post_meta( $val['post_id'], 'user_voted_ids' );
-				$userDownVote                        = get_post_meta( $val['post_id'], 'user_down_voted_ids' );
-				$results[ $key ]['vote_ids']         = $userVote[0];
-				$results[ $key ]['down_vote_ids']    = $userDownVote[0];
-				$userSubscribe                       = get_post_meta( $val['post_id'], 'user_subscribed' );
-				$results[ $key ]['subscribe_ids']    = $userSubscribe[0] != null ? $userSubscribe[0] : array();
-				$results[ $key ]['vote_length']      = count( explode( ' , ', $userVote[0] ) );
-				$results[ $key ]['down_vote_length'] = count( explode( ' , ', $userDownVote[0] ) );
+				if ( $val['post_content_filtered'] != '' ) {
+					$hasStatus[ $key ]['term_id']          = $val['term_id'];
+					$hasStatus[ $key ]['post_id']          = $val['post_id'];
+					$hasStatus[ $key ]['post_author']      = $val['post_author'];
+					$hasStatus[ $key ]['post_title']       = $val['post_title'];
+					$hasStatus[ $key ]['post_content']     = $val['post_content'];
+					$hasStatus[ $key ]['post_status']      = $val['post_content_filtered'] != '' ? $val['post_content_filtered'] : 'Unassigned';
+					$hasStatus[ $key ]['post_date']        = $val['post_date'];
+					$hasStatus[ $key ]['post_slug']        = sanitize_title( $val['post_title'] );
+					$hasStatus[ $key ]['display_name']     = $val['display_name'];
+					$hasStatus[ $key ]['comment_status']   = $val['comment_status'];
+					$userVote                              = get_post_meta( $val['post_id'], 'user_voted_ids' );
+					$userDownVote                          = get_post_meta( $val['post_id'], 'user_down_voted_ids' );
+					$hasStatus[ $key ]['vote_ids']         = $userVote[0];
+					$hasStatus[ $key ]['down_vote_ids']    = $userDownVote[0];
+					$userSubscribe                         = get_post_meta( $val['post_id'], 'user_subscribed' );
+					$hasStatus[ $key ]['subscribe_ids']    = $userSubscribe[0] != null ? $userSubscribe[0] : array();
+					$hasStatus[ $key ]['vote_length']      = count( explode( ' , ', $userVote[0] ) );
+					$hasStatus[ $key ]['down_vote_length'] = count( explode( ' , ', $userDownVote[0] ) );
+				} else {
+					$unassigned[ $key ]['term_id']          = $val['term_id'];
+					$unassigned[ $key ]['post_id']          = $val['post_id'];
+					$unassigned[ $key ]['post_author']      = $val['post_author'];
+					$unassigned[ $key ]['post_title']       = $val['post_title'];
+					$unassigned[ $key ]['post_content']     = $val['post_content'];
+					$unassigned[ $key ]['post_status']      = 'Unassigned';
+					$unassigned[ $key ]['post_date']        = $val['post_date'];
+					$unassigned[ $key ]['post_slug']        = sanitize_title( $val['post_title'] );
+					$unassigned[ $key ]['display_name']     = $val['display_name'];
+					$unassigned[ $key ]['comment_status']   = $val['comment_status'];
+					$userVote                               = get_post_meta( $val['post_id'], 'user_voted_ids' );
+					$userDownVote                           = get_post_meta( $val['post_id'], 'user_down_voted_ids' );
+					$unassigned[ $key ]['vote_ids']         = $userVote[0];
+					$unassigned[ $key ]['down_vote_ids']    = $userDownVote[0];
+					$userSubscribe                          = get_post_meta( $val['post_id'], 'user_subscribed' );
+					$unassigned[ $key ]['subscribe_ids']    = $userSubscribe[0] != null ? $userSubscribe[0] : array();
+					$unassigned[ $key ]['vote_length']      = count( explode( ' , ', $userVote[0] ) );
+					$unassigned[ $key ]['down_vote_length'] = count( explode( ' , ', $userDownVote[0] ) );
+				}
+				$results = array_merge( $hasStatus, $unassigned );
 			}
 		}
 		return new \WP_REST_Response( $results, 200 );

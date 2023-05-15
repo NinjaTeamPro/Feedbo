@@ -101,12 +101,23 @@ class PageLoad {
 		if ( false !== $boardId ) {
 			$term = get_term_meta( $boardId );
 			if ( count( $term ) > 0 ) {
+				$statusColor = array();
+				if ( $term['status_color'] ) {
+					$status      = maybe_unserialize( $term['status_color'][0] );
+					$statusColor = array(
+						'Archived'    => ! empty( $status['Archived'] ) ? $status['Archived'] : '#108ee9',
+						'Completed'   => ! empty( $status['Completed'] ) ? $status['Completed'] : '#87d068',
+						'In Progress' => ! empty( $status['In Progress'] ) ? $status['In Progress'] : '##f50',
+						'Planned'     => ! empty( $status['Planned'] ) ? $status['Planned'] : '#2db7f5',
+						'Unassigned'  => ! empty( $status['Unassigned'] ) ? $status['Unassigned'] : '#a4a4a4',
+					);
+				}
 				$results = array(
 					'user_created' => count( $term['user_created'] ) ? $term['user_created'][0] : 0,
-					'setting'      => count( $term['board_Setting'] ) ? unserialize( $term['board_Setting'][0] ) : array(),
-					'theme'        => count( $term['theme_color'] ) ? unserialize( $term['theme_color'][0] ) : array(),
-					'status'       => count( $term['status_color'] ) ? unserialize( $term['status_color'][0] ) : array(),
-					'logo_favicon' => count( $term['logo_favicon'] ) ? unserialize( $term['logo_favicon'][0] ) : array(),
+					'setting'      => count( $term['board_Setting'] ) ? maybe_unserialize( $term['board_Setting'][0] ) : array(),
+					'theme'        => count( $term['theme_color'] ) ? maybe_unserialize( $term['theme_color'][0] ) : array(),
+					'status'       => $statusColor,
+					'logo_favicon' => count( $term['logo_favicon'] ) ? maybe_unserialize( $term['logo_favicon'][0] ) : array(),
 				);
 				return $results;
 			} else {

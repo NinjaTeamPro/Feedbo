@@ -505,10 +505,11 @@ class AddApi extends \WP_REST_Controller {
 		);
 		$wpdb->insert( $table8, $data9 );
 		$statusArray = array(
+			'Archived'    => '#108ee9',
+			'Completed'   => '#87d068',
 			'In Progress' => '#f50',
 			'Planned'     => '#2db7f5',
-			'Completed'   => '#87d068',
-			'Archived'    => '#108ee9',
+			'Unassigned'  => '#a4a4a4',
 		);
 		$data9       = array(
 			'term_id'    => $term_id,

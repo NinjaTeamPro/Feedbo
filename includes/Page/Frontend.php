@@ -7,6 +7,7 @@ defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'Frontend' ) ) {
 	class Frontend {
+
 		protected static $instance = null;
 
 		public static function getInstance() {
@@ -34,7 +35,7 @@ if ( ! class_exists( 'Frontend' ) ) {
 
 		}
 
-		function feedbo_redirect_url( $redirectUrl ) {
+		public function feedbo_redirect_url( $redirectUrl ) {
 			if ( is_user_logged_in() ) {
 				if ( wp_safe_redirect( home_url( '/' ) ) ) {
 					exit;
@@ -51,7 +52,7 @@ if ( ! class_exists( 'Frontend' ) ) {
 			return $redirectUrl;
 		}
 
-		function custom_redirect_homepage() {
+		public function custom_redirect_homepage() {
 			$requestURL = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '';
 			if ( MV_URL_BOARD === $requestURL ) {
 				wp_redirect( home_url(), 301 );
@@ -59,7 +60,7 @@ if ( ! class_exists( 'Frontend' ) ) {
 			}
 		}
 
-		function generate_custom_title( $title ) {
+		public function generate_custom_title( $title ) {
 			$requestURL = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '';
 			$boardId    = '';
 			if ( str_starts_with( $requestURL, MV_URL_BOARD ) ) {
