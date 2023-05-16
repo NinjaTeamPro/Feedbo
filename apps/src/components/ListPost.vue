@@ -120,11 +120,13 @@
             :class="{
               'modal-post-content-anonymous': user.userAnonymous == true,
             }"
-            :title="title"
             centered
             :footer="null"
             @cancel="handleCloseComment"
           >
+            <template slot="title">
+              <h1 style="font-size: 1.1em;margin-bottom: 0;">{{ title }}</h1>
+            </template>
             <ASkeleton :loading="comment.isLoadingComment" active>
               <Comment
                 :post-item="postItem"
@@ -166,11 +168,13 @@
             :class="{
               'modal-post-content-anonymous': user.userAnonymous == true,
             }"
-            :title="postItem != null ? postItem.post_title : ''"
             centered
             :footer="null"
             @cancel="handleCloseComment"
-          >
+          > 
+            <template slot="title">
+              <h1 style="font-size: 1.1em;margin-bottom: 0;">{{ postItem != null ? postItem.post_title : '' }}</h1>
+            </template>
             <ASkeleton :loading="comment.isLoadingComment" active>
               <Comment
                 :post-item="postItem"
@@ -542,6 +546,7 @@ export default {
     },
     handleCloseComment() {
       this.$router.push({ hash: `` });
+      document.title = this.category.board.name + "  | " + window.bigNinjaVoteWpdata.siteName;
     },
     getStatusColor(status) {
       return this.category.status[status];

@@ -43,13 +43,15 @@
       </AModal>
       <AModal
         v-model="modalVisible"
-        :title="this.postItem != null ? this.postItem.post_title : ''"
         class="modal-post-content"
         :class="{ 'modal-post-content-anonymous': user.userAnonymous == true }"
         centered
         :footer="null"
         @cancel="handleCloseComment"
       >
+        <template slot="title">
+          <h1 style="font-size: 1.1em;margin-bottom: 0;">{{ this.postItem != null ? this.postItem.post_title : '' }}</h1>
+        </template>
         <ASkeleton :loading="comment.isLoadingComment" active>
           <Comment
             :post-item="postItem"
@@ -126,10 +128,11 @@ export default {
     },
     handleCloseComment() {
       this.$router.push({ hash: `` });
+      document.title = this.category.board.name + "  | " + window.bigNinjaVoteWpdata.siteName;
     },
   },
   computed: {
-    ...mapState(["post", "comment", "user"]),
+    ...mapState(["post", "comment", "user", "category"]),
   },
 };
 </script>

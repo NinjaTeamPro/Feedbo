@@ -23,7 +23,7 @@ if ( ! class_exists( 'Frontend' ) ) {
 			add_filter( 'login_redirect', array( $this, 'redirectPreviousPage' ), 10, 3 );
 			add_action( 'login_enqueue_scripts', array( $this, 'my_custom_login_stylesheet' ) );
 			add_filter( 'login_headerurl', array( $this, 'custom_loginlogo_url' ) );
-			add_filter( 'pre_get_document_title', array( $this, 'generate_custom_title' ), 10 );
+			add_filter( 'pre_get_document_title', array( $this, 'generate_custom_title' ), 1000 );
 			add_action( 'template_redirect', array( $this, 'custom_redirect_homepage' ) );
 
 			add_filter( 'wp_head', array( $this, 'wp_head' ) );

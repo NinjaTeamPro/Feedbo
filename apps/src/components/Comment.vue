@@ -574,6 +574,7 @@ export default {
   mounted() {
     this.setUserList();
     this.linkUpload = window.bigNinjaVoteWpdata.axiosUrl + "/v1/wp_upload_file";
+    document.title = this.postItem.post_title + ' - ' + this.category.board.name + "  | " + window.bigNinjaVoteWpdata.siteName;
   },
   methods: {
     setUserList() {

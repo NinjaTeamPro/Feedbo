@@ -55,6 +55,7 @@ function init() {
 	Api\GetApi::getInstance();
 	Api\AddApi::getInstance();
 	Api\DeleteApi::getInstance();
+	YoastSEO::getInstance();
 }
 add_action( 'plugins_loaded', 'Feedbo\\init' );
 add_filter( 'show_admin_bar', '__return_false' );
