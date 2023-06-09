@@ -45,6 +45,7 @@ body {
     outline: 0;
     box-shadow: 0 0 0 2px rgba(24,144,255,.2);
 }
+
 .feedbo-outer-content {
     color: #222c36;
 }
@@ -113,16 +114,34 @@ body {
     border-color: var(--fb-accent);
 }
 .feedbo-outer-content .inner-content .fb-title {
-    text-align: center;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 15px;
+    padding: 15px 20px 0 20px;
     margin: 0;
 }
-.feedbo-outer-content .inner-content  .fb-description {
-    text-align: center;
+
+.feedbo-outer-content .inner-content .fb-title.has-logo {
+    display: flex;
+    align-items: center;
+}
+
+.feedbo-outer-content .inner-content .fb-title.has-logo img {
+    margin-right: 10px;
+}
+
+.feedbo-outer-content .inner-content .fb-description {
+    padding: 15px 20px 15px 20px;
     font-size: 12px;
     margin: 0;
 }
+.feedbo-outer-content .inner-content .fb-description a {
+    color: inherit;
+}
+
+.feedbo-outer-content .inner-content .fb-description a:hover {
+    color: var(--fb-accent);
+}
+
 .feedbo-outer-content .inner-content #index .fb-content {
     background-color: #fff;
     overflow-x: hidden;

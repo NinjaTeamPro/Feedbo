@@ -143,7 +143,7 @@ get_header();
 			window.bigNinjaWidgetData.teamAvatar = response.data.avatarAllUser;
 			window.bigNinjaWidgetData.colorStatus = response.data.boardInfo.status;
 			let downVote = response.data.boardInfo.setting['features'].includes("downvoting");
-			loadHeader(response.data.boardInfo.setting);
+			loadHeader(response.data.boardInfo);
 			loadTheme(response.data.boardInfo.theme);
 			loadContent(response.data.listMostVotePost, response.data.listNewPost, response.data.listRoadmapPost,response.data.boardInfo.status,response.data.boardInfo.setting, downVote);
 		  },
@@ -168,8 +168,9 @@ get_header();
 	});
 	jQuery(`.feedbo-outer-content .feedbo-content .inner-content .fb-content #${activeTab}`).addClass('tab-active');
   }
-  async function loadHeader(boardSetting) {
-	var headerRender = renderHeader(boardSetting);
+  async function loadHeader(boardInfo) {
+	var headerRender = renderHeader(boardInfo);
+	const boardSetting = boardInfo.setting;
 	window.bigNinjaWidgetData.boardSetting = boardSetting;
 	window.bigNinjaWidgetData.downVote = boardSetting['features'].includes("downvoting");
 	jQuery('.feedbo-outer-content .feedbo-content .inner-content #index .fb-header').html(headerRender);
@@ -255,11 +256,18 @@ get_header();
 		}
 	});
   }
-  function renderHeader(respondData) {
+  function renderHeader(boardInfo) {
+	const boardSettings = boardInfo.setting
 	  var htmlRender = "";
-	  if(respondData != false){
-		htmlRender += '<div class="fb-title">'+respondData.name+'</div>';
-		htmlRender += '<p class="fb-description">'+respondData.description+'</p>';
+	  var logoRender = "";
+	  var classTitleWrap = "";
+	  if(boardInfo.logo_favicon.logo != undefined && boardInfo.logo_favicon.logo != '') {
+		logoRender = '<img style="height: 32px" src="'+boardInfo.logo_favicon.logo+'" />';
+		classTitleWrap = 'has-logo';
+	  }
+	  if(boardInfo != false){
+		htmlRender += '<div class="fb-title '+classTitleWrap+'">'+logoRender+'<div>'+boardSettings.name+'</div></div>';
+		htmlRender += '<p class="fb-description">'+boardSettings.description+'</p>';
 	  }
 	  return htmlRender;
   }
@@ -451,7 +459,6 @@ get_header();
 		  var postTitle = value['post_title'];
 		  var postStatus = value['post_status'];
 		  var statusColor = window.bigNinjaWidgetData.colorStatus[postStatus];
-	  console.log('statusColor', statusColor)
 		  var userVoteIds = value['vote_ids'].split(" , ");
 		  var colorButton = window.bigNinjaWidgetData.checkColorAccent == "dark" ? '#fff' : '#000';
 		  htmlRender += '<div class="logDetailsItem" data-id="'+postId+'">';

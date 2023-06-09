@@ -81,10 +81,10 @@ function createStyleTag() {
 }
 function createDivContainer() {
   var divTag = document.createElement("div");
-  divTag.style.height = "400px";
+  divTag.style.height = "450px";
   divTag.style.left = "50%";
   divTag.style.top = "50%";
-  divTag.style.marginTop = "-200px";
+  divTag.style.marginTop = "-225px";
   divTag.style.marginLeft = "-250px";
   divTag.setAttribute('id', 'feedbo_frame_cont');
   divTag.setAttribute('class', 'feedbo-frame-cont feedbo-bottom');
@@ -103,7 +103,7 @@ function createIframe(url) {
     // assign url
     ifrm.setAttribute('src', url);
     ifrm.setAttribute('sanbox', 'allow-same-origin allow-scripts allow-top-navigation allow-popups allow-forms allow-popups-to-escape-sandbox');
-    ifrm.style.height = "400px";
+    ifrm.style.height = "450px";
     document.getElementById("feedbo_frame_cont").appendChild(ifrm);
 }
 function showFrameContent() {
