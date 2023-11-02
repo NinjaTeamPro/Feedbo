@@ -97,7 +97,7 @@ import { mapState } from 'vuex';
 import { getBoardIdFromUrl } from '@/helper/helper.js';
 export default {
     computed: {
-        ...mapState([ 'category','post' ]),
+        ...mapState([ 'category','post','user' ]),
     },
     data () {
         return {
@@ -116,6 +116,10 @@ export default {
         this.linkUpload =  window.bigNinjaVoteWpdata.axiosUrl + '/v1/wp_upload_file';
     },
     methods: {
+        checkAllowAnonymous() {
+          const str = this.category.board.features;
+          return str.includes("anonymous");
+        },
         beforeUpload (file) {
             const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
             if (!isJpgOrPng) {
@@ -164,13 +168,21 @@ export default {
             this.visible = true;
         },
         handleOk () {
-            this.form.validateFields((err, values) => {
-                if (!err) {
-                    const id = getBoardIdFromUrl();
-                    const component = this;
-                    this.$store.dispatch('post/createPost', { id, values, component });
-                }
-            });
+          if (this.user.userAnonymous == true) {
+            if (this.checkAllowAnonymous() == false) {
+              this.$message.error(
+                "Anonymous does not create suggestion on this board. Please login and continue."
+              );
+            } else {
+              this.form.validateFields((err, values) => {
+                  if (!err) {
+                      const id = getBoardIdFromUrl();
+                      const component = this;
+                      this.$store.dispatch('post/createPost', { id, values, component });
+                  }
+              });
+            }
+          }
         },     
         handleCancel (e) {
             this.visible = false;
