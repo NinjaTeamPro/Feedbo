@@ -168,21 +168,23 @@ export default {
             this.visible = true;
         },
         handleOk () {
+          // console.log(this.user);
           if (this.user.userAnonymous == true) {
             if (this.checkAllowAnonymous() == false) {
               this.$message.error(
                 "Anonymous does not create suggestion on this board. Please login and continue."
               );
-            } else {
-              this.form.validateFields((err, values) => {
-                  if (!err) {
-                      const id = getBoardIdFromUrl();
-                      const component = this;
-                      this.$store.dispatch('post/createPost', { id, values, component });
-                  }
-              });
+              return;
             }
           }
+          this.form.validateFields((err, values) => {
+              if (!err) {
+                  const id = getBoardIdFromUrl();
+                  const component = this;
+                  this.$store.dispatch('post/createPost', { id, values, component });
+              }
+          });
+            
         },     
         handleCancel (e) {
             this.visible = false;
