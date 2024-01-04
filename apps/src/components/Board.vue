@@ -120,6 +120,9 @@ export default {
         }
       }
     },
+    redirectNotFoundBoard(){
+      this.$router.push({ path: `/not-found/` });
+    },
     mobileCheck() {
       let check = false;
       (function(a) {

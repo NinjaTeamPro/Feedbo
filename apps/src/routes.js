@@ -2,6 +2,7 @@ import Home from '@/components/Home';
 import Board from '@/components/Board';
 import NewBoard from '@/components/NewBoard';
 import PrivateBoard from '@/components/PrivateBoard';
+import NotFoundBoard from '@/components/NotFoundBoard';
 const routes = [
     {
         path: '/',
@@ -23,6 +24,11 @@ const routes = [
         path: '/private',
         name: 'Private',
         component: PrivateBoard,
+    },
+    {
+        path: '/not-found',
+        name: 'NotFound',
+        component: NotFoundBoard,
     },
 ];
 

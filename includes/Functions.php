@@ -36,6 +36,7 @@ class Functions {
 				add_rewrite_rule( 'board/([0-9a-zA-Z-_]+)[/]?$', 'index.php?pagename=board', 'top' );
 				add_rewrite_rule( 'new-board', 'index.php?pagename=board', 'top' );
 				add_rewrite_rule( 'private', 'index.php?pagename=board', 'top' );
+				add_rewrite_rule( 'not-found', 'index.php?pagename=board', 'top' );
 			}
 		);
 

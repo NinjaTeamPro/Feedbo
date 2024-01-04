@@ -23,49 +23,54 @@ export const actions = {
     ApiService.getBoardContent(requestParams.boardId)
       .then(function(response) {
         if (response.status == 200 && response.data) {
-          commit(
-            "category/SET_GENERNAL",
-            {
-              board: response.data.data.boardInfo.setting,
-              theme: response.data.data.boardInfo.theme,
-              rootTheme: response.data.data.boardInfo.theme,
-              status: response.data.data.boardInfo.status,
-              logoimg: response.data.data.boardInfo.logo_favicon.logo,
-              faviconimg: response.data.data.boardInfo.logo_favicon.favicon,
-              userCreate: response.data.data.boardInfo.user_created,
-              userTeam: response.data.data.userInBoard,
-              allUserAvatar: response.data.data.avatarAllUser,
-              listAllBoard: response.data.data.urlAllBoard,
-            },
-            { root: true }
-          );
-          document.body.style.backgroundColor =
-            response.data.data.boardInfo.theme.background;
-          commit(
-            "post/SET_GENERNAL",
-            {
-              // posts: response.data.data.listPost,
-              tabActive: response.data.data.boardInfo.setting.default_sort,
-            },
-            { root: true }
-          );
-          commit("user/SET_USER", response.data.data.currentUser, {
-            root: true,
-          });
-          commit(
-            "user/SET_CURRENT_LEVEL",
-            response.data.data.currentUserLevel,
-            { root: true }
-          );
-          commit("SET_GENERNAL", {
-            isLoadingBoard: false,
-            isLoadingComplete: true,
-          });
-          thisComp.renderBoard();
+          if(Object.keys(response.data.data.boardInfo).length > 0) {
+            commit(
+              "category/SET_GENERNAL",
+              {
+                board: response.data.data.boardInfo.setting,
+                theme: response.data.data.boardInfo.theme,
+                rootTheme: response.data.data.boardInfo.theme,
+                status: response.data.data.boardInfo.status,
+                logoimg: response.data.data.boardInfo.logo_favicon.logo,
+                faviconimg: response.data.data.boardInfo.logo_favicon.favicon,
+                userCreate: response.data.data.boardInfo.user_created,
+                userTeam: response.data.data.userInBoard,
+                allUserAvatar: response.data.data.avatarAllUser,
+                listAllBoard: response.data.data.urlAllBoard,
+              },
+              { root: true }
+            );
+            document.body.style.backgroundColor =
+              response.data.data.boardInfo.theme.background;
+            commit(
+              "post/SET_GENERNAL",
+              {
+                // posts: response.data.data.listPost,
+                tabActive: response.data.data.boardInfo.setting.default_sort,
+              },
+              { root: true }
+            );
+            commit("user/SET_USER", response.data.data.currentUser, {
+              root: true,
+            });
+            commit(
+              "user/SET_CURRENT_LEVEL",
+              response.data.data.currentUserLevel,
+              { root: true }
+            );
+            commit("SET_GENERNAL", {
+              isLoadingBoard: false,
+              isLoadingComplete: true,
+            });
+            thisComp.renderBoard();
+          } else {
+            thisComp.redirectNotFoundBoard();
+          }
         }
       })
       .catch((error) => {
         commit("SET_GENERNAL", { isLoadingBoard: false });
+        thisComp.redirectNotFoundBoard();
         console.log("There was an error:", error.response);
       });
   },
