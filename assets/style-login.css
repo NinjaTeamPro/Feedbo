@@ -266,6 +266,10 @@ a {
 .forgetmenot input:checked + label::after {
   opacity: 1;
 }
+#registerform label {
+  display: block !important;
+}
+
 #login form label {
   display: none;
   font-size: 0.9rem;
