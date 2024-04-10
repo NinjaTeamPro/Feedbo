@@ -331,7 +331,10 @@ export default {
         } else {
           arr = item.vote_ids.split(" , ");
         }
-        return arr.includes(this.user.user.ID.toString());
+        if (this.user.user.ID !== undefined) {
+          return arr.includes(this.user.user.ID.toString());
+        }
+        return false;
       }
     },
     checkAnonymousDownVote(item) {
@@ -482,14 +485,32 @@ export default {
       if (this.user.user.length == 0 || user_vote_ids == null) {
         return false;
       } else {
-        return user_vote_ids.includes(this.user.user.ID.toString());
+        let arr = [];
+        if (user_vote_ids == "" || user_vote_ids == null) {
+          arr = [];
+        } else {
+          arr = user_vote_ids.split(" , ");
+        }
+        if (this.user.user.ID !== undefined) {
+          return arr.includes(this.user.user.ID.toString());
+        }
+        return false;
       }
     },
     checkUserDownVote(user_down_vote_ids) {
       if (this.user.user.length == 0 || user_down_vote_ids == null) {
         return false;
       } else {
-        return user_down_vote_ids.includes(this.user.user.ID.toString());
+        let arr = [];
+        if (user_down_vote_ids == "" || user_down_vote_ids == null) {
+          arr = [];
+        } else {
+          arr = user_down_vote_ids.split(" , ");
+        }
+        if (this.user.user.ID !== undefined) {
+          return arr.includes(this.user.user.ID.toString());
+        }
+        return false;
       }
     },
     deletePost() {
@@ -512,7 +533,10 @@ export default {
     },
     checkDownVote() {
       const str = this.category.board.features;
-      return str.includes("downvoting");
+      if (str !== undefined) {
+        return str.includes("downvoting");
+      }
+      return false;
     },
     checkAllowAnonymous() {
       const str = this.category.board.features;

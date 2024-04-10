@@ -776,7 +776,16 @@ export default {
       if (this.user.user.length == 0 || user_vote_ids == null) {
         return false;
       } else {
-        return user_vote_ids.includes(this.user.user.ID.toString());
+        let arr = [];
+        if (user_vote_ids == "" || user_vote_ids == null) {
+          arr = [];
+        } else {
+          arr = user_vote_ids.split(" , ");
+        }
+        if (this.user.user.ID !== undefined) {
+          return arr.includes(this.user.user.ID.toString());
+        }
+        return false;
       }
     },
     checkAnonymousVote(item) {
@@ -793,7 +802,10 @@ export default {
         } else {
           arr = item.vote_ids.split(" , ");
         }
-        return arr.includes(this.user.user.ID.toString());
+        if (this.user.user.ID !== undefined) {
+          return arr.includes(this.user.user.ID.toString());
+        }
+        return false;
       }
     },
     checkAnonymousDownVote(item) {
@@ -810,7 +822,10 @@ export default {
         } else {
           arr = item.down_vote_ids.split(" , ");
         }
-        return arr.includes(this.user.user.ID.toString());
+        if (this.user.user.ID !== undefined) {
+          return arr.includes(this.user.user.ID.toString());
+        }
+        return false;
       }
     },
     handleVoteClick(post) {
@@ -852,6 +867,7 @@ export default {
         const beforeVoteList = post.vote_ids;
         const beforeDownVoteList = post.down_vote_ids;
         const user = this.user.user;
+        
         this.$store.commit("post/UPDATE_VOTE", {
           post,
           checkVote,
@@ -1113,13 +1129,25 @@ export default {
     },
     checkDownVote() {
       const str = this.category.board.features;
-      return str.includes("downvoting");
+      if (str !== undefined) {
+        return str.includes("downvoting");
+      }
+      return false;
     },
     checkUserDownVote(user_down_vote_ids) {
       if (this.user.user.length == 0 || user_down_vote_ids == null) {
         return false;
       } else {
-        return user_down_vote_ids.includes(this.user.user.ID.toString());
+        let arr = [];
+        if (user_down_vote_ids == "" || user_down_vote_ids == null) {
+          arr = [];
+        } else {
+          arr = user_down_vote_ids.split(" , ");
+        }
+        if (this.user.user.ID !== undefined) {
+          return arr.includes(this.user.user.ID.toString());
+        }
+        return false;
       }
     },
     handleDownVoteClick(post) {
