@@ -12,74 +12,76 @@
         </h3>
           
         <template>
-          <ASkeleton :loading="category.loadingActivity" active>
-          <AList
-            item-layout="horizontal"
-            :data-source="category.activity"
+          <ASkeleton
+            :loading="category.loadingActivity"
+            active
           >
-          
-            <AListItem
-              slot="renderItem"
-              slot-scope="item"
+            <AList
+              item-layout="horizontal"
+              :data-source="category.activity"
             >
-              <AListItemMeta>
-                <div
-                  slot="title"
-                  class="text-description"
-                >
-                  <span
-                    v-if="item.display_name != null"
-                    class="text"
+              <AListItem
+                slot="renderItem"
+                slot-scope="item"
+              >
+                <AListItemMeta>
+                  <div
+                    slot="title"
+                    class="text-description"
                   >
-                    {{ item.display_name }}
-                  </span>
-                  <span
-                    v-else
-                    class="text"
+                    <span
+                      v-if="item.display_name != null"
+                      class="text"
+                    >
+                      {{ item.display_name }}
+                    </span>
+                    <span
+                      v-else
+                      class="text"
+                    >
+                      Anonymous
+                    </span> {{ item.activity_name }}
+                  </div>
+                  <div
+                    slot="avatar"
+                    class="img-account-wrap"
                   >
-                    Anonymous
-                  </span> {{ item.activity_name }}
-                </div>
-                <div
-                  slot="avatar"
-                  class="img-account-wrap"
-                >
-                  <img
-                    v-if="item.display_name != null"
-                    :src="avatarCommentAuthor(item.display_name)"
-                    class="img-account"
-                  >
-                  <AAvatar
-                    v-else
-                    size="large"
-                    icon="user"
-                  />
-                </div>
+                    <img
+                      v-if="item.display_name != null"
+                      :src="avatarCommentAuthor(item.display_name)"
+                      class="img-account"
+                    >
+                    <AAvatar
+                      v-else
+                      size="large"
+                      icon="user"
+                    />
+                  </div>
                     
-                <a
-                  slot="description"
-                  class="item-wrap"
-                  @click="handelClick(item)"
-                >
-                  <span class="item-title">
-                    {{ item.post_title }}
-                  </span>
-                </a>
-                <p
-                  slot="description"
-                  class="activity-date"
-                >
-                  <ATooltip
-                    placement="bottom"
-                    :title="item.activity_date"
+                  <a
+                    slot="description"
+                    class="item-wrap"
+                    @click="handelClick(item)"
                   >
-                    <span>{{ item.activity_date_format }}</span>
-                  </ATooltip>
-                </p>
-              </AListItemMeta>
-              <br>
-            </AListItem>
-          </AList> 
+                    <span class="item-title">
+                      {{ item.post_title }}
+                    </span>
+                  </a>
+                  <p
+                    slot="description"
+                    class="activity-date"
+                  >
+                    <ATooltip
+                      placement="bottom"
+                      :title="item.activity_date"
+                    >
+                      <span>{{ item.activity_date_format }}</span>
+                    </ATooltip>
+                  </p>
+                </AListItemMeta>
+                <br>
+              </AListItem>
+            </AList> 
           </ASkeleton>
           <AModal
             v-model="modalVisible"
@@ -90,7 +92,9 @@
             @cancel="handleCloseComment"
           > 
             <template slot="title">
-              <h1 style="font-size: 1.1em;margin-bottom: 0;">{{ title }}</h1>
+              <h1 style="font-size: 1.1em;margin-bottom: 0;">
+                {{ title }}
+              </h1>
             </template>
             <ASkeleton
               :loading="comment.isLoadingComment"
@@ -136,7 +140,7 @@ export default {
     methods: {
         handelClick (item){
           this.post.posts.forEach(element => {
-            if(element.post_id == item.post_id) {
+            if (element.post_id == item.post_id) {
               this.postItem = element;
             }
           });
@@ -145,8 +149,8 @@ export default {
           this.modalVisible = true;
           const boardId = getBoardIdFromUrl();
           this.$router.push({
-              path: '/board/'+ boardId + '/',
-              hash: `#${item.post_slug}` 
+              path: '/board/'+ boardId + '/' + item.post_slug,
+              // hash: `#${item.post_slug}` 
           });
         },
         avatarCommentAuthor (userName){
@@ -165,8 +169,11 @@ export default {
           this.postItem.comment_status = requestParams;
         },
         handleCloseComment() {
-            this.$router.push({hash: `` });
-            document.title = this.category.board.name + "  | " + window.bigNinjaVoteWpdata.siteName;
+          const boardId = getBoardIdFromUrl();
+          this.$router.push({
+            path: "/board/" + boardId + "/"
+          });
+          document.title = this.category.board.name + "  | " + window.bigNinjaVoteWpdata.siteName;
         }
     }
 };

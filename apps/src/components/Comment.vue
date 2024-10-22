@@ -723,7 +723,10 @@ export default {
       }
     },
     avatarCommentAuthor(commentAuthor) {
-      let avatar;
+      if (commentAuthor == '' || commentAuthor == 'Anonymous') {
+        return '';
+      }
+      let avatar = '';
       this.category.allUserAvatar.forEach((item) => {
         if (commentAuthor == item.user_name) {
           avatar = item.user_avatar;

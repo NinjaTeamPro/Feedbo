@@ -10,7 +10,10 @@
         placeholder="Search"
         @keyup.enter.native="showSearchResults"
       >
-        <AIcon slot="prefix" type="search" />
+        <AIcon
+          slot="prefix"
+          type="search"
+        />
       </AInput>
       <AModal
         title="Search Post"
@@ -21,9 +24,9 @@
       >
         <AInputSearch
           id="search"
+          v-model="text"
           placeholder="Search"
           :loading="loading2"
-          v-model="text"
           @search="onSearch"
         />
         <AList
@@ -31,10 +34,18 @@
           item-layout="horizontal"
           :data-source="post.results"
         >
-          <div slot="header">{{ post.results.length }} results</div>
-          <AListItem slot="renderItem" slot-scope="item">
+          <div slot="header">
+            {{ post.results.length }} results
+          </div>
+          <AListItem
+            slot="renderItem"
+            slot-scope="item"
+          >
             <AListItemMeta :description="item.post_content">
-              <a slot="title" @click="setModalVisible(item)">
+              <a
+                slot="title"
+                @click="setModalVisible(item)"
+              >
                 {{ item.post_title }}
               </a>
             </AListItemMeta>
@@ -50,9 +61,14 @@
         @cancel="handleCloseComment"
       >
         <template slot="title">
-          <h1 style="font-size: 1.1em;margin-bottom: 0;">{{ this.postItem != null ? this.postItem.post_title : '' }}</h1>
+          <h1 style="font-size: 1.1em;margin-bottom: 0;">
+            {{ this.postItem != null ? this.postItem.post_title : '' }}
+          </h1>
         </template>
-        <ASkeleton :loading="comment.isLoadingComment" active>
+        <ASkeleton
+          :loading="comment.isLoadingComment"
+          active
+        >
           <Comment
             :post-item="postItem"
             @deletePost="deletePost"
@@ -111,8 +127,8 @@ export default {
       this.modalVisible = true;
       const boardId = getBoardIdFromUrl();
       this.$router.push({
-        path: "/board/" + boardId + "/",
-        hash: `#${item.post_slug}`,
+        path: "/board/" + boardId + "/" + item.post_slug,
+        // hash: `#${item.post_slug}`,
       });
     },
     handleCloseSearchPost(e) {
@@ -127,12 +143,16 @@ export default {
       this.postItem.comment_status = requestParams;
     },
     handleCloseComment() {
-      this.$router.push({ hash: `` });
+      const boardId = getBoardIdFromUrl();
+      this.$router.push({
+        path: "/board/" + boardId + "/"
+      });
+      // this.$router.push({ hash: `` });
       document.title = this.category.board.name + "  | " + window.bigNinjaVoteWpdata.siteName;
     },
   },
   computed: {
-    ...mapState(["post", "comment", "user", "category"]),
+    ...mapState([ "post", "comment", "user", "category" ]),
   },
 };
 </script>

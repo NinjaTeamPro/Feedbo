@@ -5,11 +5,17 @@ const getBoardIdFromUrl = () => {
     currentPath.length
   );
   const defineUrlBoard = window.bigNinjaVoteWpdata.defineUrlBoard;
+  let boardId = '';
   if (lastTextCurrentPath === "/") {
-    return currentPath.substring(defineUrlBoard.length, currentPath.length - 1);
+    boardId = currentPath.substring(defineUrlBoard.length, currentPath.length - 1);
   } else {
-    return currentPath.substring(defineUrlBoard.length, currentPath.length);
+    boardId = currentPath.substring(defineUrlBoard.length, currentPath.length);
   }
+  const commentIndex = boardId.indexOf('/');
+  if ( commentIndex > -1 ) {
+    return boardId.substring(0, commentIndex);
+  }
+  return boardId;
 };
 
-export {getBoardIdFromUrl };
+export { getBoardIdFromUrl };

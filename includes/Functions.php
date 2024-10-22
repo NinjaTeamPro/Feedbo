@@ -34,6 +34,7 @@ class Functions {
 			'init',
 			function() {
 				add_rewrite_rule( 'board/([0-9a-zA-Z-_]+)[/]?$', 'index.php?pagename=board', 'top' );
+				add_rewrite_rule( 'board/([0-9a-zA-Z-_]+)/([0-9a-zA-Z-_]+)[/]?$', 'index.php?pagename=board', 'top' );
 				add_rewrite_rule( 'new-board', 'index.php?pagename=board', 'top' );
 				add_rewrite_rule( 'private', 'index.php?pagename=board', 'top' );
 				add_rewrite_rule( 'not-found', 'index.php?pagename=board', 'top' );
@@ -77,6 +78,26 @@ class Functions {
 				$boardURL  = str_replace( '/#/board/', MV_URL_BOARD, $boardMeta[0]['board_URL'] );
 				if ( $boardURL === site_url() . MV_URL_BOARD . $key ) {
 					return $boardMeta[0];
+				}
+			}
+		}
+		return false;
+	}
+
+	public function getTermIdByKey( $key ) {
+		$args        = array(
+			'taxonomy'   => 'category',
+			'order'      => 'ASC',
+			'hide_empty' => false,
+			'meta_key'   => 'board_Setting',
+		);
+		$terms_query = new \WP_Term_Query( $args );
+		if ( ! empty( $terms_query->terms ) ) {
+			foreach ( $terms_query->terms as $term ) {
+				$boardMeta = get_term_meta( $term->term_id, 'board_Setting' );
+				$boardURL  = str_replace( '/#/board/', MV_URL_BOARD, $boardMeta[0]['board_URL'] );
+				if ( $boardURL === site_url() . MV_URL_BOARD . $key ) {
+					return $term->term_id;
 				}
 			}
 		}

@@ -2,6 +2,7 @@
 namespace Feedbo;
 
 use Feedbo\Functions;
+use Feedbo\Classes\PageLoad;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -33,10 +34,25 @@ class YoastSEO {
 			$currentUrl = substr( $currentUrl, 0, strlen( $currentUrl ) - 1 );
 		}
 		$boardSlug     = str_replace( MV_URL_BOARD, '', $currentUrl );
-		$functions     = Functions::getInstance();
-		$boardSettings = $functions->getTermByKey( $boardSlug );
-		if ( false !== $boardSettings ) {
-			return $boardSettings['name'];
+		$hasPost 	   = strpos($boardSlug, '/');
+		if ( false !== $hasPost ) {
+			$postSlug  = substr($boardSlug, $hasPost + 1);
+			$boardSlug = substr($boardSlug, 0, $hasPost);
+			$functions     = Functions::getInstance();
+			$boardId 	   = $functions->getTermIdByKey( $boardSlug );
+			$pageLoad      = PageLoad::getInstance();
+			$listPosts     = $pageLoad->getPosts( $boardId );
+			foreach ( $listPosts as $post ) {
+				if ( $post['post_slug'] === $postSlug ) {
+					return $post['post_title'];
+				}
+			}
+		} else {
+			$functions     = Functions::getInstance();
+			$boardSettings = $functions->getTermByKey( $boardSlug );
+			if ( false !== $boardSettings ) {
+				return $boardSettings['name'];
+			}
 		}
 		return $title;
 	}
@@ -47,11 +63,23 @@ class YoastSEO {
 			$currentUrl = substr( $currentUrl, 0, strlen( $currentUrl ) - 1 );
 		}
 		$boardSlug     = str_replace( MV_URL_BOARD, '', $currentUrl );
-		$functions     = Functions::getInstance();
-		$boardSettings = $functions->getTermByKey( $boardSlug );
-		if ( false !== $boardSettings ) {
-			return $boardSettings['board_URL'];
+		$hasPost 	   = strpos($boardSlug, '/');
+		if ( false !== $hasPost ) {
+			$postSlug  = substr($boardSlug, $hasPost + 1);
+			$boardSlug = substr($boardSlug, 0, $hasPost);
+			$functions     = Functions::getInstance();
+			$boardSettings = $functions->getTermByKey( $boardSlug );
+			if ( false !== $boardSettings ) {
+				return $boardSettings['board_URL'] . '/' . $postSlug;
+			}
+		} else {
+			$functions     = Functions::getInstance();
+			$boardSettings = $functions->getTermByKey( $boardSlug );
+			if ( false !== $boardSettings ) {
+				return $boardSettings['board_URL'];
+			}
 		}
+		
 		return $url;
 	}
 
@@ -61,10 +89,25 @@ class YoastSEO {
 			$currentUrl = substr( $currentUrl, 0, strlen( $currentUrl ) - 1 );
 		}
 		$boardSlug     = str_replace( MV_URL_BOARD, '', $currentUrl );
-		$functions     = Functions::getInstance();
-		$boardSettings = $functions->getTermByKey( $boardSlug );
-		if ( false !== $boardSettings ) {
-			return $boardSettings['description'];
+		$hasPost 	   = strpos($boardSlug, '/');
+		if ( false !== $hasPost ) {
+			$postSlug  = substr($boardSlug, $hasPost + 1);
+			$boardSlug = substr($boardSlug, 0, $hasPost);
+			$functions     = Functions::getInstance();
+			$boardId 	   = $functions->getTermIdByKey( $boardSlug );
+			$pageLoad      = PageLoad::getInstance();
+			$listPosts     = $pageLoad->getPosts( $boardId );
+			foreach ( $listPosts as $post ) {
+				if ( $post['post_slug'] === $postSlug ) {
+					return $post['post_content'];
+				}
+			}
+		} else {
+			$functions     = Functions::getInstance();
+			$boardSettings = $functions->getTermByKey( $boardSlug );
+			if ( false !== $boardSettings ) {
+				return $boardSettings['description'];
+			}
 		}
 		return $description;
 	}
@@ -80,16 +123,40 @@ class YoastSEO {
 				$currentUrl = substr( $currentUrl, 0, strlen( $currentUrl ) - 1 );
 			}
 			$boardSlug     = str_replace( MV_URL_BOARD, '', $currentUrl );
-			$functions     = Functions::getInstance();
-			$boardSettings = $functions->getTermByKey( $boardSlug );
-			$graph_piece = [
-				'@type' => 'CollectionPage',
-				'@id' => $boardSettings['board_URL'],
-				'url' => $boardSettings['board_URL'],
-				'name' => $boardSettings['name'],
-				'isPartOf' => $graph_piece['isPartOf'],
-				'breadcrumb' => $graph_piece['breadcrumb']
-			];
+			$hasPost 	   = strpos($boardSlug, '/');
+			if ( false !== $hasPost ) {
+				$postSlug  = substr($boardSlug, $hasPost + 1);
+				$boardSlug = substr($boardSlug, 0, $hasPost);
+				$functions     = Functions::getInstance();
+				$boardId 	   = $functions->getTermIdByKey( $boardSlug );
+				$boardSettings = $functions->getTermByKey( $boardSlug );
+				$pageLoad      = PageLoad::getInstance();
+				$listPosts     = $pageLoad->getPosts( $boardId );
+				foreach ( $listPosts as $post ) {
+					if ( $post['post_slug'] === $postSlug ) {
+						$graph_piece = [
+							'@type' => 'CollectionPage',
+							'@id' => $boardSettings['board_URL'] . '/' . $postSlug,
+							'url' => $boardSettings['board_URL'] . '/' . $postSlug,
+							'name' => $post['post_title'],
+							'isPartOf' => $graph_piece['isPartOf'],
+							'breadcrumb' => $graph_piece['breadcrumb']
+						];
+						break;
+					}
+				}
+			} else {
+				$functions     = Functions::getInstance();
+				$boardSettings = $functions->getTermByKey( $boardSlug );
+				$graph_piece = [
+					'@type' => 'CollectionPage',
+					'@id' => $boardSettings['board_URL'],
+					'url' => $boardSettings['board_URL'],
+					'name' => $boardSettings['name'],
+					'isPartOf' => $graph_piece['isPartOf'],
+					'breadcrumb' => $graph_piece['breadcrumb']
+				];
+			}
 		}
 		return $graph_piece;
 	}
@@ -101,9 +168,19 @@ class YoastSEO {
 				$currentUrl = substr( $currentUrl, 0, strlen( $currentUrl ) - 1 );
 			}
 			$boardSlug     = str_replace( MV_URL_BOARD, '', $currentUrl );
-			$functions     = Functions::getInstance();
-			$boardSettings = $functions->getTermByKey( $boardSlug );
-			$canonical = $boardSettings['board_URL'];
+			$hasPost 	   = strpos($boardSlug, '/');
+			if ( false !== $hasPost ) {
+				$postSlug  = substr($boardSlug, $hasPost + 1);
+				$boardSlug = substr($boardSlug, 0, $hasPost);
+				$functions     = Functions::getInstance();
+				$boardSettings = $functions->getTermByKey( $boardSlug );
+				$canonical     = $boardSettings['board_URL'] . '/' . $postSlug;
+			} else {
+				$functions     = Functions::getInstance();
+				$boardSettings = $functions->getTermByKey( $boardSlug );
+				$canonical     = $boardSettings['board_URL'];
+			}
+			
 		}
 		return $canonical;
 	
