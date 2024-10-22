@@ -136,7 +136,7 @@ class YoastSEO {
 				foreach ( $listPosts as $post ) {
 					if ( $post['post_slug'] === $postSlug ) {
 						$graph_piece = [
-							'@type' => 'CollectionPage',
+							'@type' => 'WebPage',
 							'@id' => $boardSettings['board_URL'] . '/' . $postSlug,
 							'url' => $boardSettings['board_URL'] . '/' . $postSlug,
 							'name' => $boardSettings['name'] . ': ' . $post['post_title'],
