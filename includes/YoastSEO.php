@@ -40,11 +40,12 @@ class YoastSEO {
 			$boardSlug = substr($boardSlug, 0, $hasPost);
 			$functions     = Functions::getInstance();
 			$boardId 	   = $functions->getTermIdByKey( $boardSlug );
+			$boardSettings = $functions->getTermByKey( $boardSlug );
 			$pageLoad      = PageLoad::getInstance();
 			$listPosts     = $pageLoad->getPosts( $boardId );
 			foreach ( $listPosts as $post ) {
 				if ( $post['post_slug'] === $postSlug ) {
-					return $post['post_title'];
+					return $boardSettings['name'] . ': ' . $post['post_title'];
 				}
 			}
 		} else {
@@ -138,7 +139,7 @@ class YoastSEO {
 							'@type' => 'CollectionPage',
 							'@id' => $boardSettings['board_URL'] . '/' . $postSlug,
 							'url' => $boardSettings['board_URL'] . '/' . $postSlug,
-							'name' => $post['post_title'],
+							'name' => $boardSettings['name'] . ': ' . $post['post_title'],
 							'isPartOf' => $graph_piece['isPartOf'],
 							'breadcrumb' => $graph_piece['breadcrumb']
 						];
