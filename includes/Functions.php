@@ -41,6 +41,8 @@ class Functions {
 		);
 
 		add_action( 'wp_head', array( $this, 'addMeta' ) );
+
+		add_action( 'template_redirect', array( $this, 'redirect_category_to_board' ) );
 	}
 
 	public function widgetTemplate( $template ) {
@@ -102,6 +104,16 @@ class Functions {
 		<meta property="og:image" content="<?php echo MV_PLUGIN_URL . 'assets/img/feedbo_banner.png'; ?>" />
 		<meta property="fb:app_id" content="741859919960916" />
 		<?php
+	}
+
+	public function redirect_category_to_board() {
+		$current_url = $_SERVER['REQUEST_URI'];
+		if ( preg_match( '#^/category/(.+)#', $current_url, $matches ) ) {
+			$slug    = $matches[1];
+			$new_url = home_url( '/board/' . $slug );
+			wp_redirect( $new_url, 301 );
+			exit;
+		}
 	}
 
 }

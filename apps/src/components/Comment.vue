@@ -1,8 +1,15 @@
+<!-- eslint-disable vue/multiline-html-element-content-newline -->
 <template>
   <div>
-    <div v-if="user.currentLevel < 3" class="button-lock-delete">
+    <div
+      v-if="user.currentLevel < 3"
+      class="button-lock-delete"
+    >
       <ADropdown>
-        <AMenu slot="overlay" style="width:170px;">
+        <AMenu
+          slot="overlay"
+          style="width:170px;"
+        >
           <AMenuItem
             v-if="checkLock == false"
             key="lock"
@@ -18,14 +25,30 @@
             <span>UnLock</span>
           </AMenuItem>
           <AMenuItem key="export-voter">
-            <span @click="exportListVoter">Export Voter</span>
-            <div id="export_email_voter" style="display:none;" />
+            <span @click="exportListVoter">
+              Export Voter
+            </span>
+            <div
+              id="export_email_voter"
+              style="display:none;"
+            />
           </AMenuItem>
-          <AMenuItem v-if="user.currentLevel < 3" key="export-subscriber">
-            <span @click="exportListSubscriber">Export Subscriber</span>
-            <div id="export_email_subscriber" style="display: none;" />
+          <AMenuItem
+            v-if="user.currentLevel < 3"
+            key="export-subscriber"
+          >
+            <span @click="exportListSubscriber">
+              Export Subscriber
+            </span>
+            <div
+              id="export_email_subscriber"
+              style="display: none;"
+            />
           </AMenuItem>
-          <AMenuItem key="delete" @click="deletePost(postItem)">
+          <AMenuItem
+            key="delete"
+            @click="deletePost(postItem)"
+          >
             <span>Delete</span>
           </AMenuItem>
           <AMenuItem
@@ -50,7 +73,10 @@
     />
     <template>
       <div class="post-status-container">
-        <div class="post-status" :style="{ color: category.theme.text }">
+        <div
+          class="post-status"
+          :style="{ color: category.theme.text }"
+        >
           Status:
         </div>
         <div class="status">
@@ -58,8 +84,14 @@
             :trigger="['click']"
             :disabled="checkChangeStatus() == false"
           >
-            <AMenu slot="overlay" :style="{ color: category.theme.text }">
-              <AMenuItem v-for="(value, name) in category.status" :key="name">
+            <AMenu
+              slot="overlay"
+              :style="{ color: category.theme.text }"
+            >
+              <AMenuItem
+                v-for="(value, name) in category.status"
+                :key="name"
+              >
                 <div>
                   <div>
                     <ABadge
@@ -248,7 +280,9 @@
                 <AIcon type="caret-up" />
               </template>
             </span>
-            <span class="vote-count"> Upvoted {{ postItem.vote_length }} </span>
+            <span class="vote-count">
+              Upvoted {{ postItem.vote_length }}
+            </span>
           </AButton>
           <AButton
             v-if="checkDownVote() === true"
@@ -279,9 +313,15 @@
       :data-source="comment.comments"
       :style="{ color: category.theme.text }"
     >
-      <AListItem slot="renderItem" slot-scope="item, index">
+      <AListItem
+        slot="renderItem"
+        slot-scope="item, index"
+      >
         <AComment>
-          <p slot="author" :style="{ color: category.theme.text }">
+          <p
+            slot="author"
+            :style="{ color: category.theme.text }"
+          >
             <span v-if="item.comment_author != ''">
               {{ item.comment_author }}
             </span>
@@ -290,14 +330,17 @@
             </span>
           </p>
           <p slot="avatar">
-            <AAvatar
+            <img
               v-if="
-                item.comment_author == '' || item.comment_author == 'Anonymous'
+                avatarCommentAuthor(item.comment_author) != ''
               "
+              :src="avatarCommentAuthor(item.comment_author)"
+            >
+            <AAvatar
+              v-else
               size="large"
               icon="user"
             />
-            <img v-else :src="avatarCommentAuthor(item.comment_author)" />
           </p>
           <div
             slot="content"
@@ -313,10 +356,17 @@
               title="Image"
               target="_blank"
             >
-              <img :src="image" alt="avatar" class="comment-image" />
+              <img
+                :src="image"
+                alt="avatar"
+                class="comment-image"
+              >
             </a>
           </div>
-          <p slot="datetime" :style="{ color: category.theme.text }">
+          <p
+            slot="datetime"
+            :style="{ color: category.theme.text }"
+          >
             <ATooltip>
               <template slot="title">
                 <span style="font-size: 10px;">
@@ -342,8 +392,14 @@
               </span>
             </span>
             <ADropdown v-show="checkUser(item.comment_author) || user.currentLevel < 3">
-              <AMenu slot="overlay" style="width:100px;">
-                <AMenuItem key="edit-comment" @click="hide(item)">
+              <AMenu
+                slot="overlay"
+                style="width:100px;"
+              >
+                <AMenuItem
+                  key="edit-comment"
+                  @click="hide(item)"
+                >
                   <span>Edit</span>
                 </AMenuItem>
                 <AMenuItem
@@ -356,10 +412,17 @@
               <AIcon type="more" />
             </ADropdown>
           </p>
-          <AModal v-model="visibleUpdate" centered>
+          <AModal
+            v-model="visibleUpdate"
+            centered
+          >
             <template slot="footer">
               <div class="modal-update-button">
-                <AButton key="back" class="button-attach" @click="handleCancel">
+                <AButton
+                  key="back"
+                  class="button-attach"
+                  @click="handleCancel"
+                >
                   Cancel
                 </AButton>
                 <AButton
@@ -373,7 +436,7 @@
                 </AButton>
               </div>
             </template>
-            <br />
+            <br>
             <AMentions
               v-model="inputUpdate"
               rows="4"
@@ -388,20 +451,33 @@
                 {{ item }}
               </AMentionsOption>
             </AMentions>
-            <div v-for="comment in comment.comments" :key="comment.comment_ID">
-              <div v-if="comment.comment_ID == id" style="margin-top:10px;">
+            <div
+              v-for="comment in comment.comments"
+              :key="comment.comment_ID"
+            >
+              <div
+                v-if="comment.comment_ID == id"
+                style="margin-top:10px;"
+              >
                 <div
                   v-for="(image, index) in comment.comment_image"
                   :key="index"
                   class="comment-image-list comment-image-list-edit"
                 >
-                  <img :src="image" alt="avatar" class="comment-image" />
+                  <img
+                    :src="image"
+                    alt="avatar"
+                    class="comment-image"
+                  >
                   <div
                     class="upload-image-text"
                     @click="deleteimgUpload(image)"
                   >
                     <p>
-                      <ATooltip title="Delete Image" placement="bottom">
+                      <ATooltip
+                        title="Delete Image"
+                        placement="bottom"
+                      >
                         <AIcon type="delete" />
                       </ATooltip>
                     </p>
@@ -428,7 +504,10 @@
       </AListItem>
     </AList>
     <div>
-      <AForm :form="form" @submit.prevent="handleSubmit(postItem)">
+      <AForm
+        :form="form"
+        @submit.prevent="handleSubmit(postItem)"
+      >
         <AFormItem style="margin-bottom: 7px;">
           <AMentions
             v-decorator="[
@@ -458,7 +537,7 @@
             class="button-upload"
             :style="[
               form.getFieldValue('file') == undefined ||
-              Object.keys(form.getFieldValue('file')).length === 0
+                Object.keys(form.getFieldValue('file')).length === 0
                 ? { display: 'inline-block' }
                 : { display: 'block', marginBottom: '10px' },
             ]"
@@ -539,7 +618,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["category", "post", "comment", "user"]),
+    ...mapState([ "category", "post", "comment", "user" ]),
     setcountVote() {
       if (this.postItem.vote_ids == "") {
         this.countVote = [];
