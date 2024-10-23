@@ -3,6 +3,8 @@ namespace Feedbo;
 
 defined( 'ABSPATH' ) || exit;
 
+use Feedbo\Classes\PageLoad;
+
 class Functions {
 	protected static $instance = null;
 	private $bodyClass         = 'big-ninja-feedbo';
@@ -42,8 +44,7 @@ class Functions {
 		);
 
 		add_action( 'wp_head', array( $this, 'addMeta' ) );
-
-		add_action( 'template_redirect', array( $this, 'redirect_category_to_board' ) );
+		add_action( 'template_redirect', array( $this, 'redirectCategoryToBoard' ) );
 	}
 
 	public function widgetTemplate( $template ) {
@@ -111,23 +112,49 @@ class Functions {
 			$currentUrl = substr( $currentUrl, 0, strlen( $currentUrl ) - 1 );
 		}
 		$boardSlug     = str_replace( MV_URL_BOARD, '', $currentUrl );
-		$boardSettings = $this->getTermByKey( $boardSlug );
-		if ( false !== $boardSettings ) {
+		$hasPost 	   = strpos($boardSlug, '/');
+		if ( false !== $hasPost ) {
+			$postSlug  = substr($boardSlug, $hasPost + 1);
+			$boardSlug = substr($boardSlug, 0, $hasPost);
+			$boardId 	   = $this->getTermIdByKey( $boardSlug );
+			$boardSettings = $this->getTermByKey( $boardSlug );
+			$pageLoad      = PageLoad::getInstance();
+			$listPosts     = $pageLoad->getPosts( $boardId );
+			foreach ( $listPosts as $post ) {
+				if ( $post['post_slug'] === $postSlug ) {
+					?>
+					<meta property="og:title" content="<?php echo $post['post_title'] . ' - ' . $boardSettings['name'] . ' | ' . get_bloginfo( 'name' ); ?>" />
+					<meta property="og:type" content="article">
+					<meta property="og:description" content="<?php echo sanitize_text_field( $post['post_content'] ); ?>" />
+					<meta property="og:url" content="<?php echo $boardSettings['board_URL'] . '/'. $postSlug; ?>" />
+					<?php
+					break;
+				}
+			}
 			?>
-	  <meta property="og:title" content="<?php echo $boardSettings['name']; ?>" />
-	  <meta property="og:type" content="article">
-	  <meta property="og:description" content="<?php echo sanitize_text_field( $boardSettings['description'] ); ?>" />
-	  <meta property="og:url" content="<?php echo $boardSettings['board_URL']; ?>" />
+			<meta property="og:image" content="<?php echo MV_PLUGIN_URL . 'assets/img/feedbo_banner.png'; ?>" />
+			<meta property="fb:app_id" content="741859919960916" />
+			<?php
+		} else {
+			$boardSettings = $this->getTermByKey( $boardSlug );
+			if ( false !== $boardSettings ) {
+				?>
+		  <meta property="og:title" content="<?php echo $boardSettings['name']; ?>" />
+		  <meta property="og:type" content="article">
+		  <meta property="og:description" content="<?php echo sanitize_text_field( $boardSettings['description'] ); ?>" />
+		  <meta property="og:url" content="<?php echo $boardSettings['board_URL']; ?>" />
+				<?php
+			}
+	
+			?>
+			<meta property="og:image" content="<?php echo MV_PLUGIN_URL . 'assets/img/feedbo_banner.png'; ?>" />
+			<meta property="fb:app_id" content="741859919960916" />
 			<?php
 		}
-
-		?>
-		<meta property="og:image" content="<?php echo MV_PLUGIN_URL . 'assets/img/feedbo_banner.png'; ?>" />
-		<meta property="fb:app_id" content="741859919960916" />
-		<?php
+		
 	}
 
-	public function redirect_category_to_board() {
+	public function redirectCategoryToBoard() {
 		$current_url = $_SERVER['REQUEST_URI'];
 		if ( preg_match( '#^/category/(.+)#', $current_url, $matches ) ) {
 			$slug    = $matches[1];
@@ -136,5 +163,4 @@ class Functions {
 			exit;
 		}
 	}
-
 }

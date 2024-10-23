@@ -18,6 +18,8 @@ class YoastSEO {
 	}
 
 	private function __construct() {
+		
+		add_filter( 'wpseo_title', array( $this, 'wpseo_title' ), 10, 2 );
 		add_filter( 'wpseo_opengraph_title', array( $this, 'wpseo_opengraph_title' ), 10, 2 );
 		add_filter( 'wpseo_opengraph_url', array( $this, 'wpseo_opengraph_url' ), 10, 2 );
 		add_filter( 'wpseo_opengraph_desc', array( $this, 'wpseo_opengraph_desc' ), 10, 2 );
@@ -26,6 +28,36 @@ class YoastSEO {
 		add_filter( 'wpseo_canonical', array( $this, 'edit_canonical_urls' ), 10, 2 );
 		add_action( 'wpseo_head', array( $this, 'add_meta' ) );
 		add_filter( 'xmlrpc_enabled', '__return_false' );
+	}
+
+	public function wpseo_title( $title, $presentation ) {
+		$currentUrl = $_SERVER['REQUEST_URI'];
+		if ( '/' === substr( $currentUrl, -1 ) ) {
+			$currentUrl = substr( $currentUrl, 0, strlen( $currentUrl ) - 1 );
+		}
+		$boardSlug     = str_replace( MV_URL_BOARD, '', $currentUrl );
+		$hasPost 	   = strpos($boardSlug, '/');
+		if ( false !== $hasPost ) {
+			$postSlug  = substr($boardSlug, $hasPost + 1);
+			$boardSlug = substr($boardSlug, 0, $hasPost);
+			$functions     = Functions::getInstance();
+			$boardId 	   = $functions->getTermIdByKey( $boardSlug );
+			$boardSettings = $functions->getTermByKey( $boardSlug );
+			$pageLoad      = PageLoad::getInstance();
+			$listPosts     = $pageLoad->getPosts( $boardId );
+			foreach ( $listPosts as $post ) {
+				if ( $post['post_slug'] === $postSlug ) {
+					return $post['post_title'] . ' - ' . $boardSettings['name'] . ' | ' . get_bloginfo( 'name' );
+				}
+			}
+		} else {
+			$functions     = Functions::getInstance();
+			$boardSettings = $functions->getTermByKey( $boardSlug );
+			if ( false !== $boardSettings ) {
+				return $boardSettings['name'];
+			}
+		}
+		return $title;
 	}
 
 	public function wpseo_opengraph_title( $title, $presentation ) {
@@ -45,7 +77,7 @@ class YoastSEO {
 			$listPosts     = $pageLoad->getPosts( $boardId );
 			foreach ( $listPosts as $post ) {
 				if ( $post['post_slug'] === $postSlug ) {
-					return $boardSettings['name'] . ': ' . $post['post_title'];
+					return $post['post_title'] . ' - ' . $boardSettings['name'] . ' | ' . get_bloginfo( 'name' );
 				}
 			}
 		} else {
@@ -139,7 +171,7 @@ class YoastSEO {
 							'@type' => 'WebPage',
 							'@id' => $boardSettings['board_URL'] . '/' . $postSlug,
 							'url' => $boardSettings['board_URL'] . '/' . $postSlug,
-							'name' => $boardSettings['name'] . ': ' . $post['post_title'],
+							'name' => $post['post_title'] . ' - ' . $boardSettings['name'] . ' | ' . get_bloginfo( 'name' ),
 							'isPartOf' => $graph_piece['isPartOf'],
 							'breadcrumb' => $graph_piece['breadcrumb']
 						];
