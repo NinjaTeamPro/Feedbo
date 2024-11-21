@@ -17,7 +17,7 @@ jQuery(document).ready(function () {
         '">Feedbo</a></div>'
     );
     jQuery("#loginform").prepend(
-      '<p class="Login-on-Vote-Project" id="login-header-title"><span>Login on Vote Project</span></p>'
+      '<p class="feedbo-login-text" id="login-header-title"><span>Login</span></p>'
     );
     jQuery("#user_login").css("display", "none");
     jQuery(".mo-openid-app-icons").appendTo("#loginform");
@@ -85,7 +85,7 @@ jQuery(document).ready(function () {
 
     if (currentUri.includes(loginText) && currentUri.includes(actionRegister)) {
       jQuery("#registerform").prepend(
-        '<div class="Login-on-Vote-Project register-header"><span>Register Account</span></div>'
+        '<div class="feedbo-login-text register-header"><span>Register Account</span></div>'
       );
       jQuery("#user_login").css("display", "block");
       jQuery("#user_login").addClass("ant-input user-pass-input");
@@ -126,7 +126,7 @@ jQuery(document).ready(function () {
       currentUri.includes(actionLostPassWord)
     ) {
       jQuery("#lostpasswordform").prepend(
-        '<div class="Login-on-Vote-Project register-header"><span>Lost Password</span></div>'
+        '<div class="feedbo-login-text register-header"><span>Lost Password</span></div>'
       );
       jQuery("#user_login").css("display", "block");
       jQuery("#user_login").addClass("ant-input user-pass-input");
@@ -149,7 +149,7 @@ jQuery(document).ready(function () {
       currentUri.includes(actionResetPass1)
     ) {
       jQuery("#resetpassform").prepend(
-        '<div class="Login-on-Vote-Project register-header"><span>Reset Password</span></div>'
+        '<div class="feedbo-login-text register-header"><span>Reset Password</span></div>'
       );
       jQuery("#user_login").css("display", "block");
       jQuery("#user_login").addClass("ant-input user-pass-input");

@@ -115,7 +115,7 @@ a {
 .Feedbo-login a:hover {
   color: inherit;
 }
-.Login-on-Vote-Project {
+.feedbo-login-text {
   font-size: 25px;
   font-weight: bold;
   font-stretch: normal;
@@ -124,8 +124,9 @@ a {
   letter-spacing: normal;
   color: #1a2a37;
   margin-bottom: 20px;
+  padding-top: 15px;
 }
-.Login-on-Vote-Project span {
+.feedbo-login-text span {
   display: block;
   text-align: center;
 }
@@ -381,7 +382,7 @@ a {
     margin-bottom: 12px;
     max-width: 100%;
   }
-  .Login-on-Vote-Project {
+  .feedbo-login-text {
     font-size: 22px;
   }
   .forgetmenot label::before {
