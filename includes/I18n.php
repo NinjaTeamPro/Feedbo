@@ -24,7 +24,7 @@ class I18n
         load_plugin_textdomain(
             'feedbo',
             false,
-            MV_PLUGIN_URL . 'i18n/languages/'
+            FB_PLUGIN_URL . 'i18n/languages/'
         );
     }
 }

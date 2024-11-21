@@ -281,7 +281,7 @@ class DeleteApi extends \WP_REST_Controller {
                                     <body topmargin="25">
                                     <div>Hi ' . $val['user_name'] . ',</div>
                                     <div>' . self::$current_user->display_name . ' tag you on comment. Click link below to open website</div>
-                                    <div><a href="' . site_url() . MV_URL_BOARD . $req['termId'] . '" target="_blank">' . site_url() . '/board/' . $req['termId'] . '</a></div>
+                                    <div><a href="' . site_url() . FB_URL_BOARD . $req['termId'] . '" target="_blank">' . site_url() . '/board/' . $req['termId'] . '</a></div>
                                     </body>
                                 </html>';
 						$headers = array( 'Content-Type: text/html; charset=UTF-8' );
@@ -580,7 +580,7 @@ class DeleteApi extends \WP_REST_Controller {
 		$data1  = array( 'option_value' => 'relative' );
 		$where1 = array( 'option_name' => 'mo_openid_login_redirect' );
 		$wpdb->update( $table1, $data1, $where1 );
-		$data2  = array( 'option_value' => MV_URL_BOARD . $req['id'] );
+		$data2  = array( 'option_value' => FB_URL_BOARD . $req['id'] );
 		$where2 = array( 'option_name' => 'mo_openid_relative_login_redirect_url' );
 		$wpdb->update( $table1, $data2, $where2 );
 	}

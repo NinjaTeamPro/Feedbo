@@ -50,7 +50,7 @@ class Functions {
 	public function widgetTemplate( $template ) {
 		$boardId = get_query_var( 'widget' );
 		if ( ! empty( $boardId ) ) {
-			return MV_PLUGIN_PATH . '/views/pages/widget.php';
+			return FB_PLUGIN_PATH . '/views/pages/widget.php';
 		}
 		return $template;
 	}
@@ -76,8 +76,8 @@ class Functions {
 		if ( ! empty( $terms_query->terms ) ) {
 			foreach ( $terms_query->terms as $term ) {
 				$boardMeta = get_term_meta( $term->term_id, 'board_Setting' );
-				$boardURL  = str_replace( '/#/board/', MV_URL_BOARD, $boardMeta[0]['board_URL'] );
-				if ( $boardURL === site_url() . MV_URL_BOARD . $key ) {
+				$boardURL  = str_replace( '/#/board/', FB_URL_BOARD, $boardMeta[0]['board_URL'] );
+				if ( $boardURL === site_url() . FB_URL_BOARD . $key ) {
 					return $boardMeta[0];
 				}
 			}
@@ -96,8 +96,8 @@ class Functions {
 		if ( ! empty( $terms_query->terms ) ) {
 			foreach ( $terms_query->terms as $term ) {
 				$boardMeta = get_term_meta( $term->term_id, 'board_Setting' );
-				$boardURL  = str_replace( '/#/board/', MV_URL_BOARD, $boardMeta[0]['board_URL'] );
-				if ( $boardURL === site_url() . MV_URL_BOARD . $key ) {
+				$boardURL  = str_replace( '/#/board/', FB_URL_BOARD, $boardMeta[0]['board_URL'] );
+				if ( $boardURL === site_url() . FB_URL_BOARD . $key ) {
 					return $term->term_id;
 				}
 			}
@@ -111,7 +111,7 @@ class Functions {
 		if ( '/' === substr( $currentUrl, -1 ) ) {
 			$currentUrl = substr( $currentUrl, 0, strlen( $currentUrl ) - 1 );
 		}
-		$boardSlug     = str_replace( MV_URL_BOARD, '', $currentUrl );
+		$boardSlug     = str_replace( FB_URL_BOARD, '', $currentUrl );
 		$hasPost 	   = strpos($boardSlug, '/');
 		if ( false !== $hasPost ) {
 			$postSlug  = substr($boardSlug, $hasPost + 1);
@@ -132,7 +132,7 @@ class Functions {
 				}
 			}
 			?>
-			<meta property="og:image" content="<?php echo MV_PLUGIN_URL . 'assets/img/feedbo_banner.png'; ?>" />
+			<meta property="og:image" content="<?php echo FB_PLUGIN_URL . 'assets/img/feedbo_banner.png'; ?>" />
 			<meta property="fb:app_id" content="741859919960916" />
 			<?php
 		} else {
@@ -147,7 +147,7 @@ class Functions {
 			}
 	
 			?>
-			<meta property="og:image" content="<?php echo MV_PLUGIN_URL . 'assets/img/feedbo_banner.png'; ?>" />
+			<meta property="og:image" content="<?php echo FB_PLUGIN_URL . 'assets/img/feedbo_banner.png'; ?>" />
 			<meta property="fb:app_id" content="741859919960916" />
 			<?php
 		}

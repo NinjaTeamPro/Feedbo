@@ -54,7 +54,7 @@ if ( ! class_exists( 'Frontend' ) ) {
 
 		public function custom_redirect_homepage() {
 			$requestURL = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '';
-			if ( MV_URL_BOARD === $requestURL ) {
+			if ( FB_URL_BOARD === $requestURL ) {
 				wp_redirect( home_url(), 301 );
 				exit();
 			}
@@ -63,8 +63,8 @@ if ( ! class_exists( 'Frontend' ) ) {
 		public function generate_custom_title( $title ) {
 			$requestURL = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '';
 			$boardId    = '';
-			if ( str_starts_with( $requestURL, MV_URL_BOARD ) ) {
-				$boardId = str_replace( MV_URL_BOARD, '', $requestURL );
+			if ( str_starts_with( $requestURL, FB_URL_BOARD ) ) {
+				$boardId = str_replace( FB_URL_BOARD, '', $requestURL );
 				if ( str_ends_with( $requestURL, '/' ) ) {
 					$boardId = substr( $boardId, 0, strlen( $boardId ) - 1 );
 				}
@@ -79,8 +79,8 @@ if ( ! class_exists( 'Frontend' ) ) {
 					if ( ! empty( $terms_query->terms ) ) {
 						foreach ( $terms_query->terms as $term ) {
 							$boardMeta = get_term_meta( $term->term_id, 'board_Setting' );
-							$boardURL  = str_replace( '/#/board/', MV_URL_BOARD, $boardMeta[0]['board_URL'] );
-							if ( $boardURL === site_url() . MV_URL_BOARD . $boardId ) {
+							$boardURL  = str_replace( '/#/board/', FB_URL_BOARD, $boardMeta[0]['board_URL'] );
+							if ( $boardURL === site_url() . FB_URL_BOARD . $boardId ) {
 								$title = $boardMeta[0]['name'] . ' | ' . get_bloginfo( 'name' );
 							}
 						}
@@ -109,8 +109,8 @@ if ( ! class_exists( 'Frontend' ) ) {
 
 		public function wp_head() {
 			?>
-			<script src="https://www.google.com/recaptcha/api.js?render=<?php echo MV_RECAPTCHA_KEY; ?>"></script>
-			<script type="text/javascript">var mv_recaptcha_key = '<?php echo MV_RECAPTCHA_KEY; ?>';</script>
+			<script src="https://www.google.com/recaptcha/api.js?render=<?php echo FB_RECAPTCHA_KEY; ?>"></script>
+			<script type="text/javascript">var FB_RECAPTCHA_KEY = '<?php echo FB_RECAPTCHA_KEY; ?>';</script>
 			<?php
 		}
 
@@ -118,22 +118,22 @@ if ( ! class_exists( 'Frontend' ) ) {
 			$axiosURL = site_url() . '/wp-json';
 			wp_dequeue_style( 'twentytwenty-style' );
 			wp_deregister_style( 'twentytwenty-style' );
-			wp_enqueue_style( 'feedbo_front_end_style', MV_PLUGIN_URL . 'assets/css/feedbo_frontend_style.css', null, true );
-			wp_enqueue_style( 'style_main', MV_PLUGIN_URL . 'assets/dist/css/main.css', null, true );
-			wp_enqueue_style( 'hide-header-footer', MV_PLUGIN_URL . 'assets/headerfooter.css', null, true );
+			wp_enqueue_style( 'feedbo_front_end_style', FB_PLUGIN_URL . 'assets/css/feedbo_frontend_style.css', null, true );
+			wp_enqueue_style( 'style_main', FB_PLUGIN_URL . 'assets/dist/css/main.css', null, true );
+			wp_enqueue_style( 'hide-header-footer', FB_PLUGIN_URL . 'assets/headerfooter.css', null, true );
 
-			wp_enqueue_script( 'js_main', MV_PLUGIN_URL . 'assets/dist/js/main.js', array( 'jquery' ), null, true );
+			wp_enqueue_script( 'js_main', FB_PLUGIN_URL . 'assets/dist/js/main.js', array( 'jquery' ), null, true );
 			wp_localize_script(
 				'js_main',
 				'bigNinjaVoteWpdata',
 				array(
 					'axiosUrl'       => $axiosURL,
-					'pluginUrl'      => MV_PLUGIN_URL,
+					'pluginUrl'      => FB_PLUGIN_URL,
 					'siteUrl'        => site_url(),
 					'siteName'       => get_bloginfo( 'name' ),
 					'logoutUrl'      => wp_logout_url(),
 					'apiNonce'       => wp_create_nonce( 'wp_rest' ),
-					'defineUrlBoard' => MV_URL_BOARD,
+					'defineUrlBoard' => FB_URL_BOARD,
 				)
 			);
 			wp_enqueue_media();
@@ -141,10 +141,10 @@ if ( ! class_exists( 'Frontend' ) ) {
 
 		public function my_custom_login_stylesheet() {
 			?>
-			<script src="https://www.google.com/recaptcha/api.js?render=<?php echo MV_RECAPTCHA_KEY; ?>"></script>
+			<script src="https://www.google.com/recaptcha/api.js?render=<?php echo FB_RECAPTCHA_KEY; ?>"></script>
 			<script type="text/javascript">
 				grecaptcha.ready(function () {
-					grecaptcha.execute('<?php echo MV_RECAPTCHA_KEY; ?>', { action: 'submit' }).then(function (token) {
+					grecaptcha.execute('<?php echo FB_RECAPTCHA_KEY; ?>', { action: 'submit' }).then(function (token) {
 						var recaptchaResponse = document.getElementById('recaptchaResponse');
 						recaptchaResponse.value = token;
 					});
@@ -160,15 +160,15 @@ if ( ! class_exists( 'Frontend' ) ) {
 			wp_deregister_style( 'mo-wp-bootstrap-social' );
 			wp_dequeue_style( 'mo-wp-bootstrap-main' );
 			wp_deregister_style( 'mo-wp-bootstrap-main' );
-			wp_enqueue_style( 'custom-login', MV_PLUGIN_URL . 'assets/style-login.css' );
-			wp_enqueue_style( 'style_main', MV_PLUGIN_URL . 'assets/dist/css/main.css', null, true );
-			wp_enqueue_script( 'custom-login-js', MV_PLUGIN_URL . 'assets/js-login.js', array( 'jquery' ), null, true );
+			wp_enqueue_style( 'custom-login', FB_PLUGIN_URL . 'assets/style-login.css' );
+			wp_enqueue_style( 'style_main', FB_PLUGIN_URL . 'assets/dist/css/main.css', null, true );
+			wp_enqueue_script( 'custom-login-js', FB_PLUGIN_URL . 'assets/js-login.js', array( 'jquery' ), null, true );
 			wp_localize_script(
 				'custom-login-js',
 				'bigNinjaVoteUrl',
 				array(
 					'ajaxUrl'   => $axiosURL,
-					'pluginUrl' => MV_PLUGIN_URL,
+					'pluginUrl' => FB_PLUGIN_URL,
 					'siteURL'   => site_url(),
 				)
 			);

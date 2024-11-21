@@ -35,7 +35,7 @@ class YoastSEO {
 		if ( '/' === substr( $currentUrl, -1 ) ) {
 			$currentUrl = substr( $currentUrl, 0, strlen( $currentUrl ) - 1 );
 		}
-		$boardSlug     = str_replace( MV_URL_BOARD, '', $currentUrl );
+		$boardSlug     = str_replace( FB_URL_BOARD, '', $currentUrl );
 		$hasPost 	   = strpos($boardSlug, '/');
 		if ( false !== $hasPost ) {
 			$postSlug  = substr($boardSlug, $hasPost + 1);
@@ -65,7 +65,7 @@ class YoastSEO {
 		if ( '/' === substr( $currentUrl, -1 ) ) {
 			$currentUrl = substr( $currentUrl, 0, strlen( $currentUrl ) - 1 );
 		}
-		$boardSlug     = str_replace( MV_URL_BOARD, '', $currentUrl );
+		$boardSlug     = str_replace( FB_URL_BOARD, '', $currentUrl );
 		$hasPost 	   = strpos($boardSlug, '/');
 		if ( false !== $hasPost ) {
 			$postSlug  = substr($boardSlug, $hasPost + 1);
@@ -95,7 +95,7 @@ class YoastSEO {
 		if ( '/' === substr( $currentUrl, -1 ) ) {
 			$currentUrl = substr( $currentUrl, 0, strlen( $currentUrl ) - 1 );
 		}
-		$boardSlug     = str_replace( MV_URL_BOARD, '', $currentUrl );
+		$boardSlug     = str_replace( FB_URL_BOARD, '', $currentUrl );
 		$hasPost 	   = strpos($boardSlug, '/');
 		if ( false !== $hasPost ) {
 			$postSlug  = substr($boardSlug, $hasPost + 1);
@@ -121,7 +121,7 @@ class YoastSEO {
 		if ( '/' === substr( $currentUrl, -1 ) ) {
 			$currentUrl = substr( $currentUrl, 0, strlen( $currentUrl ) - 1 );
 		}
-		$boardSlug     = str_replace( MV_URL_BOARD, '', $currentUrl );
+		$boardSlug     = str_replace( FB_URL_BOARD, '', $currentUrl );
 		$hasPost 	   = strpos($boardSlug, '/');
 		if ( false !== $hasPost ) {
 			$postSlug  = substr($boardSlug, $hasPost + 1);
@@ -146,7 +146,7 @@ class YoastSEO {
 	}
 
 	public function wpseo_opengraph_image( $image, $presentation ) {
-		return MV_PLUGIN_URL . 'assets/img/feedbo_banner.png';
+		return FB_PLUGIN_URL . 'assets/img/feedbo_banner.png';
 	}
 
 	public function wpseo_schema_webpage($graph_piece, $context, $graph_piece_generator, $graph_piece_generators) {
@@ -155,7 +155,7 @@ class YoastSEO {
 			if ( '/' === substr( $currentUrl, -1 ) ) {
 				$currentUrl = substr( $currentUrl, 0, strlen( $currentUrl ) - 1 );
 			}
-			$boardSlug     = str_replace( MV_URL_BOARD, '', $currentUrl );
+			$boardSlug     = str_replace( FB_URL_BOARD, '', $currentUrl );
 			$hasPost 	   = strpos($boardSlug, '/');
 			if ( false !== $hasPost ) {
 				$postSlug  = substr($boardSlug, $hasPost + 1);
@@ -200,7 +200,7 @@ class YoastSEO {
 			if ( '/' === substr( $currentUrl, -1 ) ) {
 				$currentUrl = substr( $currentUrl, 0, strlen( $currentUrl ) - 1 );
 			}
-			$boardSlug     = str_replace( MV_URL_BOARD, '', $currentUrl );
+			$boardSlug     = str_replace( FB_URL_BOARD, '', $currentUrl );
 			$hasPost 	   = strpos($boardSlug, '/');
 			if ( false !== $hasPost ) {
 				$postSlug  = substr($boardSlug, $hasPost + 1);
@@ -221,7 +221,7 @@ class YoastSEO {
 
 	public function add_meta() {
 		?>
-		<meta property="og:image" content="<?php echo MV_PLUGIN_URL . 'assets/img/feedbo_banner.png'; ?>" />
+		<meta property="og:image" content="<?php echo FB_PLUGIN_URL . 'assets/img/feedbo_banner.png'; ?>" />
 		<meta property="fb:app_id" content="741859919960916" />
 		<?php
 	}

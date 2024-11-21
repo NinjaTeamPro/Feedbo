@@ -60,8 +60,8 @@ class Plugin
     }
     public static function copyFileToRoot()
     {
-        $rootDirFile = dirname(dirname(dirname(MV_PLUGIN_PATH))).'/widget.js';
-        $pluginPath = MV_PLUGIN_PATH;
+        $rootDirFile = dirname(dirname(dirname(FB_PLUGIN_PATH))).'/widget.js';
+        $pluginPath = FB_PLUGIN_PATH;
         $dirFile = $pluginPath .'assets/widget.js';
         if(!file_exists($rootDirFile)) {
             if (!copy($dirFile, $rootDirFile)) {

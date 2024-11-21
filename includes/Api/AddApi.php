@@ -481,7 +481,7 @@ class AddApi extends \WP_REST_Controller {
 			'description'  => 'Let us know how we can improve. Vote on existing ideas or suggest new ones.',
 			'button_text'  => 'Make a suggestion',
 			'default_sort' => 'vote',
-			'board_URL'    => site_url() . MV_URL_BOARD . $term_id,
+			'board_URL'    => site_url() . FB_URL_BOARD . $term_id,
 			'visibility'   => 'public',
 			'features'     => 'anonymous , roadmap',
 		);

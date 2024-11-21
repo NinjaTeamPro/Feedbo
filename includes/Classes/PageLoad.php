@@ -55,10 +55,10 @@ class PageLoad {
 
 				$boardMeta = get_term_meta( $board->term_id, 'board_Setting' );
 				if ( ! empty( $boardMeta ) ) {
-					$boardURL    = str_replace( '/#/board/', MV_URL_BOARD, $boardMeta[0]['board_URL'] );
+					$boardURL    = str_replace( '/#/board/', FB_URL_BOARD, $boardMeta[0]['board_URL'] );
 					$listBoard[] = array(
 						'term_id'    => $board->term_id,
-						'board_URL'  => str_replace( site_url() . MV_URL_BOARD, '', $boardURL ),
+						'board_URL'  => str_replace( site_url() . FB_URL_BOARD, '', $boardURL ),
 						'name'       => $board->name,
 						'slug'       => $board->slug,
 						'term_group' => $board->term_group,
@@ -227,8 +227,8 @@ class PageLoad {
 		if ( ! empty( $terms_query->terms ) ) {
 			foreach ( $terms_query->terms as $term ) {
 				$boardMeta = get_term_meta( $term->term_id, 'board_Setting' );
-				$boardURL  = str_replace( '/#/board/', MV_URL_BOARD, $boardMeta[0]['board_URL'] );
-				if ( $boardURL === site_url() . MV_URL_BOARD . $key ) {
+				$boardURL  = str_replace( '/#/board/', FB_URL_BOARD, $boardMeta[0]['board_URL'] );
+				if ( $boardURL === site_url() . FB_URL_BOARD . $key ) {
 					return $term->term_id;
 				}
 			}

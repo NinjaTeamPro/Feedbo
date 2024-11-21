@@ -30,10 +30,10 @@ if ( ! class_exists( 'GoogleOnTab' ) ) {
 		}
 
 		public function login_enqueue_scripts() {
-			wp_register_script( 'feebo-one-tap-client-js', 'https://accounts.google.com/gsi/client', array(), MV_PLUGIN_VERSION, true );
+			wp_register_script( 'feebo-one-tap-client-js', 'https://accounts.google.com/gsi/client', array(), FB_PLUGIN_VERSION, true );
 			wp_enqueue_script( 'feebo-one-tap-client-js' );
 
-			wp_enqueue_script( 'frontend-js', MV_PLUGIN_URL . 'assets/js/frontend.js', array( 'jquery' ), MV_PLUGIN_VERSION, true );
+			wp_enqueue_script( 'frontend-js', FB_PLUGIN_URL . 'assets/js/frontend.js', array( 'jquery' ), FB_PLUGIN_VERSION, true );
 			wp_localize_script(
 				'frontend-js',
 				'feedboData',
@@ -45,7 +45,7 @@ if ( ! class_exists( 'GoogleOnTab' ) ) {
 				)
 			);
 			if ( ! is_user_logged_in() ) {
-				wp_enqueue_script( 'feebo-google-tap', MV_PLUGIN_URL . 'assets/js/google-tab.js', array( 'jquery' ), MV_PLUGIN_VERSION, true );
+				wp_enqueue_script( 'feebo-google-tap', FB_PLUGIN_URL . 'assets/js/google-tab.js', array( 'jquery' ), FB_PLUGIN_VERSION, true );
 			}
 
 		}

@@ -15,7 +15,7 @@ function removeClassBigNinjaFeedbo( $classes ) {
 
 }
 function addFeedboWidgetStyle() {
-	wp_enqueue_style( 'feedbo-widget-style', MV_PLUGIN_URL . 'assets/css/feedbo_widget_style.css', array() );
+	wp_enqueue_style( 'feedbo-widget-style', FB_PLUGIN_URL . 'assets/css/feedbo_widget_style.css', array() );
 }
 $boardId = get_query_var( 'widget' );
 get_header();

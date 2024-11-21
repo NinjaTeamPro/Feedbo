@@ -11,23 +11,23 @@ namespace Feedbo;
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'BN_PREFIX', 'feedbo' );
-define( 'MV_URL_BOARD', '/board/' );
-define( 'MV_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-define( 'MV_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
-define( 'MV_PLUGIN_NAME', plugin_basename( __FILE__ ) );
-define( 'MV_PLUGIN_VERSION', '2.0.0' );
-if ( ! defined( 'MV_PLUGIN_FILE' ) ) {
-	define( 'MV_PLUGIN_FILE', __FILE__ );
+define( 'FB_PREFIX', 'feedbo' );
+define( 'FB_URL_BOARD', '/board/' );
+define( 'FB_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'FB_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+define( 'FB_PLUGIN_NAME', plugin_basename( __FILE__ ) );
+define( 'FB_PLUGIN_VERSION', '2.0.0' );
+if ( ! defined( 'FB_PLUGIN_FILE' ) ) {
+	define( 'FB_PLUGIN_FILE', __FILE__ );
 }
-if ( ! defined( 'MV_PLUGIN_DIR' ) ) {
-	define( 'MV_PLUGIN_DIR', plugin_dir_path( MV_PLUGIN_FILE ) );
+if ( ! defined( 'FB_PLUGIN_DIR' ) ) {
+	define( 'FB_PLUGIN_DIR', plugin_dir_path( FB_PLUGIN_FILE ) );
 }
 
-// define( 'MV_RECAPTCHA_KEY', '6LfoiLslAAAAAPlhxIS_HDwuUCxa415E3iWGqqJu' );
-// define( 'MV_RECAPTCHA_SECRET', '6LfoiLslAAAAANprMfE3iPeD2aYW5VEaikHOu90U' );
-define( 'MV_RECAPTCHA_KEY', '6Ld6a-YkAAAAAMH-zAsjPMz3Oh4IczQeNZtGh5Rg' );
-define( 'MV_RECAPTCHA_SECRET', '6Ld6a-YkAAAAANxnVlWfNZdunOA6ppYsdX_F0PQ0' );
+// define( 'FB_RECAPTCHA_KEY', '6LfoiLslAAAAAPlhxIS_HDwuUCxa415E3iWGqqJu' );
+// define( 'FB_RECAPTCHA_SECRET', '6LfoiLslAAAAANprMfE3iPeD2aYW5VEaikHOu90U' );
+define( 'FB_RECAPTCHA_KEY', '6Ld6a-YkAAAAAMH-zAsjPMz3Oh4IczQeNZtGh5Rg' );
+define( 'FB_RECAPTCHA_SECRET', '6Ld6a-YkAAAAANxnVlWfNZdunOA6ppYsdX_F0PQ0' );
 spl_autoload_register(
 	function ( $class ) {
 		$prefix   = __NAMESPACE__; // project-specific namespace prefix
