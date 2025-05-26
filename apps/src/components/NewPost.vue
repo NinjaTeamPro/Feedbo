@@ -58,6 +58,7 @@
                 :before-upload="beforeUpload"
                 list-type="picture"
                 class="upload-list-inline"
+                :disabled="isUploading"
                 @change="handelUpload"
               > 
                 <AButton class="template-button button-attach">
@@ -72,6 +73,7 @@
                 :loading="post.isLoadingCreatePost"
                 class="template-button"
                 :class="{'add-button': checkTheme() == ''}"
+                :disabled="isUploading"
                 @click.prevent="handleOk()"
               >
                 Create post
@@ -96,10 +98,7 @@ const formTailLayout = {
 import { mapState } from 'vuex';
 import { getBoardIdFromUrl } from '@/helper/helper.js';
 export default {
-    computed: {
-        ...mapState([ 'category','post','user' ]),
-    },
-    data () {
+  data () {
         return {
             modalVisible: false,
             id: null,
@@ -109,9 +108,14 @@ export default {
             form: this.$form.createForm(this, { name: 'dynamic_rule' }),
             postItem: null,
             linkUpload: '',
-            fileList: []
+            fileList: [],
+            isUploading: false,
         };
     },
+    computed: {
+        ...mapState([ 'category','post','user' ]),
+    },
+    
     mounted (){
         this.linkUpload =  window.bigNinjaVoteWpdata.axiosUrl + '/v1/wp_upload_file';
     },
@@ -142,6 +146,7 @@ export default {
             }
         },
         handelUpload ({ file, fileList }){
+            this.isUploading = true;
             if (file.hasOwnProperty('status')) {
                 if (file.status === 'done') {
                     this.$message.success(`${file.name} file uploaded successfully`);
@@ -157,6 +162,7 @@ export default {
                 });
             }
             this.fileList = fileList;
+            this.isUploading = false;
         },
         normFile (e) {
             if (Array.isArray(e)) {

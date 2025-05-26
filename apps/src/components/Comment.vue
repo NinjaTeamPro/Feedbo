@@ -561,7 +561,7 @@
             >
               <AButton
                 class="template-button button-attach"
-                :disabled="checkLock"
+                :disabled="checkLock || isUploading"
               >
                 <AIcon type="upload" /> Upload image
               </AButton>
@@ -574,7 +574,7 @@
               :class="{ 'button-comment': checkTheme() == '' }"
               :loading="comment.isLoadingAddComment"
               html-type="submit"
-              :disabled="checkLock"
+              :disabled="checkLock || isUploading"
             >
               Comment
             </AButton>
@@ -606,6 +606,7 @@ export default {
       inputUpdate: "",
       visibleUpdate: false,
       loading: false,
+      isUploading: false,
       form: this.$form.createForm(this, { name: "coordinated" }),
       loading1: false,
       moment,
@@ -694,6 +695,7 @@ export default {
       return isJpgOrPng && isLt2M;
     },
     handelUpload(info) {
+      this.isUploading = true;
       if (info.file.hasOwnProperty("status")) {
         if (info.file.status === "uploading") {
           return;
@@ -710,6 +712,7 @@ export default {
           }
         });
       }
+      this.isUploading = false;
     },
     updateImage({ file, fileList }) {
       if (file.status === "uploading") {
