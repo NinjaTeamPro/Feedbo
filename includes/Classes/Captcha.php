@@ -7,7 +7,7 @@ class Captcha {
 
 	public static function isValid( $response ) {
 		$data = array(
-			'secret'   => MV_RECAPTCHA_SECRET,
+			'secret'   => FB_RECAPTCHA_SECRET,
 			'response' => $response,
 		);
 		$res  = self::cURL( 'https://www.google.com/recaptcha/api/siteverify', $data );
