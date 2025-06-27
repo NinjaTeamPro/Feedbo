@@ -2,20 +2,6 @@ jQuery(document).ready(function () {
   var currentUri = window.location.href;
   var loginText = "wp-login.php";
   if (currentUri.includes(loginText)) {
-    jQuery("body").prepend('<div class="login-header"></div>');
-    jQuery(".login-header").append(
-      '<div class="icon-vote"><a  href="' +
-        window.bigNinjaVoteUrl.siteURL +
-        '"><img src="' +
-        window.bigNinjaVoteUrl.pluginUrl +
-        "assets/img/feedbo-logo-square.png" +
-        '" alt="Feedbo Logo" class="feedbo-main-logo"></a></div>'
-    );
-    jQuery(".login-header").append(
-      '<div class="Feedbo-login"><a  href="' +
-        window.bigNinjaVoteUrl.siteURL +
-        '">Feedbo</a></div>'
-    );
     jQuery("#loginform").prepend(
       '<p class="feedbo-login-text" id="login-header-title"><span>Login</span></p>'
     );
@@ -212,6 +198,21 @@ jQuery(document).ready(function () {
           });
       }
     }
+    jQuery("body").prepend('<div class="login-header"></div>');
+    jQuery(".login-header").append(
+      '<div class="icon-vote"><a  href="' +
+        window.bigNinjaVoteUrl.siteURL +
+        '"><img src="' +
+        window.bigNinjaVoteUrl.pluginUrl +
+        "assets/img/feedbo-logo-square.png" +
+        '" alt="Feedbo Logo" class="feedbo-main-logo"></a></div>'
+    );
+    jQuery(".login-header").append(
+      '<div class="Feedbo-login"><a  href="' +
+        window.bigNinjaVoteUrl.siteURL +
+        '">Feedbo</a></div>'
+    );
+    jQuery("#loginform").css("display", "block");
   }
 });
 function getJsonFromUrl(url) {

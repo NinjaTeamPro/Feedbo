@@ -1,3 +1,7 @@
+#loginform {
+  display: none;
+}
+
 body.login {
   font-family: "Helvetica";
   font-style: normal;
