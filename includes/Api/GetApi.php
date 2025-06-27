@@ -540,7 +540,7 @@ class GetApi extends \WP_REST_Controller {
 		$currentUser = self::$current_user;
 		$data        = array(
 			'user_name'   => self::$current_user->user_email,
-			'user_avatar' => get_avatar_url( self::$current_user->user_email, array( 'size' => '64' ) ),
+			'user_avatar' => get_avatar_url( self::$current_user->user_email, array( 'size' => '64', 'default' => 'gravatar_default' ) ),
 		);
 		return new \WP_REST_Response( $data, 200 );
 	}
@@ -725,7 +725,7 @@ class GetApi extends \WP_REST_Controller {
 				$userAvatar,
 				(object) array(
 					'user_name'   => $val['display_name'],
-					'user_avatar' => get_avatar_url( $val['user_email'], array( 'size' => '64' ) ),
+					'user_avatar' => get_avatar_url( $val['user_email'], array( 'size' => '64', 'default' => 'gravatar_default' ) ),
 					'gravatar'    => 'https://www.gravatar.com/avatar/' . md5( strtolower( trim( $val['user_email'] ) ) ) . '?d=' . urlencode( $default ) . '&s=' . $size,
 				)
 			);
@@ -760,7 +760,7 @@ class GetApi extends \WP_REST_Controller {
 					'user_email'  => $user->user_email,
 					'user_avatar' => get_avatar_url(
 						$user->user_email,
-						array( 'size' => '64' )
+						array( 'size' => '64', 'default' => 'gravatar_default' )
 					),
 				)
 			);
@@ -874,7 +874,7 @@ class GetApi extends \WP_REST_Controller {
 				$userAvatar,
 				(object) array(
 					'user_name'   => $val['display_name'],
-					'user_avatar' => get_avatar_url( $val['user_email'], array( 'size' => '64' ) ),
+					'user_avatar' => get_avatar_url( $val['user_email'], array( 'size' => '64', 'default' => 'gravatar_default' ) ),
 				)
 			);
 		}

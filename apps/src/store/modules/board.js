@@ -4,12 +4,13 @@ export const namespaced = true;
 export const state = {
   isLoadingBoard: false,
   isLoadingComplete: false,
+  activeTab: "vote",
 };
 export const mutations = {
   SET_GENERNAL(state, data) {
-    for (var key in data) {
+    for (const key in data) {
       if (data.hasOwnProperty(key)) {
-        let value = data[key];
+        const value = data[key];
         state[key] = value;
       }
     }
@@ -21,9 +22,9 @@ export const actions = {
     delete requestParams.component;
     commit("SET_GENERNAL", { isLoadingBoard: false });
     ApiService.getBoardContent(requestParams.boardId)
-      .then(function(response) {
+      .then((response) => {
         if (response.status == 200 && response.data) {
-          if(Object.keys(response.data.data.boardInfo).length > 0) {
+          if (Object.keys(response.data.data.boardInfo).length > 0) {
             commit(
               "category/SET_GENERNAL",
               {
@@ -88,7 +89,7 @@ export const actions = {
       { root: true }
     );
     ApiService.getPosts(requestParams.boardId)
-      .then(function(response) {
+      .then((response) => {
         if (response.status == 200 && response.data) {
           commit(
             "post/SET_GENERNAL",

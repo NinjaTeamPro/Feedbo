@@ -69,7 +69,7 @@ class Comment {
 					'user_email'  => false !== $user ? $user->user_email : null,
 					'user_avatar' => get_avatar_url(
 						false !== $user ? $user->user_email : '',
-						array( 'size' => '64' )
+						array( 'size' => '64', 'default' => 'gravatar_default' )
 					),
 				)
 			);

@@ -207,7 +207,7 @@ export default {
         this.setFormValue;
     },
     computed: {
-        ...mapState([ 'category', 'user' ]),
+        ...mapState([ 'category', 'user', 'board' ]),
         setFormValue (){
             this.form.name = this.category.board.name;
             this.form.description = this.category.board.description;
@@ -215,11 +215,10 @@ export default {
             this.form.default_sort = this.category.board.default_sort;
             this.form.board_URL = this.category.board.board_URL;
             this.form.visibility = this.category.board.visibility;
-            this.form.features = this.category.board.features.split(' , ');
-
+            this.form.features = this.category.board.features !== null ? this.category.board.features.split(' , ') : [];
         },
         checkValue (){
-            if (this.category.board.name == this.form.name && this.category.board.description == this.form.description && this.category.board.button_text == this.form.button_text && this.category.board.default_sort == this.form.default_sort && this.category.board.board_URL == this.form.board_URL && this.category.board.visibility == this.form.visibility && this.category.board.features.split(' , ').toString() == this.form.features.toString())
+            if (this.category.board.name == this.form.name && this.category.board.description == this.form.description && this.category.board.button_text == this.form.button_text && this.category.board.default_sort == this.form.default_sort && this.category.board.board_URL == this.form.board_URL && this.category.board.visibility == this.form.visibility && (this.category.board.features !== null ? this.category.board.features.split(' , ').toString() : '') == this.form.features.toString())
             {return true;}
             else {return false;}
         }
@@ -242,6 +241,12 @@ export default {
                         this.$store.commit('user/SET_CURRENT_BOARD_URL', { oldUrl: oldUrl,newUrl:newUrl });
                     }
                     this.$store.dispatch('category/updateBoardInfo',requestParams);
+                    // Check setting features road map
+                    console.log(this.board.activeTab);
+                    if (this.board.activeTab == 'roadmap' && !this.form.features.includes('roadmap')) {
+                        this.$store.commit('board/SET_GENERNAL', { activeTab: this.form.default_sort });
+                        this.$store.dispatch('post/changeTabActive', { key: this.form.default_sort, id: term_id });
+                    }
                 } else {
                     return false;
                 }

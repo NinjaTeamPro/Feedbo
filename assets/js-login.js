@@ -70,8 +70,9 @@ jQuery(document).ready(function () {
     }
 
     if (messageDiv.length && errorDiv.length === 0) {
-      var textInfo = jQuery(".message").text();
-      if (textInfo != null && textInfo != "") {
+      const message = jQuery(".message");
+      var textInfo = message.text();
+      if (!message.hasClass("register") && textInfo != null && textInfo != "") {
         jQuery("body").append(
           '<div class="ant-message"><span><div class="ant-message-notice"><div class="ant-message-notice-content"><div class="ant-message-custom-content ant-message-info"><i aria-label="icon: info-circle" class="anticon anticon-info-circle"><svg viewBox="64 64 896 896" data-icon="info-circle" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false"><path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm32 664c0 4.4-3.6 8-8 8h-48c-4.4 0-8-3.6-8-8V456c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v272zm-32-344a48.01 48.01 0 0 1 0-96 48.01 48.01 0 0 1 0 96z"></path></svg></i><span>' +
             textInfo +
@@ -81,6 +82,20 @@ jQuery(document).ready(function () {
           jQuery(".ant-message").remove();
         }, 4000);
       }
+    }
+
+    //get message from search params
+    const searchParams = new URLSearchParams(window.location.search);
+    const message = searchParams.get("message");
+    if (message !== null && message !== undefined) {
+      jQuery("body").append(
+        '<div class="ant-message"><span><div class="ant-message-notice"><div class="ant-message-notice-content"><div class="ant-message-custom-content ant-message-error"><i aria-label="icon: close-circle" class="anticon anticon-close-circle"><svg viewBox="64 64 896 896" data-icon="close-circle" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false" ><path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm165.4 618.2l-66-.3L512 563.4l-99.3 118.4-66.1.3c-4.4 0-8-3.5-8-8 0-1.9.7-3.7 1.9-5.2l130.1-155L340.5 359a8.32 8.32 0 0 1-1.9-5.2c0-4.4 3.6-8 8-8l66.1.3L512 464.6l99.3-118.4 66-.3c4.4 0 8 3.5 8 8 0 1.9-.7 3.7-1.9 5.2L553.5 514l130 155c1.2 1.5 1.9 3.3 1.9 5.2 0 4.4-3.6 8-8 8z"></path></svg></i><span>' +
+        message +
+          "</span></div></div></div></span></div>"
+      );
+      setTimeout(function () {
+        jQuery(".ant-message").remove();
+      }, 4000);
     }
 
     if (currentUri.includes(loginText) && currentUri.includes(actionRegister)) {

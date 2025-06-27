@@ -118,11 +118,11 @@ if ( ! class_exists( 'Frontend' ) ) {
 			$axiosURL = site_url() . '/wp-json';
 			wp_dequeue_style( 'twentytwenty-style' );
 			wp_deregister_style( 'twentytwenty-style' );
-			wp_enqueue_style( 'feedbo_front_end_style', FB_PLUGIN_URL . 'assets/css/feedbo_frontend_style.css', null, true );
-			wp_enqueue_style( 'style_main', FB_PLUGIN_URL . 'assets/dist/css/main.css', null, true );
-			wp_enqueue_style( 'hide-header-footer', FB_PLUGIN_URL . 'assets/headerfooter.css', null, true );
+			wp_enqueue_style( 'feedbo_front_end_style', FB_PLUGIN_URL . 'assets/css/feedbo_frontend_style.css', null, FB_PLUGIN_VERSION );
+			wp_enqueue_style( 'style_main', FB_PLUGIN_URL . 'assets/dist/css/main.css', null, FB_PLUGIN_VERSION );
+			wp_enqueue_style( 'hide-header-footer', FB_PLUGIN_URL . 'assets/headerfooter.css', null, FB_PLUGIN_VERSION );
 
-			wp_enqueue_script( 'js_main', FB_PLUGIN_URL . 'assets/dist/js/main.js', array( 'jquery' ), null, true );
+			wp_enqueue_script( 'js_main', FB_PLUGIN_URL . 'assets/dist/js/main.js', array( 'jquery' ), FB_PLUGIN_VERSION, true );
 			wp_localize_script(
 				'js_main',
 				'bigNinjaVoteWpdata',
@@ -161,8 +161,8 @@ if ( ! class_exists( 'Frontend' ) ) {
 			wp_dequeue_style( 'mo-wp-bootstrap-main' );
 			wp_deregister_style( 'mo-wp-bootstrap-main' );
 			wp_enqueue_style( 'custom-login', FB_PLUGIN_URL . 'assets/style-login.css' );
-			wp_enqueue_style( 'style_main', FB_PLUGIN_URL . 'assets/dist/css/main.css', null, true );
-			wp_enqueue_script( 'custom-login-js', FB_PLUGIN_URL . 'assets/js-login.js', array( 'jquery' ), null, true );
+			wp_enqueue_style( 'style_main', FB_PLUGIN_URL . 'assets/dist/css/main.css', null, FB_PLUGIN_VERSION );
+			wp_enqueue_script( 'custom-login-js', FB_PLUGIN_URL . 'assets/js-login.js', array( 'jquery' ), FB_PLUGIN_VERSION, true );
 			wp_localize_script(
 				'custom-login-js',
 				'bigNinjaVoteUrl',

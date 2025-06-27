@@ -68,7 +68,7 @@ class WidgetLoad {
 				'user_nicename' => $this->currentUser->data->user_nicename,
 				'user_email'    => $this->currentUser->data->user_email,
 				'display_name'  => $this->currentUser->data->display_name,
-				'user_avatar'   => get_avatar_url( $this->currentUser->data->ID, array( 'size' => '64' ) ),
+				'user_avatar'   => get_avatar_url( $this->currentUser->data->ID, array( 'size' => '64', 'default' => 'gravatar_default' ) ),
 				'notification'  => get_user_meta( $this->currentUser->data->ID, 'notification_setting', false ),
 				'list_board'    => $listBoard,
 			);
@@ -86,7 +86,7 @@ class WidgetLoad {
 					$userAvatar,
 					array(
 						'user_name'   => $val->display_name,
-						'user_avatar' => get_avatar_url( $val->user_email, array( 'size' => '64' ) ),
+						'user_avatar' => get_avatar_url( $val->user_email, array( 'size' => '64', 'default' => 'gravatar_default' ) ),
 					)
 				);
 			}
@@ -134,7 +134,7 @@ class WidgetLoad {
 			$results    = array();
 			if ( count( $data ) > 0 ) {
 				foreach ( $data as $key => $val ) {
-					$data[ $key ]['user_avatar'] = get_avatar_url( $val['user_email'], array( 'size' => '64' ) );
+					$data[ $key ]['user_avatar'] = get_avatar_url( $val['user_email'], array( 'size' => '64', 'default' => 'gravatar_default' ) );
 				}
 			}
 			return count( $data ) > 0 ? $data : array();

@@ -1214,7 +1214,7 @@ export default {
     },
     checkDownVote() {
       const str = this.category.board.features;
-      if (str !== undefined) {
+      if (str !== undefined && str !== null) {
         return str.includes("downvoting");
       }
       return false;

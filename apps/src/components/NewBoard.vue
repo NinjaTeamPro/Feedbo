@@ -2,8 +2,15 @@
   <div class="newboard-container">
     <div class="newboard-header">
       <div class="project-name">
-        <router-link :to="{ name: 'Home' }" class="FeedboProject">
-          <img :src="logoLink" alt="Feedbo Logo" class="feedbo-main-logo" />
+        <router-link
+          :to="{ name: 'Home' }"
+          class="FeedboProject"
+        >
+          <img
+            :src="logoLink"
+            alt="Feedbo Logo"
+            class="feedbo-main-logo"
+          >
           <span class="Feedbo">
             Feedbo
           </span>
@@ -14,9 +21,15 @@
     <div class="content">
       <div class="form-container">
         {{ category.categorys }}
-        <h2 class="Create-new-board">Create New Board</h2>
+        <h2 class="Create-new-board">
+          Create New Board
+        </h2>
         <p>Enter your board name. You can change it later.</p>
-        <AForm id="form" :form="form" @submit.prevent="handleSubmit()">
+        <AForm
+          id="form"
+          :form="form"
+          @submit.prevent="handleSubmit()"
+        >
           <AFormItem>
             <AInput
               v-decorator="[
@@ -65,11 +78,13 @@ export default {
     handleSubmit() {
       this.form.validateFields((err, values) => {
         if (!err) {
-          if (this.user.userAnonymous == true)
-            this.$message.error("Please sign in to create your own board.");
+          if (this.user.userAnonymous == true) {
+            window.location.href =
+              window.bigNinjaVoteWpdata.siteUrl + "/wp-login.php?message=Please sign in to create your own board";
+          }
           else {
-            let component = this;
-            let requestParams = {
+            const component = this;
+            const requestParams = {
               values: values,
               component: component,
             };
@@ -80,11 +95,11 @@ export default {
     },
   },
   computed: {
-    ...mapState(["category", "user"]),
+    ...mapState([ "category", "user" ]),
   },
   mounted() {
     document.title = window.bigNinjaVoteWpdata.siteName + " | New Board";
-    var link =
+    const link =
       document.querySelector("link[rel*='icon']") ||
       document.createElement("link");
     link.type = "image/x-icon";

@@ -1,19 +1,37 @@
 <template>
   <div v-if="!mobileDisplay">
-    <ATabs :active-key="defaultTab" @change="setActiveTab">
-      <ATabPane key="roadmap">
+    <ATabs
+      :active-key="board.activeTab"
+      @change="setActiveTab"
+    >
+      <ATabPane
+        v-if="checkRoadMap()"
+        key="roadmap"
+      >
         <span slot="tab">
           <AIcon type="control" />
         </span>
       </ATabPane>
-      <ATabPane key="vote" tab="Most Voted" />
-      <ATabPane key="new" tab="Newest" />
-      <div slot="tabBarExtraContent" class="tab-extra">
+      <ATabPane
+        key="vote"
+        tab="Most Voted"
+      />
+      <ATabPane
+        key="new"
+        tab="Newest"
+      />
+      <div
+        slot="tabBarExtraContent"
+        class="tab-extra"
+      >
         <NewPost />
       </div>
     </ATabs>
   </div>
-  <div v-else class="mobile-head-menu">
+  <div
+    v-else
+    class="mobile-head-menu"
+  >
     <div>
       <ASelect
         :value="defaultTab"
@@ -70,11 +88,11 @@ export default {
     };
   },
   computed: {
-    ...mapState(["category", "comment", "post", "user"]),
+    ...mapState([ "category", "comment", "post", "user", "board" ]),
     group() {
       const item = this.post.status;
       const group = item.reduce((r, a) => {
-        r[a.post_content_filtered] = [...(r[a.post_content_filtered] || []), a];
+        r[a.post_content_filtered] = [ ...(r[a.post_content_filtered] || []), a ];
         return r;
       }, {});
       return group;
@@ -107,8 +125,7 @@ export default {
       }
     },
     checkRoadMap() {
-      const str =
-        this.category.board.length > 0 ? this.category.board.features : "";
+      const str = this.category.board.features !== null && this.category.board.features !== undefined ? this.category.board.features : "";
       return str.includes("roadmap");
     },
     showModalPost(item) {
@@ -127,6 +144,7 @@ export default {
     },
     setActiveTab(key) {
       const id = getBoardIdFromUrl();
+      this.$store.commit("board/SET_GENERNAL", { activeTab: key });
       this.$store.dispatch("post/changeTabActive", { key, id });
     },
     showModal() {
