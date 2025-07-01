@@ -1,6 +1,7 @@
 jQuery(document).ready(function () {
   var currentUri = window.location.href;
   var loginText = "wp-login.php";
+  const searchParams = new URLSearchParams(window.location.search);
   if (currentUri.includes(loginText)) {
     jQuery("#loginform").prepend(
       '<p class="feedbo-login-text" id="login-header-title"><span>Login</span></p>'
@@ -71,7 +72,6 @@ jQuery(document).ready(function () {
     }
 
     //get message from search params
-    const searchParams = new URLSearchParams(window.location.search);
     const message = searchParams.get("message");
     if (message !== null && message !== undefined) {
       jQuery("body").append(

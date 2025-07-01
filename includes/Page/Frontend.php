@@ -33,6 +33,41 @@ if ( ! class_exists( 'Frontend' ) ) {
 
 			add_filter( 'feedbo_redirect_url', array( $this, 'feedbo_redirect_url' ), 10, 1 );
 
+			add_filter( 'wp_new_user_notification_email', array( $this, 'custom_new_user_notification_email' ), 10, 3 );
+
+			add_action( 'user_register', array( $this, 'store_user_password' ), 10, 1 );
+		
+		}
+
+		public function store_user_password( $user_id ) {
+			// Generate a custom password
+			$password = wp_generate_password();
+
+			// Set the password for the user
+			wp_set_password($password, $user_id);
+
+			update_user_meta( $user_id, '_temp_password', $password );
+		}
+
+		public function custom_new_user_notification_email( $wp_new_user_notification_email, $user, $blogname ) {
+			$password = get_user_meta( $user->ID, '_temp_password', true );
+			if(empty($password)) {
+				$password = wp_generate_password();
+				wp_set_password($password, $user->ID);
+			}
+
+			/* translators: %s: User login. */
+			$message  = sprintf( __( 'Username: %s' ), $user->user_login ) . "\r\n\r\n";
+			$message .= __( 'Password: ' ) . $password . "\r\n\r\n";
+
+			$message .= __( 'Link login: ' ) . wp_login_url() . "\r\n";
+
+			$wp_new_user_notification_email['message'] = $message;
+			
+			// Clean up the temporary password
+			delete_user_meta( $user->ID, '_temp_password' );
+
+			return $wp_new_user_notification_email;
 		}
 
 		public function feedbo_redirect_url( $redirectUrl ) {
@@ -200,6 +235,8 @@ if ( ! class_exists( 'Frontend' ) ) {
 		public function custom_loginlogo_url( $url ) {
 			return site_url();
 		}
+
+
 
 	}
 
