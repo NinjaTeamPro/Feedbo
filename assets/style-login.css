@@ -2,6 +2,10 @@
   display: none;
 }
 
+.feedbo-login-form {
+  display: block !important;
+}
+
 body.login {
   font-family: "Helvetica";
   font-style: normal;

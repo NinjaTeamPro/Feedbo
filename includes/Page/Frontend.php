@@ -181,7 +181,15 @@ if ( ! class_exists( 'Frontend' ) ) {
 				grecaptcha.ready(function () {
 					grecaptcha.execute('<?php echo FB_RECAPTCHA_KEY; ?>', { action: 'submit' }).then(function (token) {
 						var recaptchaResponse = document.getElementById('recaptchaResponse');
-						recaptchaResponse.value = token;
+						if(recaptchaResponse) {
+							recaptchaResponse.value = token;
+						} else {
+							var recaptchaResponse = document.createElement('input');
+							recaptchaResponse.type = 'hidden';
+							recaptchaResponse.name = 'recaptcha_response';
+							recaptchaResponse.value = token;
+							document.getElementById('loginform').appendChild(recaptchaResponse);
+						}
 					});
 				});
 			</script>
@@ -195,7 +203,7 @@ if ( ! class_exists( 'Frontend' ) ) {
 			wp_deregister_style( 'mo-wp-bootstrap-social' );
 			wp_dequeue_style( 'mo-wp-bootstrap-main' );
 			wp_deregister_style( 'mo-wp-bootstrap-main' );
-			wp_enqueue_style( 'custom-login', FB_PLUGIN_URL . 'assets/style-login.css' );
+			wp_enqueue_style( 'custom-login', FB_PLUGIN_URL . 'assets/style-login.css', null, FB_PLUGIN_VERSION );
 			wp_enqueue_style( 'style_main', FB_PLUGIN_URL . 'assets/dist/css/main.css', null, FB_PLUGIN_VERSION );
 			wp_enqueue_script( 'custom-login-js', FB_PLUGIN_URL . 'assets/js-login.js', array( 'jquery' ), FB_PLUGIN_VERSION, true );
 			wp_localize_script(

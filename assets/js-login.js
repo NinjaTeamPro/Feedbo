@@ -212,7 +212,7 @@ jQuery(document).ready(function () {
         window.bigNinjaVoteUrl.siteURL +
         '">Feedbo</a></div>'
     );
-    jQuery("#loginform").css("display", "block");
+    jQuery("#loginform").addClass("feedbo-login-form");
   }
 });
 function getJsonFromUrl(url) {
