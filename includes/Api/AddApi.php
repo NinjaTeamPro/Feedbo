@@ -218,6 +218,10 @@ class AddApi extends \WP_REST_Controller {
 			'meta_value' => true,
 		);
 		$wpdb->insert( $table6, $data10 );
+		// update term count for category with term id in $wpdb->term_taxonomy by sql
+		$term_id = $boardId;
+		$sql = "UPDATE $wpdb->term_taxonomy SET count = count + 1 WHERE term_id = $term_id AND taxonomy = 'category'";
+		$wpdb->query($sql);
 		$post          = get_post( $post_id );
 		$userVote      = get_post_meta( $post_id, 'user_voted_ids' );
 		$userDownVote  = get_post_meta( $post_id, 'user_down_voted_ids' );
