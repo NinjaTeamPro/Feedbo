@@ -1,9 +1,12 @@
-import Home from '@/pages/home/index.tsx';
+import { RouterProvider } from 'react-router-dom';
+import { Toaster } from '@/components/ui/sonner';
+import { router } from './routes';
 
 export default function App() {
   return (
     <>
-      <Home />
+      <RouterProvider router={router} />
+      <Toaster />
     </>
   );
 }
