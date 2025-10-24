@@ -3,8 +3,10 @@ import { ArrowRight } from '@phosphor-icons/react';
 import { Button } from '@/components/ui/button';
 import { __ } from '@wordpress/i18n';
 import TopNavigation from '@/components/top-nav';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
+  const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
   const [isAnonymous, setIsAnonymous] = useState(false);
 
@@ -57,6 +59,7 @@ export default function Home() {
 
   const handleCreateBoard = () => {
     // TODO: Navigate to NewBoard page
+    navigate('/new-board');
     console.log('Navigate to New Board');
   };
 

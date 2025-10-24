@@ -1,8 +1,10 @@
 import { __ } from '@wordpress/i18n';
 import { AccountView } from '@/components/Account';
+import { useNavigate } from 'react-router-dom';
 
 interface TopNavigationProps {
   user?: any;
+  headerColor?: string;
   isAnonymous?: boolean;
   currentBoardUrl?: string;
   onBoardChange?: (boardUrl: string) => void;
@@ -12,10 +14,12 @@ interface TopNavigationProps {
 export default function TopNavigation({
   user,
   isAnonymous = false,
+  headerColor = '#1a2a37',
   currentBoardUrl,
   onBoardChange,
   onCreateBoard,
 }: TopNavigationProps) {
+  const navigate = useNavigate();
   const handleAccountUpdate = (data: { name: string; email: string }) => {
     console.log('Update account:', data);
     // TODO: Add API call to update user account
@@ -34,17 +38,17 @@ export default function TopNavigation({
   return (
     <div className="flex w-full items-center justify-between px-4 py-5 tracking-wide">
       <div className="project-name">
-        <a
-          href="/"
-          className="focus:outline-none! no-underline! flex w-fit items-center text-2xl font-bold text-[#1a2a37] md:text-2xl"
+        <span
+          onClick={() => navigate('/')}
+          className="cursor-pointer flex w-fit items-center text-2xl font-bold text-[#1a2a37] md:text-2xl"
         >
           <img
             src={window.feedbo?.pluginUrl + 'assets/img/nav-logo.png'}
             alt={__('Nav Logo', 'feedbo')}
             className="h-[42px] w-[42px] md:h-[50px] md:w-[50px]"
           />
-          <span className="pl-2.5">{__('Feedbo', 'feedbo')}</span>
-        </a>
+          <span className="pl-2.5" style={{ color: headerColor }}>{__('Feedbo', 'feedbo')}</span>
+        </span>
       </div>
 
       {/* Account View */}

@@ -69,5 +69,11 @@ add_action(
 );
 
 add_filter( 'show_admin_bar', '__return_false' );
+
+// Flush rewrite rules on plugin activation
+register_activation_hook( __FILE__, function() {
+	flush_rewrite_rules();
+} );
+
 // register_activation_hook( __FILE__, array( 'Feedbo\Plugin', 'activate' ) );
 // register_deactivation_hook( __FILE__, array( 'Feedbo\Plugin', 'deactivate' ) );

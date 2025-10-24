@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { __ } from '@wordpress/i18n';
 import { AccountView } from '@/components/Account';
 import { toast } from 'sonner';
+import TopNavigation from '@/components/top-nav';
 
 export default function NewBoard() {
   const [user, setUser] = useState<any>(null);
@@ -132,33 +133,13 @@ export default function NewBoard() {
 
   return (
     <div className="min-h-screen w-full bg-[#27ae60]">
-      {/* Header */}
-      <div className="flex items-center justify-between px-4 py-5">
-        <div className="project-name">
-          <a
-            href="/"
-            className="flex items-center text-2xl font-bold text-white no-underline md:text-2xl"
-          >
-            <img
-              src={window.feedbo?.pluginUrl + 'assets/img/feedbo-logo-square.png'}
-              alt="Feedbo Logo"
-              className="h-[42px] w-[42px] md:h-[50px] md:w-[50px]"
-            />
-            <span className="pl-2.5">{__('Feedbo', 'feedbo')}</span>
-          </a>
-        </div>
-        {user && (
-          <AccountView
-            user={user}
-            isAnonymous={isAnonymous}
-            onBoardChange={handleBoardChange}
-            onCreateBoard={handleCreateBoard}
-            onAccountUpdate={handleAccountUpdate}
-            onNotificationUpdate={handleNotificationUpdate}
-            onUnsubscribeAll={handleUnsubscribeAll}
-          />
-        )}
-      </div>
+      <TopNavigation
+        user={user}
+        headerColor={'#ffffff'}
+        isAnonymous={isAnonymous}
+        onBoardChange={handleBoardChange}
+        onCreateBoard={handleCreateBoard}
+      />
 
       {/* Form Content */}
       <div className="mx-auto w-full max-w-[430px] px-4 pt-[15vh] md:pt-[30vh]">

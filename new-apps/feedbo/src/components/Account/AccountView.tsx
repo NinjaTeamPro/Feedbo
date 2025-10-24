@@ -18,7 +18,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import Account from './Account';
 import Notification from './Notification';
 import { __ } from '@wordpress/i18n';
-
+import { useNavigate } from 'react-router-dom';
 // Type declarations for WordPress plugin data
 declare global {
   interface Window {
@@ -74,7 +74,7 @@ export default function AccountView({
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  const navigate = useNavigate();
   const logoutUrl = window.bigNinjaVoteWpdata?.logoutUrl || '/wp-login.php?action=logout';
 
   const handleSignIn = () => {
@@ -83,6 +83,7 @@ export default function AccountView({
   };
 
   const handleBoardClick = (boardUrl: string) => {
+    navigate(`/board/${boardUrl}`);
     setDropdownOpen(false);
     onBoardChange?.(boardUrl);
   };
@@ -165,8 +166,7 @@ export default function AccountView({
           </div>
 
           <DropdownMenuSeparator className="my-0" />
-
-          {/* Create New Board */}
+          {/* {window.location.pathname !== '/new-board' && ( */}
           <div className="px-4 py-3">
             <button
               onClick={handleCreateBoard}
@@ -176,7 +176,7 @@ export default function AccountView({
               <span>{__('Create New Board', 'feedbo')}</span>
             </button>
           </div>
-
+          {/* )} */}
           {/* Board List */}
           {user.list_board && user.list_board.length > 0 && (
             <ScrollArea className="max-h-[300px]">

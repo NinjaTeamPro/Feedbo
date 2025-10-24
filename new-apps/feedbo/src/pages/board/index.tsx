@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Outlet } from 'react-router-dom';
 import { __ } from '@wordpress/i18n';
-import { AccountView } from '@/components/Account';
+import { BoardExample } from '@/components';
+import TopNavigation from '@/components/top-nav';
+import { BoardManage } from '@/components/ManagerBoard';
 
 export default function Board() {
   const { id } = useParams<{ id: string }>();
@@ -24,6 +26,7 @@ export default function Board() {
           name: 'Product Feedback',
           description: 'Share your feedback and ideas',
           visibility: 'public',
+          logoImg: '', // You can add a logo URL here
           theme: {
             background: '#f8fafb',
             header: '#1890ff',
@@ -121,63 +124,24 @@ export default function Board() {
       className="min-h-screen"
       style={{ backgroundColor: board.theme.background }}
     >
-      {/* Header with logo */}
-      <div className="flex items-center justify-between px-4 py-5">
-        <div className="project-name">
-          <a
-            href="/"
-            className="flex items-center text-2xl font-bold text-[#1a2a37] no-underline md:text-2xl"
-          >
-            <img
-              src={window.feedbo?.pluginUrl + 'assets/img/feedbo-logo-square.png'}
-              alt="Feedbo Logo"
-              className="h-[42px] w-[42px] md:h-[50px] md:w-[50px]"
-            />
-            <span className="pl-2.5">{__('Feedbo', 'feedbo')}</span>
-          </a>
-        </div>
-        {user && (
-          <AccountView
-            user={user}
-            isAnonymous={isAnonymous}
-            currentBoardUrl={id}
-            onBoardChange={handleBoardChange}
-            onCreateBoard={handleCreateBoard}
-            onAccountUpdate={handleAccountUpdate}
-            onNotificationUpdate={handleNotificationUpdate}
-            onUnsubscribeAll={handleUnsubscribeAll}
-          />
-        )}
-      </div>
+      <TopNavigation
+        user={user}
+        isAnonymous={isAnonymous}
+        currentBoardUrl={id}
+        onBoardChange={handleBoardChange}
+        onCreateBoard={handleCreateBoard}
+      />
 
       {/* Board Content */}
       <div className="mx-auto max-w-7xl px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-[#1a2a37]">{board.name}</h1>
-          {board.description && (
-            <p className="mt-2 text-gray-600">{board.description}</p>
-          )}
-        </div>
-
         {/* Board Main Content - Placeholder */}
-        <div className="rounded-lg bg-white p-8 shadow-sm">
-          <p className="text-gray-600">
-            {__('Board ID:', 'feedbo')} <strong>{id}</strong>
-          </p>
-          <div className="mt-4">
-            <p className="text-sm text-gray-500">
-              {__(
-                'This is a placeholder for the Board component. Implement Menu, ListPost, NavBar, and BoardManage components here.',
-                'feedbo'
-              )}
-            </p>
-          </div>
-        </div>
-
+        <BoardExample />
+        <BoardManage />
         {/* Nested routes (like Comment) will render here */}
         <Outlet />
       </div>
     </div>
   );
 }
+
 
