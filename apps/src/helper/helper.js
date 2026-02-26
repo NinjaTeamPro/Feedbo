@@ -18,4 +18,16 @@ const getBoardIdFromUrl = () => {
   return boardId;
 };
 
-export { getBoardIdFromUrl };
+const setCookie = (key, value, expiry) => {
+  const expires = new Date();
+  expires.setTime(expires.getTime() + expiry * 24 * 60 * 60 * 1000);
+  const cookieString = key + '=' + value + ';expires=' + expires.toUTCString() + ';path=/';
+  document.cookie = cookieString;
+  // Return a Promise that resolves on next tick so the browser has time to persist the cookie before redirect
+  return new Promise((resolve) => {
+    setTimeout(resolve, 0);
+  });
+};
+
+
+export { getBoardIdFromUrl, setCookie };

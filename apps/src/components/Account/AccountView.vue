@@ -130,6 +130,7 @@
 import { mapState } from "vuex";
 import Account from "@/components/Account/Account.vue";
 import Notification from "@/components/Account/Notification.vue";
+import { setCookie } from "@/helper/helper";
 export default {
   components: {
     Account,
@@ -175,9 +176,13 @@ export default {
       this.visibleNotification = false;
       this.visibleSetting = true;
     },
+
     signIn() {
-      window.location.href =
-        window.bigNinjaVoteWpdata.siteUrl + "/wp-login.php";
+      const currentUrl = this.getCurrentUrl();
+      setCookie('feedbo_previous_url', currentUrl, 1).then(() => {
+        window.location.href =
+          window.bigNinjaVoteWpdata.siteUrl + "/wp-login.php";
+      });
     },
     getCurrentUrl() {
       return window.location.href;

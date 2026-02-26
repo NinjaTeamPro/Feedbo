@@ -6,9 +6,7 @@
             
             if( 'yes' === feedboData.login_page ) {
                 var previous_url = document.referrer;
-                if( previous_url ) {
-                    self.setCookie('feedbo_previous_url', previous_url ,'1'); //(key,value,expiry in days)
-                } else {
+                if( !previous_url ) {
                     self.eraseCookie('feedbo_previous_url'); // deletecookie
                 }
             }

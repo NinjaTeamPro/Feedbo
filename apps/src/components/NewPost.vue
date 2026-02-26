@@ -122,6 +122,9 @@ export default {
     methods: {
         checkAllowAnonymous() {
           const str = this.category.board.features;
+          if( !str ) {
+            return false;
+          }
           return str.includes("anonymous");
         },
         beforeUpload (file) {
