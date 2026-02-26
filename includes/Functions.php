@@ -76,6 +76,9 @@ class Functions {
 		if ( ! empty( $terms_query->terms ) ) {
 			foreach ( $terms_query->terms as $term ) {
 				$boardMeta = get_term_meta( $term->term_id, 'board_Setting' );
+				if( !isset( $boardMeta[0] ) ) {
+					return false;
+				}
 				$boardURL  = str_replace( '/#/board/', FB_URL_BOARD, $boardMeta[0]['board_URL'] );
 				if ( $boardURL === site_url() . FB_URL_BOARD . $key ) {
 					return $boardMeta[0];
@@ -96,6 +99,9 @@ class Functions {
 		if ( ! empty( $terms_query->terms ) ) {
 			foreach ( $terms_query->terms as $term ) {
 				$boardMeta = get_term_meta( $term->term_id, 'board_Setting' );
+				if ( !isset( $boardMeta[0] ) ) {
+					return false;
+				}
 				$boardURL  = str_replace( '/#/board/', FB_URL_BOARD, $boardMeta[0]['board_URL'] );
 				if ( $boardURL === site_url() . FB_URL_BOARD . $key ) {
 					return $term->term_id;

@@ -54,7 +54,7 @@ class PageLoad {
 			foreach ( $boardQuery as $key => $board ) {
 
 				$boardMeta = get_term_meta( $board->term_id, 'board_Setting' );
-				if ( ! empty( $boardMeta ) ) {
+				if ( !empty( $boardMeta ) && isset( $boardMeta[0] ) ) {
 					$boardURL    = str_replace( '/#/board/', FB_URL_BOARD, $boardMeta[0]['board_URL'] );
 					$listBoard[] = array(
 						'term_id'    => $board->term_id,
@@ -227,6 +227,9 @@ class PageLoad {
 		if ( ! empty( $terms_query->terms ) ) {
 			foreach ( $terms_query->terms as $term ) {
 				$boardMeta = get_term_meta( $term->term_id, 'board_Setting' );
+				if ( empty( $boardMeta ) || !isset( $boardMeta[0] ) ) {
+					return false;
+				}
 				$boardURL  = str_replace( '/#/board/', FB_URL_BOARD, $boardMeta[0]['board_URL'] );
 				if ( $boardURL === site_url() . FB_URL_BOARD . $key ) {
 					return $term->term_id;
@@ -247,7 +250,7 @@ class PageLoad {
 		if ( ! empty( $terms_query->terms ) ) {
 			foreach ( $terms_query->terms as $term ) {
 				$boardMeta = get_term_meta( $term->term_id, 'board_Setting' );
-				if ( $boardMeta[0]['board_URL'] ) {
+				if ( !empty( $boardMeta ) && isset( $boardMeta[0] ) && $boardMeta[0]['board_URL'] ) {
 					$results[] = $boardMeta[0]['board_URL'];
 				}
 			}

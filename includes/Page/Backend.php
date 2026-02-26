@@ -148,7 +148,7 @@ if ( ! class_exists( 'Backend' ) ) {
 				if ( $cats ) {
 					$termId = current( $cats )->term_id;
 					$boardMeta = get_term_meta(  $termId, 'board_Setting' );
-					if( isset( $boardMeta[0] ) ) {
+					if( !empty( $boardMeta ) && isset( $boardMeta[0] ) ) {
                         $boardURL  = str_replace( '/#/board/', FB_URL_BOARD, $boardMeta[0]['board_URL'] );
                         $link      = $boardURL . '/#' . sanitize_title( $post->post_title ) . '/';
                     }

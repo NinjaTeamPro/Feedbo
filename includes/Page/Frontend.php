@@ -114,6 +114,9 @@ if ( ! class_exists( 'Frontend' ) ) {
 					if ( ! empty( $terms_query->terms ) ) {
 						foreach ( $terms_query->terms as $term ) {
 							$boardMeta = get_term_meta( $term->term_id, 'board_Setting' );
+							if ( empty( $boardMeta ) || !isset( $boardMeta[0] ) ) {
+								continue;
+							}
 							$boardURL  = str_replace( '/#/board/', FB_URL_BOARD, $boardMeta[0]['board_URL'] );
 							if ( $boardURL === site_url() . FB_URL_BOARD . $boardId ) {
 								$title = $boardMeta[0]['name'] . ' | ' . get_bloginfo( 'name' );
