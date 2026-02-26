@@ -13,7 +13,8 @@ body.login {
   background-color: #f0f2f5 !important;
   padding: 0 15px;
 }
-body.login .language-switcher {
+body.login .language-switcher,
+body.login #caps-warning {
   display: none;
 }
 

@@ -4,7 +4,7 @@
  * Description: Vote on existing ideas or suggest new ones.
  * Author: Ninja Team
  * Text Domain: feedbo
- * Version: 2.2
+ * Version: 2.4
  */
 
 namespace Feedbo;
@@ -16,7 +16,7 @@ define( 'FB_URL_BOARD', '/board/' );
 define( 'FB_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'FB_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'FB_PLUGIN_NAME', plugin_basename( __FILE__ ) );
-define( 'FB_PLUGIN_VERSION', '2.2' );
+define( 'FB_PLUGIN_VERSION', '2.4' );
 if ( ! defined( 'FB_PLUGIN_FILE' ) ) {
 	define( 'FB_PLUGIN_FILE', __FILE__ );
 }
