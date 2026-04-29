@@ -79,6 +79,7 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           if (this.user.userAnonymous == true) {
+            setCookie('feedbo_previous_url', window.location.href, 1);
             window.location.href =
               window.bigNinjaVoteWpdata.siteUrl + "/wp-login.php?message=Please sign in to create your own board";
           }

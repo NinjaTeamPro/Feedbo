@@ -36,6 +36,7 @@ import NavBar from "@/components/NavBar.vue";
 import Header from "@/components/Header.vue";
 import BoardManage from "@/components/ManagerBoard/BoardManage.vue";
 import { mapState } from "vuex";
+import { setCookie } from "@/helper/helper";
 export default {
   components: {
     Header,
@@ -58,6 +59,7 @@ export default {
     const component = this;
     const boardId = this.$route.params.id;
     this.$store.dispatch("board/getBoardContent", { boardId, component });
+    
   },
   methods: {
     checkVisibility() {
@@ -117,6 +119,9 @@ export default {
           document.body.style.backgroundColor = "#fff";
         } else {
           document.body.style.backgroundColor = this.category.theme.background;
+        }
+        if(!this.user.currentUser) {
+          setCookie('feedbo_previous_url', window.location.href, 1);
         }
       }
     },
