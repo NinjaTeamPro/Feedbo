@@ -29,14 +29,18 @@ if ( ! class_exists( 'Backend' ) ) {
 
 			add_filter( 'post_type_link', array( $this, 'custom_vote_post_type_link' ), 10, 2 );
 
+			add_action('admin_menu', array( $this, 'add_submenu_vote'));
+
 		}
 		public function vote_custom_post_type() {
 			register_post_type(
 				'Vote',
 				array(
-					'labels'              => array(
-						'name'          => __( 'Vote Manager', 'feedbo' ),
+					'menu_icon'                => 'dashicons-feedback',
+					'labels'                   => array(
+						'name'          => __( 'Feedbo', 'feedbo' ),
 						'singular_name' => __( 'Vote', 'feedbo' ),
+						'all_items'     => __( 'All Vote', 'feedbo' ),
 						'add_new'       => __( 'Add New Vote', 'feedbo' ),
 						'add_new_item'  => __( 'Add New Vote', 'feedbo' ),
 						'edit_item'     => __( 'Edit Vote', 'feedbo' ),
@@ -50,6 +54,22 @@ if ( ! class_exists( 'Backend' ) ) {
 					'taxonomies'          => array( 'vote', 'category' ),
 				)
 			);
+		}
+
+		public function add_submenu_vote() {
+			// Add submenu is Users
+			add_submenu_page(
+				'edit.php?post_type=vote',
+				__( 'Board Users', 'feedbo' ),
+				__( 'Board Users', 'feedbo' ),
+				'manage_options',
+				'feedbo-user',
+				array( $this, 'feedbo_users_page' )
+			);
+		}
+
+		public function feedbo_users_page() {
+			include FB_PLUGIN_PATH . 'views/pages/users-pages.php';
 		}
 
 		public function my_columns( $columns ) {

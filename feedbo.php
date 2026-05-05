@@ -51,6 +51,7 @@ function init() {
 	I18n::getInstance();
 	Page\Frontend::getInstance();
 	Page\Backend::getInstance();
+	Page\BoardUserAdmin::getInstance();
 	Page\GoogleOnTab::getInstance();
 	Api\GetApi::getInstance();
 	Api\AddApi::getInstance();

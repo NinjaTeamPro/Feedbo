@@ -14,3 +14,7 @@ release.sh
 feedbo.zip
 /apps
 /build
+
+.opencode
+.claude
+

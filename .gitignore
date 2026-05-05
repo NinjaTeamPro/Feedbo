@@ -12,3 +12,6 @@ log.xml
 /release/*
 yarn.lock
 feedbo.zip
+
+.opencode
+.claude
