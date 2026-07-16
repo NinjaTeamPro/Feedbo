@@ -16,6 +16,9 @@ $all_boards = $board->getBoards();
 		<button id="feedbo-add-users-btn" class="button button-primary">
 			<?php esc_html_e( 'Add Users', 'feedbo' ); ?>
 		</button>
+		<button id="feedbo-update-role-btn" class="button button-primary">
+			<?php esc_html_e( 'Update role', 'feedbo' ); ?>
+		</button>
 	</div>
 
 	<!-- Boards table -->
@@ -134,6 +137,50 @@ $all_boards = $board->getBoards();
 	</div>
 </div>
 
+<!-- ── Bulk update role modal ─────────────────────────────── -->
+<div id="feedbo-role-modal" style="display:none" aria-modal="true" role="dialog">
+	<div class="feedbo-backdrop"></div>
+	<div class="feedbo-modal-box">
+		<h2 id="feedbo-role-modal-title"></h2>
+
+		<div id="feedbo-role-step-email">
+			<div class="feedbo-field">
+				<label for="feedbo-role-email"><?php esc_html_e( 'User email', 'feedbo' ); ?></label>
+				<input type="email" id="feedbo-role-email"
+					placeholder="<?php esc_attr_e( 'user@example.com', 'feedbo' ); ?>" />
+			</div>
+			<div class="feedbo-modal-footer">
+				<button id="feedbo-role-cancel-1" class="button"><?php esc_html_e( 'Cancel', 'feedbo' ); ?></button>
+				<button id="feedbo-role-find-btn" class="button button-primary"><?php esc_html_e( 'Find', 'feedbo' ); ?></button>
+			</div>
+		</div>
+
+		<div id="feedbo-role-step-update" style="display:none">
+			<div id="feedbo-role-update-fields">
+				<p><?php esc_html_e( 'Boards where this user is a member:', 'feedbo' ); ?></p>
+				<ul id="feedbo-role-board-list"></ul>
+
+				<div class="feedbo-field">
+					<label for="feedbo-role-select"><?php esc_html_e( 'New role', 'feedbo' ); ?></label>
+					<select id="feedbo-role-select">
+						<option value="Owner"><?php esc_html_e( 'Owner', 'feedbo' ); ?></option>
+						<option value="Admin"><?php esc_html_e( 'Admin', 'feedbo' ); ?></option>
+						<option value="Moderator" selected><?php esc_html_e( 'Moderator', 'feedbo' ); ?></option>
+						<option value="Member"><?php esc_html_e( 'Member', 'feedbo' ); ?></option>
+					</select>
+				</div>
+			</div>
+
+			<div id="feedbo-role-modal-results" style="display:none"></div>
+
+			<div class="feedbo-modal-footer">
+				<button id="feedbo-role-cancel-2" class="button"><?php esc_html_e( 'Cancel', 'feedbo' ); ?></button>
+				<button id="feedbo-role-update-btn" class="button button-primary"><?php esc_html_e( 'Update', 'feedbo' ); ?></button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <style>
 /* ── Bulk bar ─────────────────────────────────────────────── */
 #feedbo-bulk-bar {
@@ -223,6 +270,10 @@ $all_boards = $board->getBoards();
 	display:flex; justify-content:flex-end; gap:8px;
 	margin-top:20px; padding-top:16px; border-top:1px solid #dcdcde;
 }
+
+/* Role modal board list */
+#feedbo-role-board-list { margin:0 0 18px; padding-left:20px; }
+#feedbo-role-board-list li { padding:2px 0; font-size:13px; }
 
 /* Results list */
 #feedbo-modal-results {

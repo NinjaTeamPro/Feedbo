@@ -23,6 +23,8 @@ class BoardUserAdmin {
 		add_action( 'wp_ajax_feedbo_add_single_user',   array( $this, 'ajax_add_single_user' ) );
 		add_action( 'wp_ajax_feedbo_update_user_role',  array( $this, 'ajax_update_user_role' ) );
 		add_action( 'wp_ajax_feedbo_delete_board_user', array( $this, 'ajax_delete_board_user' ) );
+		add_action( 'wp_ajax_feedbo_find_user_boards',  array( $this, 'ajax_find_user_boards' ) );
+		add_action( 'wp_ajax_feedbo_bulk_update_role',  array( $this, 'ajax_bulk_update_role' ) );
 	}
 
 	public function enqueue_scripts( $hook ) {
@@ -160,6 +162,64 @@ class BoardUserAdmin {
 			array( 'ID' => $user_id )
 		);
 		wp_send_json_success();
+	}
+
+	public function ajax_find_user_boards() {
+		check_ajax_referer( 'feedbo_board_users_nonce', 'nonce' );
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( 'Unauthorized' );
+		}
+		$board_ids = array_map( 'absint', (array) ( $_POST['board_ids'] ?? array() ) );
+		$board_ids = array_filter( $board_ids );
+		$email     = sanitize_email( $_POST['email'] ?? '' );
+		if ( empty( $board_ids ) || ! is_email( $email ) ) {
+			wp_send_json_error( 'Invalid email or boards.' );
+		}
+		global $wpdb;
+		$term_users   = $wpdb->prefix . 'term_users';
+		$placeholders = implode( ',', array_fill( 0, count( $board_ids ), '%d' ) );
+		$rows         = $wpdb->get_results( $wpdb->prepare(
+			"SELECT ID, term_id, term_role FROM $term_users WHERE user_email = %s AND term_id IN ($placeholders)",
+			array_merge( array( $email ), $board_ids )
+		), ARRAY_A );
+
+		$results = array();
+		foreach ( $rows as $row ) {
+			$results[] = array(
+				'user_id'    => (int) $row['ID'],
+				'board_name' => $this->get_board_name( $row['term_id'] ),
+				'term_role'  => $row['term_role'],
+			);
+		}
+		wp_send_json_success( $results );
+	}
+
+	public function ajax_bulk_update_role() {
+		check_ajax_referer( 'feedbo_board_users_nonce', 'nonce' );
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( 'Unauthorized' );
+		}
+		$user_ids = array_map( 'absint', (array) ( $_POST['user_ids'] ?? array() ) );
+		$user_ids = array_filter( $user_ids );
+		$role     = sanitize_text_field( $_POST['role'] ?? '' );
+		$role_map = array( 'Owner' => 1, 'Admin' => 2, 'Moderator' => 3, 'Member' => 4 );
+		if ( empty( $user_ids ) || ! array_key_exists( $role, $role_map ) ) {
+			wp_send_json_error( 'Invalid data.' );
+		}
+		global $wpdb;
+		$term_users = $wpdb->prefix . 'term_users';
+		$results    = array();
+		foreach ( $user_ids as $user_id ) {
+			$row        = $wpdb->get_row( $wpdb->prepare( "SELECT term_id FROM $term_users WHERE ID = %d", $user_id ), ARRAY_A );
+			$board_name = $row ? $this->get_board_name( $row['term_id'] ) : ( '#' . $user_id );
+			$wpdb->update(
+				$term_users,
+				array( 'term_role' => $role, 'level' => $role_map[ $role ] ),
+				array( 'ID' => $user_id )
+			);
+			$results[] = array( 'board_name' => $board_name, 'status' => 'updated' );
+		}
+		wp_send_json_success( array( 'results' => $results ) );
 	}
 
 	public function ajax_delete_board_user() {

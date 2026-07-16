@@ -90,6 +90,87 @@ jQuery(document).ready(function ($) {
         );
     });
 
+    /* ── Bulk update role modal ───────────────────────────── */
+
+    var roleMatches = [];
+    var roleDone    = false;
+
+    $('#feedbo-update-role-btn').on('click', function () {
+        var n = $('.feedbo-board-cb:checked').length;
+        $('#feedbo-role-modal-title').text('Update Role in ' + n + ' board' + (n > 1 ? 's' : ''));
+        $('#feedbo-role-email').val('');
+        $('#feedbo-role-select').val('Moderator');
+        $('#feedbo-role-board-list').html('');
+        $('#feedbo-role-modal-results').hide().html('');
+        $('#feedbo-role-update-fields').show();
+        $('#feedbo-role-cancel-2').show();
+        $('#feedbo-role-update-btn').text('Update').prop('disabled', false);
+        $('#feedbo-role-step-email').show();
+        $('#feedbo-role-step-update').hide();
+        roleMatches = [];
+        roleDone    = false;
+        $('#feedbo-role-modal').show();
+        $('#feedbo-role-email').focus();
+    });
+
+    function closeRoleModal() { $('#feedbo-role-modal').hide(); }
+    $('#feedbo-role-cancel-1, #feedbo-role-cancel-2').on('click', closeRoleModal);
+    $('#feedbo-role-modal .feedbo-backdrop').on('click', closeRoleModal);
+
+    $('#feedbo-role-find-btn').on('click', function () {
+        var email = $('#feedbo-role-email').val().trim();
+        if (!email) { alert('Enter an email.'); return; }
+
+        var boardIds = $('.feedbo-board-cb:checked').map(function () { return $(this).val(); }).get();
+        var $btn = $(this).prop('disabled', true).text('Finding…');
+
+        post('feedbo_find_user_boards', { board_ids: boardIds, email: email },
+            function (res) {
+                $btn.prop('disabled', false).text('Find');
+                if (!res.success) { alert(res.data || 'Error'); return; }
+                roleMatches = res.data;
+                if (!roleMatches.length) { alert('This user is not a member of any of the selected boards.'); return; }
+                $('#feedbo-role-board-list').html(roleMatches.map(function (m) {
+                    return '<li>' + esc(m.board_name) + ' (' + esc(m.term_role) + ')</li>';
+                }).join(''));
+                $('#feedbo-role-step-email').hide();
+                $('#feedbo-role-step-update').show();
+            },
+            function () { $btn.prop('disabled', false).text('Find'); }
+        );
+    });
+
+    $('#feedbo-role-update-btn').on('click', function () {
+        if (roleDone) { closeRoleModal(); return; }
+        var role     = $('#feedbo-role-select').val();
+        var userIds  = roleMatches.map(function (m) { return m.user_id; });
+        var $btn     = $(this).prop('disabled', true).text('Updating…');
+
+        post('feedbo_bulk_update_role', { user_ids: userIds, role: role },
+            function (res) {
+                $btn.prop('disabled', false);
+                if (res.success) {
+                    var html = res.data.results.map(function (r) {
+                        return '<div class="feedbo-result-item feedbo-result-added">'
+                            + '<strong>' + esc(r.board_name) + ':</strong> Updated to ' + esc(role) + '</div>';
+                    }).join('');
+                    $('#feedbo-role-modal-results').html(html).show();
+                    $('#feedbo-role-update-fields').hide();
+                    $btn.text('Close').prop('disabled', false);
+                    $('#feedbo-role-cancel-2').hide();
+                    roleDone = true;
+                } else {
+                    $('#feedbo-role-modal-results').html('<p class="feedbo-err">' + esc(res.data || 'Error') + '</p>').show();
+                    $btn.text('Update');
+                }
+            },
+            function () {
+                $btn.text('Update').prop('disabled', false);
+                $('#feedbo-role-modal-results').html('<p class="feedbo-err">Request failed.</p>').show();
+            }
+        );
+    });
+
     /* ── Board detail modal (click board name) ────────────── */
 
     var activeBoardId = null;
@@ -210,5 +291,6 @@ jQuery(document).ready(function ($) {
         if (e.key !== 'Escape') return;
         closeBulkModal();
         closeBoardModal();
+        closeRoleModal();
     });
 });
